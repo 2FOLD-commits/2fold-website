@@ -1,0 +1,30 @@
+# Security and caching headers. Netlify and Cloudflare Pages read this file
+# automatically from the published folder and never serve it as a page.
+# tools/serve.mjs applies it locally too, so anything it would break shows up
+# before going live. Hosts that ignore it (GitHub Pages, plain FTP hosting)
+# get none of this; see README.md.
+#
+# Content-Security-Policy, in plain words: the page may only load scripts,
+# styles, fonts and images from this site itself, and may only send data to
+# Formspree. 'unsafe-inline' is needed because the page's own scripts and
+# styles are written inline; the page shows no user-supplied content, and
+# every external script source stays blocked. frame-ancestors 'none' stops
+# other sites from embedding this one in a frame (clickjacking).
+#
+# If a future change adds a new outside service (analytics, a chat widget,
+# an embedded map), its address has to be added here or the browser will
+# block it. tools/serve.mjs shows exactly that error in the console.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), usb=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Font file names contain a hash of their contents, so a changed font always
+# gets a new name; they can be cached for a year without going stale.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
