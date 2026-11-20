@@ -95,7 +95,7 @@
     -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font-variant-numeric:tabular-nums}
   .status .dot{width:7px; height:7px; border-radius:50%; background:var(--green)}
 
-  /* journey: honest numbers on the road to client no. 1 */
+  /* "2FOLD vienā skatienā" — three quick facts about the service */
   .journey{width:100%; margin-top:30px; border:1px solid var(--line); border-radius:20px; padding:18px 18px 16px;
     background:linear-gradient(180deg, rgba(110,136,255,.07), rgba(14,16,23,.7)); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px)}
   .journey .top{display:flex; justify-content:space-between; align-items:baseline; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint)}
@@ -257,16 +257,15 @@
   <div class="wave in" style="--d:4" aria-hidden="true"></div>
   <div class="status in" style="--d:5"><span class="dot"></span><span id="clock">rīga</span></div>
 
-  <section class="journey in" style="--d:6" aria-label="Ceļš līdz pirmajam klientam">
-    <div class="top"><span>ceļš līdz pirmajam klientam</span><em>live</em></div>
+  <section class="journey in" style="--d:6" aria-label="2FOLD vienā skatienā">
+    <div class="top"><span>2FOLD vienā skatienā</span><em>online</em></div>
     <div class="stats">
-      <!-- Update these numbers as the story moves on. -->
-      <div class="stat"><b data-count="710">0</b><span>e-pasti uzņēmumiem</span></div>
-      <div class="stat"><b data-count="1506">0</b><span>personīgas lapas uzbūvētas</span></div>
-      <div class="stat goal"><b data-count="0">0</b><span>klienti<br>(pagaidām)</span></div>
+      <div class="stat goal"><b>24/7</b><span>zvani saņem<br>atbildi</span></div>
+      <div class="stat"><b data-count="3">3</b><span>valodas<br>LV · EN · RU</span></div>
+      <div class="stat"><b data-count="7">7</b><span>dienas<br>bez maksas</span></div>
     </div>
-    <div class="track"><i id="track" data-to="86"></i></div>
-    <div class="foot">pirmais klients: tuvāk nekā vakar<span class="blink"></span></div>
+    <div class="track"><i id="track" data-to="100"></i></div>
+    <div class="foot">neviens klients vairs neaiziet pie konkurenta<span class="blink"></span></div>
   </section>
 
   <nav class="links">
@@ -460,6 +459,7 @@ var FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595052698616';
         el.textContent = Math.round(to * e).toLocaleString('lv-LV');
         if (p < 1) requestAnimationFrame(step);
       })(start);
+      setTimeout(function(){ el.textContent = to.toLocaleString('lv-LV'); }, dur + 400);
     });
     var tr = document.getElementById('track'); setTimeout(function(){ tr.style.width = tr.dataset.to + '%'; }, 200);
   }
