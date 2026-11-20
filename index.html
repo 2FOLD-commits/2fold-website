@@ -1439,6 +1439,16 @@
     overflow:hidden; pointer-events:none; background:var(--ink);
   }
   .site-bg-video{display:block; width:100%; height:100%; object-fit:cover; object-position:70% 50%;}
+  /* iPhone (Low Power Mode) and some phones refuse to autoplay and draw their
+     own big play button over the video. Hide every native control, and while
+     the video is not playing show its first frame as a plain picture instead
+     (.site-bg.still, set by the script after the <video>). 2026-11-20 */
+  .site-bg{background:var(--ink) url("assets/hero-loop-poster.jpg") 70% 50% / cover no-repeat;}
+  .site-bg-video::-webkit-media-controls,
+  .site-bg-video::-webkit-media-controls-panel,
+  .site-bg-video::-webkit-media-controls-overlay-play-button,
+  .site-bg-video::-webkit-media-controls-start-playback-button{display:none !important; -webkit-appearance:none; opacity:0 !important;}
+  .site-bg.still .site-bg-video{visibility:hidden;}
   .site-bg-shade{position:absolute; inset:0; background:var(--ink); opacity:0.5;}
   @media print{ .site-bg{display:none;} }
 
@@ -2481,11 +2491,19 @@
   // visitor's first tap counts as permission, so try again then, and when
   // the page comes back from the background.
   var video = document.querySelector('.site-bg-video');
+  var bg = video.parentNode;
+  // Until the video really plays, hide it and show the poster picture behind
+  // it, so the phone's own play button never appears (2026-11-20).
+  bg.classList.add('still');
+  video.addEventListener('playing', function(){ bg.classList.remove('still'); });
+  video.addEventListener('pause', function(){ bg.classList.add('still'); });
   function start(){
     if (!video.paused) return;
-    var p = video.play(); if (p && p.catch) p.catch(function(){});
+    var p = video.play();
+    if (p && p.then) p.then(function(){ bg.classList.remove('still'); }, function(){ bg.classList.add('still'); });
   }
   video.muted = true;
+  start();
   ['touchend', 'click'].forEach(function(type){ window.addEventListener(type, start, {passive:true}); });
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) start(); });
 })();
