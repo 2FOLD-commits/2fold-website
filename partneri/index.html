@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>2FOLD partneru programma — 20 % no katra klienta</title>
+<meta name="description" content="Iepazīstini savus klientus ar 2FOLD un saņem 20 % no viņu mēneša maksas 12 mēnešus. Programma mārketinga aģentūrām, mājaslapu izstrādātājiem, grāmatvežiem un telekom uzņēmumiem.">
+<meta name="theme-color" content="#0A0B10">
+<meta property="og:title" content="2FOLD partneru programma — 20 % no katra klienta">
+<meta property="og:description" content="Iepazīstini klientus ar MI zvanu atbildētāju un saņem 20 % no viņu maksas 12 mēnešus.">
+<meta property="og:image" content="https://2folddigital.com/assets/og-card.png">
+<meta property="og:url" content="https://2folddigital.com/partneri/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMEEwQjEwIi8+PHBhdGggZD0iTTMwLjg3IDIyIEw2OS4xMyAyMiBMNTcuNDcgMzMuNjcgTDMwLjg3IDMzLjY3IFoiIGZpbGw9IiM2RTg4RkYiLz48cGF0aCBkPSJNNjkuMTMgMjIgTDY5LjEzIDU1LjgzIEw1Ny40NyA0NC4xNyBMNTcuNDcgMzMuNjcgWiIgZmlsbD0iIzQyNTlEOSIvPjxwYXRoIGQ9Ik01Ny40NyA0NC4xNyBMNjkuMTMgNTUuODMgTDQyLjUzIDU1LjgzIEwzMC44NyA0NC4xNyBaIiBmaWxsPSIjNkU4OEZGIi8+PHBhdGggZD0iTTMwLjg3IDQ0LjE3IEw0Mi41MyA1NS44MyBMNDIuNTMgNjYuMzMgTDMwLjg3IDc4IFoiIGZpbGw9IiM0MjU5RDkiLz48cGF0aCBkPSJNNDIuNTMgNjYuMzMgTDY5LjEzIDY2LjMzIEw2OS4xMyA3OCBMMzAuODcgNzggWiIgZmlsbD0iIzZFODhGRiIvPjwvc3ZnPg==">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+  :root{
+    --ink:#0A0B10; --ink2:#12141C; --ink3:#1B1E2B; --line:rgba(243,241,234,.09); --line2:rgba(243,241,234,.16);
+    --paper:#F3F1EA; --dim:#9BA0B4; --faint:#6B7086; --blue:#6E88FF; --blue2:#4259D9; --blue-soft:#D4DBFF; --green:#3DDC97;
+    --ease:cubic-bezier(.2,.7,.15,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:var(--ink)}
+  body{background:var(--ink); color:var(--paper); font-family:'Archivo',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.55}
+  a{color:inherit}
+  .wrap{width:min(1080px, calc(100% - 40px)); margin:0 auto}
+  .glow{position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:radial-gradient(50% 35% at 75% 0%, rgba(110,136,255,.18), transparent 70%), radial-gradient(40% 30% at 0% 60%, rgba(66,89,217,.10), transparent 70%)}
+  main,header,footer{position:relative; z-index:1}
+
+  /* header */
+  header{position:sticky; top:0; z-index:10; background:rgba(10,11,16,.7); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+  .bar{display:flex; align-items:center; justify-content:space-between; height:64px}
+  .logo{display:flex; align-items:center; gap:3px; text-decoration:none; font-weight:800; font-size:20px; letter-spacing:-.02em}
+  .logo svg{width:26px; height:26px}
+  .nav a{text-decoration:none; font-size:14px; color:var(--dim); margin-left:22px}
+  .nav a:hover{color:var(--paper)}
+  .nav .cta{color:var(--ink); background:var(--paper); padding:9px 16px; border-radius:999px; font-weight:600}
+  @media (max-width:640px){ .nav a:not(.cta){display:none} }
+
+  /* hero */
+  .hero{padding:90px 0 70px}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--blue-soft);
+    border:1px solid rgba(110,136,255,.35); background:rgba(110,136,255,.08); padding:7px 13px; border-radius:999px}
+  .eyebrow i{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green)}
+  h1{margin-top:22px; font-size:clamp(38px, 6.4vw, 72px); line-height:1.02; letter-spacing:-.045em; font-weight:700; max-width:900px}
+  h1 em{font-style:normal; color:var(--blue)}
+  .lead{margin-top:22px; font-size:clamp(17px, 2vw, 20px); color:var(--dim); max-width:640px}
+  .lead b{color:var(--paper); font-weight:500}
+  .btns{margin-top:32px; display:flex; flex-wrap:wrap; gap:12px}
+  .btn{display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:600; font-size:16px; padding:15px 22px; border-radius:14px; transition:transform .2s var(--ease)}
+  .btn:active{transform:scale(.98)}
+  .btn.p{background:var(--paper); color:var(--ink)}
+  .btn.s{border:1px solid var(--line2); color:var(--paper)}
+  .btn.s:hover{border-color:var(--blue)}
+  .facts{margin-top:46px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:760px}
+  .fact{border:1px solid var(--line); background:rgba(18,20,28,.6); border-radius:18px; padding:18px}
+  .fact b{display:block; font-size:34px; letter-spacing:-.04em; line-height:1}
+  .fact span{display:block; margin-top:8px; font-size:13px; color:var(--dim); line-height:1.4}
+  @media (max-width:640px){ .facts{grid-template-columns:1fr} }
+
+  section{padding:70px 0}
+  .h2{font-size:clamp(28px, 4vw, 42px); letter-spacing:-.035em; line-height:1.1; font-weight:700}
+  .sub{margin-top:12px; color:var(--dim); max-width:620px}
+  .kicker{font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--blue); margin-bottom:14px}
+
+  /* steps */
+  .steps{margin-top:36px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .step{position:relative; border:1px solid var(--line); background:linear-gradient(180deg, rgba(27,30,43,.7), rgba(18,20,28,.6)); border-radius:22px; padding:26px 22px}
+  .step .n{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-weight:700; background:rgba(110,136,255,.14); color:var(--blue-soft); box-shadow:inset 0 0 0 1px rgba(110,136,255,.35)}
+  .step h3{margin-top:18px; font-size:20px; letter-spacing:-.02em}
+  .step p{margin-top:8px; color:var(--dim); font-size:15px}
+  @media (max-width:800px){ .steps{grid-template-columns:1fr} }
+
+  /* calculator */
+  .calc{margin-top:36px; display:grid; grid-template-columns:1.1fr .9fr; gap:16px}
+  .panel{border:1px solid var(--line); background:rgba(18,20,28,.7); border-radius:22px; padding:26px}
+  .row{margin-bottom:24px}
+  .row label{display:flex; justify-content:space-between; font-size:14px; color:var(--dim); margin-bottom:12px}
+  .row label b{color:var(--paper); font-size:16px}
+  input[type=range]{width:100%; accent-color:var(--blue); height:28px}
+  .plans{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  .plan{position:relative; cursor:pointer}
+  .plan input{position:absolute; opacity:0}
+  .plan span{display:block; padding:12px 14px; border-radius:14px; border:1px solid var(--line2); font-size:14px; transition:border-color .2s, background .2s}
+  .plan span small{display:block; color:var(--dim); font-size:12px; margin-top:2px}
+  .plan input:checked + span{border-color:var(--blue); background:rgba(110,136,255,.12)}
+  .plan input:focus-visible + span{outline:2px solid var(--blue); outline-offset:2px}
+  .result{display:flex; flex-direction:column; justify-content:center; background:linear-gradient(160deg, rgba(110,136,255,.2), rgba(18,20,28,.85) 70%); border-color:rgba(110,136,255,.35)}
+  .result .lbl{font-size:13px; color:var(--blue-soft); letter-spacing:.06em}
+  .result .big{margin-top:6px; font-size:clamp(48px, 7vw, 68px); font-weight:700; letter-spacing:-.05em; line-height:1; font-variant-numeric:tabular-nums}
+  .result .mo{margin-top:16px; font-size:15px; color:var(--dim)}
+  .result .mo b{color:var(--paper)}
+  .result .note{margin-top:18px; font-size:12px; color:var(--faint)}
+  @media (max-width:800px){ .calc{grid-template-columns:1fr} }
+
+  /* who + tools */
+  .grid4{margin-top:30px; display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+  .who{border:1px solid var(--line); border-radius:18px; padding:20px; background:rgba(18,20,28,.55)}
+  .who b{display:block; font-size:16px}
+  .who span{display:block; margin-top:6px; font-size:13.5px; color:var(--dim)}
+  @media (max-width:860px){ .grid4{grid-template-columns:1fr 1fr} }
+  @media (max-width:520px){ .grid4{grid-template-columns:1fr} }
+  .tools{margin-top:30px; border:1px solid var(--line); border-radius:22px; overflow:hidden}
+  .tool{display:grid; grid-template-columns:1fr auto auto; gap:16px; align-items:center; padding:16px 22px; border-bottom:1px solid var(--line)}
+  .tool:last-child{border-bottom:0}
+  .tool b{font-weight:600}
+  .tool small{display:block; color:var(--dim); font-size:13px; margin-top:2px}
+  .tool .pr{font-variant-numeric:tabular-nums; color:var(--dim); font-size:14px; text-align:right}
+  .tool .you{font-variant-numeric:tabular-nums; color:var(--green); font-weight:600; min-width:110px; text-align:right}
+  .tool.head{background:rgba(27,30,43,.6); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); padding:12px 22px}
+  .tool.head .you{color:var(--faint); font-weight:400}
+  @media (max-width:560px){ .tool{grid-template-columns:1fr auto} .tool .pr{display:none} }
+
+  /* terms */
+  .terms{margin-top:30px; display:grid; gap:10px; counter-reset:t}
+  .term{display:flex; gap:16px; padding:18px 20px; border:1px solid var(--line); border-radius:16px; background:rgba(18,20,28,.5)}
+  .term::before{counter-increment:t; content:counter(t); flex:none; width:30px; height:30px; border-radius:9px; display:grid; place-items:center; font-size:14px; font-weight:700; background:var(--ink3); color:var(--blue-soft)}
+  .term p{color:var(--dim)}
+  .term p b{color:var(--paper); font-weight:500}
+
+  /* copy box */
+  .copy{margin-top:26px; border:1px dashed rgba(110,136,255,.45); border-radius:18px; padding:20px; background:rgba(110,136,255,.05)}
+  .copy p{font-size:15px; color:var(--paper)}
+  .copy button{margin-top:14px; font:inherit; font-size:14px; font-weight:600; color:var(--ink); background:var(--paper); border:0; border-radius:10px; padding:10px 14px; cursor:pointer}
+
+  /* form */
+  .form{margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:760px}
+  .form .full{grid-column:1/-1}
+  .form label{display:block; font-size:13px; color:var(--dim); margin-bottom:6px}
+  .form input,.form select,.form textarea{width:100%; font:inherit; font-size:15px; color:var(--paper); background:var(--ink2); border:1px solid var(--line2); border-radius:12px; padding:13px 14px}
+  .form input:focus,.form select:focus,.form textarea:focus{outline:none; border-color:var(--blue)}
+  .form textarea{min-height:96px; resize:vertical}
+  .form button{font:inherit; font-weight:600; font-size:16px; color:var(--ink); background:var(--paper); border:0; border-radius:14px; padding:15px; cursor:pointer}
+  .form button:disabled{opacity:.6}
+  .ok{display:none; margin-top:16px; padding:16px 18px; border-radius:14px; background:rgba(61,220,151,.1); border:1px solid rgba(61,220,151,.35); color:#BDF5DC; max-width:760px}
+  .err{display:none; margin-top:16px; color:#FFB4B0}
+  @media (max-width:600px){ .form{grid-template-columns:1fr} }
+
+  /* faq */
+  details{border-bottom:1px solid var(--line); padding:18px 0}
+  summary{cursor:pointer; font-weight:600; font-size:17px; list-style:none; display:flex; justify-content:space-between; gap:20px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+"; color:var(--blue); font-weight:400; font-size:22px; line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{margin-top:10px; color:var(--dim); max-width:760px}
+
+  footer{border-top:1px solid var(--line); padding:30px 0 40px; color:var(--faint); font-size:13px}
+  footer .wrap{display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between}
+
+  .rv{opacity:0; transform:translateY(18px); transition:opacity .8s var(--ease), transform .8s var(--ease)}
+  .rv.on{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){ .rv{opacity:1; transform:none; transition:none} html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="https://2folddigital.com/"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>FOLD</a>
+    <nav class="nav"><a href="#ka">Kā tas strādā</a><a href="#aprekins">Aprēķins</a><a href="#noteikumi">Noteikumi</a><a class="cta" href="#pieteikties">Kļūt par partneri</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow"><i></i>2FOLD partneru programma</span>
+      <h1>Iepazīstini klientu ar 2FOLD.<br><em>Saņem 20 % katru mēnesi.</em></h1>
+      <p class="lead">Tavi klienti zaudē zvanus, kad neviens nevar pacelt. Mēs to atrisinām ar <b>MI zvanu atbildētāju</b>. Tu tikai iepazīstini — sarunu, uzstādīšanu un atbalstu darām mēs, un <b>tu saņem 20 % no klienta mēneša maksas 12 mēnešus</b>.</p>
+      <div class="btns"><a class="btn p" href="#pieteikties">Kļūt par partneri →</a><a class="btn s" href="#aprekins">Cik es varu nopelnīt?</a></div>
+      <div class="facts">
+        <div class="fact"><b>20 %</b><span>no klienta mēneša maksas</span></div>
+        <div class="fact"><b>12 mēn.</b><span>komisija par katru klientu</span></div>
+        <div class="fact"><b>0 €</b><span>nekas nav jāmaksā un nav jāpārdod</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ka">
+    <div class="wrap">
+      <div class="kicker rv">Kā tas strādā</div>
+      <h2 class="h2 rv">Trīs soļi. Tavs darbs ir tikai pirmais.</h2>
+      <div class="steps">
+        <div class="step rv"><div class="n">1</div><h3>Iepazīstini</h3><p>Pārsūti klientam īsu aprakstu (zemāk) vai iedod mums viņa kontaktu — ar viņa atļauju.</p></div>
+        <div class="step rv"><div class="n">2</div><h3>Mēs darām visu pārējo</h3><p>Sazināmies, parādām demo, uzstādām un uzturam. Pirmā nedēļa klientam bez maksas.</p></div>
+        <div class="step rv"><div class="n">3</div><h3>Tu saņem 20 %</h3><p>Katru mēnesi, kad klients samaksā, tu saņem 20 % no viņa maksas — 12 mēnešus pēc kārtas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aprekins">
+    <div class="wrap">
+      <div class="kicker rv">Aprēķins</div>
+      <h2 class="h2 rv">Cik tu vari nopelnīt?</h2>
+      <p class="sub rv">Pavelc slīdni. Aprēķins pēc mūsu standarta cenām (ar PVN).</p>
+      <div class="calc rv">
+        <div class="panel">
+          <div class="row"><label for="n">Klienti, ko iepazīstini <b id="nOut">5</b></label><input type="range" id="n" min="1" max="30" value="5"></div>
+          <div class="row" style="margin-bottom:0"><label>Ko klients izvēlas</label>
+            <div class="plans" role="radiogroup">
+              <label class="plan"><input type="radio" name="p" value="150" checked><span>MI zvanu atbildētājs<small>150 € / mēn.</small></span></label>
+              <label class="plan"><input type="radio" name="p" value="200"><span>Premium komplekts<small>200 € / mēn.</small></span></label>
+              <label class="plan"><input type="radio" name="p" value="120"><span>Standarta komplekts<small>120 € / mēn.</small></span></label>
+              <label class="plan"><input type="radio" name="p" value="60"><span>Atbilde uz neatbildētu zvanu<small>60 € / mēn.</small></span></label>
+            </div>
+          </div>
+        </div>
+        <div class="panel result" aria-live="polite">
+          <div class="lbl">Tava komisija gadā</div>
+          <div class="big" id="year">1 800 €</div>
+          <div class="mo">jeb <b id="month">150 €</b> katru mēnesi 12 mēnešus</div>
+          <div class="note">Komisija tiek rēķināta tikai no mēneša maksas (ne no uzstādīšanas) un izmaksāta par mēnešiem, ko klients ir samaksājis. Dibinātāju cenas pirmajiem 5 klientiem ir zemākas, tāpēc arī komisija tad ir attiecīgi mazāka.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker rv">Kam tas der</div>
+      <h2 class="h2 rv">Ja tu strādā ar maziem uzņēmumiem, tu jau zini, kam tas vajadzīgs.</h2>
+      <div class="grid4">
+        <div class="who rv"><b>Mārketinga aģentūras</b><span>Tu atved zvanus — mēs parūpējamies, lai neviens nepaliek neatbildēts.</span></div>
+        <div class="who rv"><b>Mājaslapu izstrādātāji</b><span>Pievieno klientam tērzētavu un MI atbildētāju kā papildu vērtību.</span></div>
+        <div class="who rv"><b>Grāmatveži</b><span>Tu zini, kuriem klientiem telefons zvana vairāk, nekā viņi spēj pacelt.</span></div>
+        <div class="who rv"><b>Telekom un IT</b><span>Klienta numurs un līgums paliek pie tevis — mēs strādājam ar pāradresāciju.</span></div>
+      </div>
+
+      <div class="tools rv" role="table" aria-label="Rīki un komisija">
+        <div class="tool head" role="row"><span>Rīks</span><span class="pr">Klients maksā</span><span class="you">Tu saņem</span></div>
+        <div class="tool" role="row"><span><b>MI zvanu atbildētājs</b><small>atbild uzņēmuma vārdā, pieraksta, nodod ziņu</small></span><span class="pr">150 € / mēn.</span><span class="you">30 € / mēn.</span></div>
+        <div class="tool" role="row"><span><b>Premium komplekts</b><small>MI atbildētājs + tērzētava + atgādinājumi + pārskats</small></span><span class="pr">200 € / mēn.</span><span class="you">40 € / mēn.</span></div>
+        <div class="tool" role="row"><span><b>Standarta komplekts</b><small>īsziņa + tērzētava + atgādinājumi + pārskats</small></span><span class="pr">120 € / mēn.</span><span class="you">24 € / mēn.</span></div>
+        <div class="tool" role="row"><span><b>Atbilde uz neatbildētu zvanu</b><small>īsziņa uzreiz pēc nepacelta zvana</small></span><span class="pr">60 € / mēn.</span><span class="you">12 € / mēn.</span></div>
+        <div class="tool" role="row"><span><b>Tērzētava mājaslapai · Atgādinājumi</b><small>katrs atsevišķi</small></span><span class="pr">40 € / mēn.</span><span class="you">8 € / mēn.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="noteikumi">
+    <div class="wrap">
+      <div class="kicker rv">Noteikumi</div>
+      <h2 class="h2 rv">Vienkārši un godīgi.</h2>
+      <div class="terms">
+        <div class="term rv"><p>Klients skaitās tavs, ja tu mūs <b>iepazīstināji pirmais</b> un viņš kļūst par klientu <b>3 mēnešu laikā</b>.</p></div>
+        <div class="term rv"><p>Tu saņem <b>20 % no klienta mēneša maksas 12 mēnešus</b>, sākot ar viņa pirmo apmaksāto mēnesi (bezmaksas nedēļa neskaitās).</p></div>
+        <div class="term rv"><p>Izmaksājam <b>reizi mēnesī ar bankas pārskaitījumu</b> par tiem mēnešiem, ko klients ir samaksājis.</p></div>
+        <div class="term rv"><p>Ja klients pārtrauc, maksājumi par viņu beidzas.</p></div>
+        <div class="term rv"><p>Ar klientu runājam mēs paši un <b>tavā vārdā neko nesolām</b>.</p></div>
+      </div>
+
+      <div class="copy rv" id="apraksts">
+        <p id="pitch">“2FOLD uzstāda MI zvanu atbildētāju: kad jūs nevarat pacelt tālruni, balss atbild jūsu uzņēmuma vārdā, pasaka darba laiku, cenas un adresi un pieņem ziņu. Jūs uzreiz saņemat īsziņu: kas zvanīja un ko gribēja. Jūsu numurs paliek tas pats, visu uzstāda un uztur 2FOLD. Pirmā nedēļa bez maksas un bez saistībām. Vairāk: 2folddigital.com”</p>
+        <button type="button" id="copyPitch">Kopēt aprakstu klientam</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="pieteikties">
+    <div class="wrap">
+      <div class="kicker rv">Pieteikties</div>
+      <h2 class="h2 rv">Kļūsti par 2FOLD partneri.</h2>
+      <p class="sub rv">Aizpildi formu — atbildēsim vienas darba dienas laikā un atsūtīsim visu, kas vajadzīgs.</p>
+      <form class="form rv" id="pform">
+        <div><label for="f1">Vārds, uzvārds</label><input id="f1" name="Vārds" required autocomplete="name"></div>
+        <div><label for="f2">Uzņēmums</label><input id="f2" name="Uzņēmums" required autocomplete="organization"></div>
+        <div><label for="f3">E-pasts</label><input id="f3" name="email" type="email" required autocomplete="email"></div>
+        <div><label for="f4">Tālrunis</label><input id="f4" name="Tālrunis" type="tel" autocomplete="tel"></div>
+        <div class="full"><label for="f5">Tava joma</label>
+          <select id="f5" name="Joma"><option>Mārketinga aģentūra</option><option>Mājaslapu izstrāde</option><option>Grāmatvedība</option><option>Telekom / IT</option><option>Cits</option></select></div>
+        <div class="full"><label for="f6">Ziņa (nav obligāti)</label><textarea id="f6" name="Ziņa" placeholder="Piemēram: ar cik maziem uzņēmumiem strādājat, kādās nozarēs"></textarea></div>
+        <div class="full"><button type="submit" id="send">Nosūtīt pieteikumu</button></div>
+      </form>
+      <div class="ok" id="ok">Paldies! Pieteikums saņemts — Ņikita no 2FOLD sazināsies ar tevi vienas darba dienas laikā.</div>
+      <div class="err" id="err">Neizdevās nosūtīt. Lūdzu, raksti uz info@2folddigital.com vai zvani +371 2092 1114.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker rv">Biežāk jautātais</div>
+      <details class="rv"><summary>Vai man kaut kas jāpārdod vai jāmaksā?</summary><p>Nē. Tu tikai iepazīstini. Sarunu, demo, uzstādīšanu un atbalstu darām mēs. Partneriem nekas nav jāmaksā.</p></details>
+      <details class="rv"><summary>Kā klients uzzina par 2FOLD?</summary><p>Pārsūti viņam aprakstu no šīs lapas vai iedod mums viņa kontaktu ar viņa atļauju. Mēs sazināmies paši un pieminam, ka iesaki tu.</p></details>
+      <details class="rv"><summary>Vai klientam jāmaina tālruņa numurs?</summary><p>Nē. Numurs paliek tas pats — zvani tiek pāradresēti tikai tad, kad neviens nepaceļ.</p></details>
+      <details class="rv"><summary>Kad un kā es saņemu naudu?</summary><p>Reizi mēnesī ar bankas pārskaitījumu par tiem mēnešiem, ko klients ir samaksājis. Ja esi uzņēmums, izraksti mums rēķinu.</p></details>
+      <details class="rv"><summary>Vai var pārdot zem sava zīmola?</summary><p>Par to runājam individuāli — piemēram, “powered by 2FOLD” vai pilots ar dažiem klientiem. Uzraksti mums.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 2FOLD · Rīga</span><span><a href="https://2folddigital.com/">2folddigital.com</a> · info@2folddigital.com · +371 2092 1114</span></div>
+</footer>
+
+<script>
+(function(){
+  // reveal on scroll (+ safety net)
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, {rootMargin:'0px 0px -6% 0px'}) : null;
+  document.querySelectorAll('.rv').forEach(function(el){ if (io) io.observe(el); else el.classList.add('on'); });
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); }, 5000);
+
+  // calculator
+  var n = document.getElementById('n'), nOut = document.getElementById('nOut'), year = document.getElementById('year'), month = document.getElementById('month');
+  function eur(v){ return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' €'; }
+  function calc(){
+    var price = +document.querySelector('input[name=p]:checked').value, k = +n.value;
+    var m = k * price * 0.2;
+    nOut.textContent = k; month.textContent = eur(m); year.textContent = eur(m * 12);
+  }
+  n.addEventListener('input', calc);
+  document.querySelectorAll('input[name=p]').forEach(function(r){ r.addEventListener('change', calc); });
+  calc();
+
+  // copy the pitch
+  document.getElementById('copyPitch').addEventListener('click', function(){
+    var b = this, t = document.getElementById('pitch').textContent.replace(/^“|”$/g, '');
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(function(){ b.textContent = 'Nokopēts ✓'; setTimeout(function(){ b.textContent = 'Kopēt aprakstu klientam'; }, 1800); });
+  });
+
+  // form → Formspree (same form as the main site)
+  var f = document.getElementById('pform');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = document.getElementById('send'); btn.disabled = true; btn.textContent = 'Sūta…';
+    var body = { _subject: 'Partneru pieteikums (2FOLD /partneri)' };
+    new FormData(f).forEach(function(v, k){ body[k] = v; });
+    fetch('https://formspree.io/f/meaqzjra', { method:'POST', headers:{ 'Accept':'application/json', 'Content-Type':'application/json' }, body: JSON.stringify(body) })
+      .then(function(r){ if (!r.ok) throw 0; f.style.display = 'none'; document.getElementById('ok').style.display = 'block'; })
+      .catch(function(){ btn.disabled = false; btn.textContent = 'Nosūtīt pieteikumu'; document.getElementById('err').style.display = 'block'; });
+  });
+})();
+</script>
+</body>
+</html>
