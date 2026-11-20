@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ņikita — 2FOLD</title>
+<meta name="description" content="17. building 2FOLD — MI aģentūra no Rīgas. Saites, sadarbība un kontakti.">
+<meta name="theme-color" content="#06070B">
+<meta property="og:title" content="ņikita — 2FOLD">
+<meta property="og:description" content="17. building 2FOLD. ai agency · riga">
+<meta property="og:image" content="https://2folddigital.com/assets/og-card.png">
+<meta property="og:url" content="https://2folddigital.com/n1k/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMEEwQjEwIi8+PHBhdGggZD0iTTMwLjg3IDIyIEw2OS4xMyAyMiBMNTcuNDcgMzMuNjcgTDMwLjg3IDMzLjY3IFoiIGZpbGw9IiM2RTg4RkYiLz48cGF0aCBkPSJNNjkuMTMgMjIgTDY5LjEzIDU1LjgzIEw1Ny40NyA0NC4xNyBMNTcuNDcgMzMuNjcgWiIgZmlsbD0iIzQyNTlEOSIvPjxwYXRoIGQ9Ik01Ny40NyA0NC4xNyBMNjkuMTMgNTUuODMgTDQyLjUzIDU1LjgzIEwzMC44NyA0NC4xNyBaIiBmaWxsPSIjNkU4OEZGIi8+PHBhdGggZD0iTTMwLjg3IDQ0LjE3IEw0Mi41MyA1NS44MyBMNDIuNTMgNjYuMzMgTDMwLjg3IDc4IFoiIGZpbGw9IiM0MjU5RDkiLz48cGF0aCBkPSJNNDIuNTMgNjYuMzMgTDY5LjEzIDY2LjMzIEw2OS4xMyA3OCBMMzAuODcgNzggWiIgZmlsbD0iIzZFODhGRiIvPjwvc3ZnPg==">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+  :root{
+    --ink:#06070B; --ink2:#0E1017; --card:rgba(14,16,23,.66);
+    --line:rgba(243,241,234,.08); --line2:rgba(243,241,234,.15);
+    --paper:#F3F1EA; --dim:#9BA0B4; --faint:#5F6478; --blue:#6E88FF; --blue2:#4259D9; --green:#3DDC97;
+    --ease:cubic-bezier(.2,.7,.15,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--ink)}
+  body{
+    background:var(--ink); color:var(--paper);
+    font-family:'Archivo',system-ui,sans-serif; min-height:100svh;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    -webkit-tap-highlight-color:transparent;
+  }
+  ::selection{background:var(--blue); color:var(--ink)}
+
+  /* ── background: living dot field (canvas) + vignette + grain ── */
+  #field{position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block}
+  .vignette{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(110,136,255,.16), transparent 70%),
+      radial-gradient(120% 90% at 50% 50%, transparent 40%, rgba(6,7,11,.92) 100%);}
+  .grain{position:fixed; inset:-50%; z-index:0; pointer-events:none; opacity:.06; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation:grain 1.2s steps(6) infinite;}
+  @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+  /* ── intro: an incoming call that gets answered ── */
+  #intro{position:fixed; inset:0; z-index:50; background:var(--ink); display:grid; place-items:center;
+    transition:opacity .7s var(--ease), visibility .7s; cursor:pointer}
+  #intro.gone{opacity:0; visibility:hidden}
+  .call{display:flex; flex-direction:column; align-items:center; gap:22px}
+  .rings{position:relative; width:90px; height:90px; display:grid; place-items:center}
+  .rings i{position:absolute; inset:0; border-radius:50%; border:1px solid rgba(110,136,255,.7); animation:ring 1.6s var(--ease) infinite; opacity:0}
+  .rings i:nth-child(2){animation-delay:.4s}.rings i:nth-child(3){animation-delay:.8s}
+  @keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+  .rings b{width:54px; height:54px; border-radius:50%; background:var(--blue); display:grid; place-items:center;
+    box-shadow:0 0 40px rgba(110,136,255,.6); transition:background .35s, box-shadow .35s}
+  .rings b svg{width:24px; height:24px; transition:transform .5s var(--ease)}
+  #intro.answered .rings b{background:var(--green); box-shadow:0 0 40px rgba(61,220,151,.55)}
+  #intro.answered .rings b svg{transform:rotate(-135deg)}
+  #intro.answered .rings i{animation:none}
+  .call p{font-size:12px; letter-spacing:.32em; text-transform:uppercase; color:var(--dim); min-height:1.2em; font-variant-numeric:tabular-nums}
+
+  /* ── page ── */
+  main{position:relative; z-index:2; width:100%; max-width:460px; margin:0 auto;
+    padding:64px 16px calc(28px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; align-items:center}
+  .in{opacity:0; transform:translateY(14px); filter:blur(6px)}
+  body.ready .in{animation:rise .9s var(--ease) forwards; animation-delay:calc(var(--d,0) * 90ms)}
+  @keyframes rise{to{opacity:1; transform:none; filter:none}}
+
+  /* avatar with a scanning ring and a voice-wave under it */
+  .avatar{position:relative; width:118px; height:118px; margin-bottom:26px}
+  .avatar .ph{position:absolute; inset:9px; border-radius:50%; overflow:hidden; display:grid; place-items:center;
+    background:radial-gradient(circle at 30% 25%, #1E2233, #08090D 70%); border:1px solid var(--line2)}
+  .avatar .ph span{font-size:46px; font-weight:300; color:var(--paper); letter-spacing:-.03em}
+  .avatar .ph img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.08) brightness(.95)}
+  .avatar svg.orbit{position:absolute; inset:0; width:100%; height:100%; animation:turn 14s linear infinite}
+  .avatar svg.orbit text{font-size:7.6px; letter-spacing:2.6px; fill:var(--faint); text-transform:uppercase}
+  @keyframes turn{to{transform:rotate(360deg)}}
+  .avatar .scan{position:absolute; inset:5px; border-radius:50%; padding:1.5px;
+    background:conic-gradient(from var(--a), transparent 0 62%, rgba(110,136,255,.95) 80%, transparent 82%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+    animation:scan 3.2s linear infinite}
+  @property --a{syntax:'<angle>'; inherits:false; initial-value:0deg}
+  @keyframes scan{to{--a:360deg}}
+  .live{position:absolute; right:10px; bottom:10px; width:18px; height:18px; border-radius:50%; background:var(--green);
+    border:3px solid var(--ink); box-shadow:0 0 0 0 rgba(61,220,151,.6); animation:pulse 2.2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+
+  h1{font-size:40px; font-weight:600; letter-spacing:-.045em; line-height:1}
+  .handle{margin-top:10px; font-size:12px; color:var(--faint); letter-spacing:.22em; text-transform:uppercase}
+  .bio{margin-top:20px; text-align:center; font-size:16px; line-height:1.55; color:var(--dim)}
+  .bio b{color:var(--paper); font-weight:500}
+  .wave{display:flex; align-items:center; gap:3px; height:22px; margin-top:18px}
+  .wave i{width:3px; border-radius:2px; background:linear-gradient(var(--blue),var(--blue2)); height:20%; animation:bar 1.1s ease-in-out infinite; animation-delay:calc(var(--i) * -110ms)}
+  @keyframes bar{0%,100%{height:18%}50%{height:100%}}
+  .status{margin-top:16px; display:inline-flex; align-items:center; gap:9px; font-size:12px; color:var(--dim);
+    border:1px solid var(--line); border-radius:999px; padding:7px 13px; background:rgba(14,16,23,.6);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font-variant-numeric:tabular-nums}
+  .status .dot{width:7px; height:7px; border-radius:50%; background:var(--green)}
+
+  /* journey: honest numbers on the road to client no. 1 */
+  .journey{width:100%; margin-top:30px; border:1px solid var(--line); border-radius:20px; padding:18px 18px 16px;
+    background:linear-gradient(180deg, rgba(110,136,255,.07), rgba(14,16,23,.7)); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px)}
+  .journey .top{display:flex; justify-content:space-between; align-items:baseline; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint)}
+  .journey .top em{font-style:normal; color:var(--blue)}
+  .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px}
+  .stat b{display:block; font-size:28px; font-weight:600; letter-spacing:-.04em; font-variant-numeric:tabular-nums}
+  .stat span{display:block; margin-top:2px; font-size:11.5px; color:var(--dim); line-height:1.3}
+  .stat.goal b{color:var(--blue)}
+  .track{position:relative; height:4px; margin-top:16px; border-radius:4px; background:rgba(243,241,234,.07); overflow:hidden}
+  .track i{position:absolute; inset:0 auto 0 0; width:0; border-radius:4px; background:linear-gradient(90deg,var(--blue2),var(--blue)); transition:width 2.2s var(--ease)}
+  .track i::after{content:""; position:absolute; right:0; top:-3px; width:10px; height:10px; border-radius:50%; background:var(--blue); box-shadow:0 0 14px 3px rgba(110,136,255,.7)}
+  .journey .foot{margin-top:10px; font-size:12px; color:var(--dim)}
+  .blink{display:inline-block; width:7px; height:13px; background:var(--blue); vertical-align:-2px; margin-left:3px; animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* links */
+  .links{width:100%; margin-top:14px; display:flex; flex-direction:column; gap:12px; perspective:900px}
+  .link{position:relative; display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--paper);
+    padding:17px 18px; border-radius:18px; border:1px solid var(--line); background:var(--card);
+    -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); overflow:hidden; isolation:isolate;
+    transform-style:preserve-3d; transition:transform .35s var(--ease), border-color .3s, background .3s; will-change:transform}
+  .link::before{content:""; position:absolute; inset:0; z-index:-1; opacity:0; transition:opacity .35s;
+    background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(110,136,255,.2), transparent 62%)}
+  .link::after{content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; padding:1px; opacity:0; transition:opacity .35s;
+    background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), rgba(110,136,255,.9), transparent 70%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
+  .link:hover{background:rgba(18,21,31,.82)}
+  .link:hover::before,.link:hover::after{opacity:1}
+  .link:active{transform:scale(.98)!important}
+  .link.main{background:linear-gradient(120deg, rgba(110,136,255,.18), rgba(14,16,23,.75) 60%); border-color:rgba(110,136,255,.32)}
+  .link.main .shine{position:absolute; inset:0; z-index:-1; background:linear-gradient(105deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+    transform:translateX(-120%); animation:shine 5s 2.4s var(--ease) infinite}
+  @keyframes shine{0%{transform:translateX(-120%)}35%,100%{transform:translateX(120%)}}
+  .ico{flex:none; width:42px; height:42px; border-radius:12px; display:grid; place-items:center;
+    background:rgba(243,241,234,.045); border:1px solid var(--line); transform:translateZ(18px)}
+  .ico svg{width:21px; height:21px}
+  .txt{flex:1; min-width:0; transform:translateZ(12px)}
+  .txt strong{display:block; font-size:16px; font-weight:600; letter-spacing:-.015em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .txt small{display:block; margin-top:3px; font-size:12.5px; color:var(--dim)}
+  .arr{flex:none; color:var(--faint); transition:transform .3s var(--ease), color .3s; transform:translateZ(10px)}
+  .link:hover .arr{transform:translate(4px,0) translateZ(10px); color:var(--blue)}
+  .copy{flex:none; font:inherit; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+    border:1px solid var(--line2); background:transparent; border-radius:999px; padding:7px 11px; cursor:pointer; transform:translateZ(10px)}
+  .copy:hover{color:var(--paper); border-color:var(--blue)}
+
+  /* "for builders" — the Whop kits, a quieter card under the main links */
+  .sub{width:100%; display:flex; align-items:center; gap:12px; margin:26px 0 12px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--faint)}
+  .sub::before,.sub::after{content:""; flex:1; height:1px; background:var(--line)}
+  .link.kit{width:100%; background:rgba(14,16,23,.5); border-style:dashed; border-color:var(--line2)}
+  .tag{flex:none; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--blue);
+    border:1px solid rgba(110,136,255,.4); border-radius:999px; padding:5px 9px; transform:translateZ(10px)}
+
+  /* socials */
+  .socials{margin-top:28px; display:flex; gap:12px}
+  .soc{position:relative; width:50px; height:50px; border-radius:50%; display:grid; place-items:center; color:var(--dim);
+    border:1px solid var(--line); background:rgba(14,16,23,.6); transition:color .25s, border-color .25s, transform .25s var(--ease)}
+  .soc:hover{color:var(--paper); border-color:rgba(110,136,255,.55); transform:translateY(-3px)}
+  .soc svg{width:20px; height:20px}
+  .soc[hidden]{display:none}
+  .soc[data-tip]::after{content:attr(data-tip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translate(-50%,4px);
+    font-size:11px; color:var(--paper); background:var(--ink2); border:1px solid var(--line2); padding:4px 8px; border-radius:8px;
+    white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s}
+  .soc:hover::after{opacity:1; transform:translate(-50%,0)}
+
+  /* marquee + footer */
+  .marquee{position:relative; z-index:2; margin-top:44px; overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    -webkit-mask:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent); mask:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
+  .marquee div{display:flex; width:max-content; animation:slide 38s linear infinite}
+  .marquee span{padding:14px 0; font-size:13px; letter-spacing:.3em; text-transform:uppercase; color:var(--faint); white-space:nowrap}
+  .marquee span b{color:var(--blue); font-weight:400; margin:0 18px}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  footer{position:relative; z-index:2; padding:26px 16px calc(30px + env(safe-area-inset-bottom)); text-align:center; font-size:11.5px; letter-spacing:.08em; color:var(--faint)}
+  footer a{color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:8px}
+  footer a:hover{color:var(--paper)}
+  footer svg{width:16px; height:16px}
+
+  .toast{position:fixed; left:50%; bottom:calc(26px + env(safe-area-inset-bottom)); z-index:60; transform:translate(-50%,20px);
+    background:var(--paper); color:var(--ink); font-size:13px; font-weight:500; padding:10px 16px; border-radius:999px;
+    opacity:0; pointer-events:none; transition:opacity .3s, transform .4s var(--ease)}
+  .toast.on{opacity:1; transform:translate(-50%,0)}
+
+  @media (min-width:700px){ main{padding-top:84px} h1{font-size:46px} }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important; transition:none!important}
+    .in{opacity:1; transform:none; filter:none}
+  }
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div id="intro" aria-hidden="true">
+  <div class="call">
+    <div class="rings"><i></i><i></i><i></i>
+      <b><svg viewBox="0 0 24 24" fill="#06070B"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></b>
+    </div>
+    <p id="callText">ienākošs zvans</p>
+  </div>
+</div>
+
+<main>
+  <div class="avatar in" style="--d:0">
+    <svg class="orbit" viewBox="0 0 118 118" aria-hidden="true"><defs><path id="c" d="M59,59 m-55,0 a55,55 0 1,1 110,0 a55,55 0 1,1 -110,0"/></defs>
+      <text><textPath href="#c">building 2fold · ai agency · riga · 17 · building 2fold · ai agency · riga ·</textPath></text></svg>
+    <div class="scan" aria-hidden="true"></div>
+    <div class="ph"><span aria-hidden="true">ņ</span>
+      <!-- Photo: put a square photo named avatar.jpg next to this file (n1k/avatar.jpg). -->
+      <img src="avatar.jpg" alt="ņikita" onerror="this.remove()"></div>
+    <i class="live" title="online"></i>
+  </div>
+
+  <h1 class="in" style="--d:1" data-scramble>ņikita</h1>
+  <div class="handle in" style="--d:2">@n1k.co</div>
+  <p class="bio in" style="--d:3"><b>17. building 2FOLD.</b><br>ai agency · riga</p>
+  <div class="wave in" style="--d:4" aria-hidden="true"></div>
+  <div class="status in" style="--d:5"><span class="dot"></span><span id="clock">rīga</span></div>
+
+  <section class="journey in" style="--d:6" aria-label="Ceļš līdz pirmajam klientam">
+    <div class="top"><span>ceļš līdz pirmajam klientam</span><em>live</em></div>
+    <div class="stats">
+      <!-- Update these numbers as the story moves on. -->
+      <div class="stat"><b data-count="710">0</b><span>e-pasti uzņēmumiem</span></div>
+      <div class="stat"><b data-count="1506">0</b><span>personīgas lapas uzbūvētas</span></div>
+      <div class="stat goal"><b data-count="0">0</b><span>klienti<br>(pagaidām)</span></div>
+    </div>
+    <div class="track"><i id="track" data-to="86"></i></div>
+    <div class="foot">pirmais klients: tuvāk nekā vakar<span class="blink"></span></div>
+  </section>
+
+  <nav class="links">
+    <a class="link main in" style="--d:7" href="https://2folddigital.com/">
+      <span class="shine" aria-hidden="true"></span>
+      <span class="ico"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg></span>
+      <span class="txt"><strong data-scramble>2FOLD — MI aģentūra</strong><small>MI atbild uz zvaniem, kad tu nevari</small></span>
+      <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="link in" style="--d:8" href="https://2folddigital.com/#consult">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+      <span class="txt"><strong data-scramble>Bezmaksas konsultācija</strong><small>15 min · ko MI var tavam uzņēmumam</small></span>
+      <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="link in" style="--d:9" href="https://2folddigital.com/#calculator">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="1.6" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7h7M8.5 11h1M12 11h1M15 11h.5M8.5 14.5h1M12 14.5h1M8.5 18h1M12 18h1M15 14.5v3.5"/></svg></span>
+      <span class="txt"><strong data-scramble>Cik maksā neatbildēts zvans?</strong><small>kalkulators · 30 sekundes</small></span>
+      <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="link in" style="--d:10" href="mailto:info@2folddigital.com?subject=Sadarb%C4%ABba">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>
+      <span class="txt"><strong data-scramble>Sadarbība / inquiries</strong><small>info@2folddigital.com</small></span>
+      <button class="copy" type="button" data-copy="info@2folddigital.com">kopēt</button>
+    </a>
+  </nav>
+
+  <div class="sub in" style="--d:11"><span>for builders</span></div>
+  <a class="link kit in" style="--d:12" href="https://whop.com/2fold/">
+    <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="1.6" aria-hidden="true"><path d="M12 3 3.5 7.5 12 12l8.5-4.5L12 3z"/><path d="M3.5 12 12 16.5 20.5 12M3.5 16.5 12 21l8.5-4.5"/></svg></span>
+    <span class="txt"><strong data-scramble>Local Automation Kits</strong><small>gatavi kiti automatizāciju būvēšanai · whop</small></span>
+    <span class="tag">kits</span>
+  </a>
+
+  <div class="socials in" style="--d:13">
+    <a class="soc" data-tip="TikTok" href="https://www.tiktok.com/@n1k.co" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.1 1.7 3.6 3.9 3.9v3.1a7.4 7.4 0 0 1-3.9-1.2v6.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.2a2.5 2.5 0 1 0 1.6 2.3V3h3.1z"/></svg></a>
+    <a class="soc" data-tip="Instagram" href="https://www.instagram.com/n.kuzminskis/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></a>
+    <a class="soc" data-tip="2FOLD Facebook" id="fb" href="#" aria-label="2FOLD Facebook" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z"/></svg></a>
+    <a class="soc" data-tip="E-pasts" href="mailto:info@2folddigital.com" aria-label="E-pasts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></a>
+  </div>
+</main>
+
+<div class="marquee" aria-hidden="true"><div>
+  <span>building while you scroll<b>/</b>ai agency<b>/</b>riga<b>/</b>17<b>/</b>day by day<b>/</b>building while you scroll<b>/</b>ai agency<b>/</b>riga<b>/</b>17<b>/</b>day by day<b>/</b></span>
+  <span>building while you scroll<b>/</b>ai agency<b>/</b>riga<b>/</b>17<b>/</b>day by day<b>/</b>building while you scroll<b>/</b>ai agency<b>/</b>riga<b>/</b>17<b>/</b>day by day<b>/</b></span>
+</div></div>
+<footer><a href="https://2folddigital.com/"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>2folddigital.com</a></footer>
+
+<div class="toast" id="toast">nokopēts ✓</div>
+
+<script>
+/* 2FOLD Facebook page: paste the page link between the quotes to show its icon. */
+var FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595052698616';
+
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (FACEBOOK_URL){ var fb = document.getElementById('fb'); fb.href = FACEBOOK_URL; fb.hidden = false; }
+
+  /* ── living dot field: dots breathe, light follows the finger/cursor, taps send ripples ── */
+  var cv = document.getElementById('field'), cx = cv.getContext('2d');
+  var W, H, dpr, dots = [], ripples = [], px = -999, py = -999, tx = -999, ty = -999, t0 = performance.now();
+  function size(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+    var gap = W < 600 ? 24 : 30; dots = [];
+    for (var y = gap/2; y < H + gap; y += gap) for (var x = gap/2; x < W + gap; x += gap)
+      dots.push({x:x, y:y, s:Math.random()});
+  }
+  function frame(now){
+    var t = (now - t0) / 1000;
+    px += (tx - px) * 0.08; py += (ty - py) * 0.08;
+    cx.clearRect(0,0,W,H);
+    for (var r = ripples.length - 1; r >= 0; r--){ ripples[r].r += 6; ripples[r].a *= 0.965; if (ripples[r].a < 0.02) ripples.splice(r,1); }
+    for (var i = 0; i < dots.length; i++){
+      var d = dots[i];
+      var wave = 0.5 + 0.5 * Math.sin(t * 0.9 + d.x * 0.012 + d.y * 0.018 + d.s * 6);   // slow breathing
+      var dx = d.x - px, dy = d.y - py, dist = Math.sqrt(dx*dx + dy*dy);
+      var near = Math.max(0, 1 - dist / 170);                                            // light under the finger
+      var ring = 0;
+      for (var k = 0; k < ripples.length; k++){
+        var rx = d.x - ripples[k].x, ry = d.y - ripples[k].y, rd = Math.sqrt(rx*rx + ry*ry);
+        ring += Math.max(0, 1 - Math.abs(rd - ripples[k].r) / 26) * ripples[k].a;
+      }
+      var a = 0.05 + wave * 0.07 + near * 0.55 + ring * 0.8;
+      var rad = 0.8 + near * 1.3 + ring * 1.4;
+      var ox = near ? dx / (dist || 1) * near * 6 : 0, oy = near ? dy / (dist || 1) * near * 6 : 0;
+      cx.fillStyle = (near > 0.05 || ring > 0.05) ? 'rgba(110,136,255,' + Math.min(a,1) + ')' : 'rgba(243,241,234,' + a + ')';
+      cx.beginPath(); cx.arc(d.x + ox, d.y + oy, rad, 0, 6.2832); cx.fill();
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize', size);
+  addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; if (px < -500){ px = tx; py = ty; } }, {passive:true});
+  addEventListener('pointerdown', function(e){ ripples.push({x:e.clientX, y:e.clientY, r:0, a:1}); }, {passive:true});
+  addEventListener('pointerleave', function(){ tx = ty = -999; });
+  requestAnimationFrame(frame);
+  // idle pulse so the page feels alive even untouched
+  setInterval(function(){ if (!document.hidden && ripples.length < 2) ripples.push({x:W/2, y:Math.min(H*0.18, 170), r:0, a:.45}); }, 4200);
+
+  /* ── voice wave bars ── */
+  var wave = document.querySelector('.wave');
+  for (var b = 0; b < 26; b++){ var i = document.createElement('i'); i.style.setProperty('--i', b); i.style.animationDuration = (0.8 + Math.random()*0.8).toFixed(2) + 's'; wave.appendChild(i); }
+
+  /* ── decode / scramble text ── */
+  var glyphs = 'abcdefghijklmnopqrstuvwxyz0123456789#%&*+=<>/';
+  function scramble(el){
+    var final = el.dataset.final || (el.dataset.final = el.textContent), n = 0, steps = 18;
+    clearInterval(el._t);
+    el._t = setInterval(function(){
+      n++;
+      el.textContent = final.split('').map(function(ch, idx){
+        if (ch === ' ' || idx < (n / steps) * final.length) return ch;
+        return glyphs[(Math.random() * glyphs.length) | 0];
+      }).join('');
+      if (n >= steps){ clearInterval(el._t); el.textContent = final; }
+    }, 34);
+  }
+  document.querySelectorAll('.link').forEach(function(a){
+    var s = a.querySelector('[data-scramble]');
+    a.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') scramble(s); });
+  });
+
+  /* ── 3D tilt + spotlight on the cards ── */
+  document.querySelectorAll('.link').forEach(function(a){
+    a.addEventListener('pointermove', function(e){
+      var r = a.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      a.style.setProperty('--mx', x + 'px'); a.style.setProperty('--my', y + 'px');
+      if (e.pointerType === 'mouse') a.style.transform = 'rotateX(' + ((y / r.height - .5) * -8).toFixed(2) + 'deg) rotateY(' + ((x / r.width - .5) * 10).toFixed(2) + 'deg) translateZ(0)';
+    });
+    a.addEventListener('pointerleave', function(){ a.style.transform = ''; });
+  });
+
+  /* ── copy e-mail ── */
+  var toast = document.getElementById('toast');
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var v = btn.dataset.copy;
+      function done(){ toast.classList.add('on'); setTimeout(function(){ toast.classList.remove('on'); }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(done, function(){ location.href = 'mailto:' + v; });
+      else location.href = 'mailto:' + v;
+    });
+  });
+
+  /* ── Riga clock with a mood ── */
+  var clock = document.getElementById('clock');
+  function tick(){
+    var now = new Date();
+    var hm = new Intl.DateTimeFormat('lv-LV',{timeZone:'Europe/Riga',hour:'2-digit',minute:'2-digit'}).format(now);
+    var h = +new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Riga',hour:'2-digit',hour12:false}).format(now);
+    var mood = h < 6 ? 'vēl strādāju' : h < 9 ? 'rīts · plānoju dienu' : h < 15 ? 'skolā · atbildu vēlāk' : h < 19 ? 'zvanu uzņēmumiem' : 'būvēju 2FOLD';
+    clock.textContent = 'rīga ' + hm + ' · ' + mood;
+  }
+  tick(); setInterval(tick, 20000);
+
+  /* ── count-up + journey track ── */
+  function countUp(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var to = +el.dataset.count, start = performance.now(), dur = 1600;
+      (function step(now){
+        var p = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(to * e).toLocaleString('lv-LV');
+        if (p < 1) requestAnimationFrame(step);
+      })(start);
+    });
+    var tr = document.getElementById('track'); setTimeout(function(){ tr.style.width = tr.dataset.to + '%'; }, 200);
+  }
+
+  /* ── intro: incoming call → answered → page ── */
+  var intro = document.getElementById('intro'), callText = document.getElementById('callText');
+  var seen = false; try { seen = sessionStorage.getItem('n1k-intro') === '1'; sessionStorage.setItem('n1k-intro','1'); } catch(e){}
+  function reveal(){
+    intro.classList.add('gone'); document.body.classList.add('ready');
+    setTimeout(function(){ scramble(document.querySelector('h1')); }, 150);
+    setTimeout(countUp, 600);
+  }
+  if (seen || reduce){ intro.style.transition = 'none'; reveal(); }
+  else {
+    var t1 = setTimeout(function(){ intro.classList.add('answered'); callText.textContent = 'atbildēts · 00:01'; }, 1300);
+    var t2 = setTimeout(reveal, 2100);
+    intro.addEventListener('click', function(){ clearTimeout(t1); clearTimeout(t2); reveal(); });
+  }
+})();
+</script>
+</body>
+</html>
