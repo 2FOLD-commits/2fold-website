@@ -190,6 +190,187 @@
   .tag{flex:none; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--blue);
     border:1px solid rgba(110,136,255,.4); border-radius:999px; padding:5px 9px; transform:translateZ(10px)}
 
+
+  /* ── scroll progress + sticky mini header ── */
+  #prog{position:fixed; left:0; top:0; height:2px; width:0; z-index:40; background:linear-gradient(90deg,var(--blue2),var(--blue)); box-shadow:0 0 10px rgba(110,136,255,.8)}
+  #mini{position:fixed; left:50%; top:calc(10px + env(safe-area-inset-top)); z-index:39; width:min(440px, calc(100% - 24px));
+    display:flex; align-items:center; gap:10px; padding:8px 8px 8px 10px; border-radius:999px;
+    background:rgba(10,11,16,.72); border:1px solid var(--line2); -webkit-backdrop-filter:blur(14px) saturate(1.4); backdrop-filter:blur(14px) saturate(1.4);
+    transform:translate(-50%,-140%); transition:transform .5s var(--ease); box-shadow:0 12px 40px rgba(0,0,0,.45)}
+  #mini.on{transform:translate(-50%,0)}
+  #mini .mav{position:relative; width:32px; height:32px; border-radius:50%; overflow:hidden; display:grid; place-items:center; background:#151826; border:1px solid var(--line2); font-size:15px}
+  #mini .mav img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:grayscale(1)}
+  #mini b{font-size:15px; font-weight:600; letter-spacing:-.02em}
+  #mini .mdot{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green)}
+  #mini a{margin-left:auto; text-decoration:none; color:var(--ink); background:var(--paper); font-size:13px; font-weight:600; padding:9px 14px; border-radius:999px; transition:transform .2s}
+  #mini a:active{transform:scale(.96)}
+
+  /* reveal on scroll */
+  .rv{opacity:0; transform:translateY(24px); transition:opacity .9s var(--ease), transform .9s var(--ease)}
+  .rv.on{opacity:1; transform:none}
+
+  /* section label */
+  .sec{width:100%; display:flex; align-items:center; gap:12px; margin:40px 0 14px; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--faint)}
+  .sec::after{content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line2),transparent)}
+  .sec i{font-style:normal; color:var(--blue)}
+
+  /* ── "šobrīd būvēju" — now playing ── */
+  .now{width:100%; margin-top:28px; display:flex; gap:14px; align-items:center; padding:14px; border-radius:20px;
+    border:1px solid var(--line); background:linear-gradient(120deg, rgba(110,136,255,.10), rgba(14,16,23,.72) 55%);
+    -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px)}
+  .art{flex:none; position:relative; width:62px; height:62px; border-radius:14px; overflow:hidden;
+    background:conic-gradient(from var(--a), #1B2450, #4259D9, #6E88FF, #1B2450); animation:scan 6s linear infinite; display:grid; place-items:center}
+  .art svg{width:30px; height:30px; filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+  .nowb{flex:1; min-width:0}
+  .nowb .lbl{display:flex; align-items:center; gap:8px; font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--blue)}
+  .eq{display:inline-flex; align-items:flex-end; gap:2px; height:10px}
+  .eq i{width:2px; background:var(--blue); animation:eq .9s ease-in-out infinite}
+  .eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}.eq i:nth-child(4){animation-delay:-.15s}
+  @keyframes eq{0%,100%{height:25%}50%{height:100%}}
+  .nowt{margin-top:6px; font-size:15.5px; font-weight:600; letter-spacing:-.015em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:opacity .35s, transform .35s}
+  .nowt.out{opacity:0; transform:translateY(6px)}
+  .nows{margin-top:2px; font-size:12px; color:var(--dim)}
+  .bar{display:flex; align-items:center; gap:8px; margin-top:9px; font-size:10.5px; color:var(--faint); font-variant-numeric:tabular-nums}
+  .bar .tr{flex:1; height:3px; border-radius:3px; background:rgba(243,241,234,.08); overflow:hidden}
+  .bar .tr i{display:block; height:100%; width:0; background:var(--paper); border-radius:3px}
+
+  /* ── phone with a live (example) call ── */
+  .demo{width:100%; display:flex; flex-direction:column; align-items:center}
+  .phone{position:relative; width:250px; height:500px; border-radius:42px; padding:10px;
+    background:linear-gradient(160deg,#20232f,#0c0d12 40%,#1a1c26); box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 40px 80px -20px rgba(0,0,0,.8), 0 0 80px -20px rgba(110,136,255,.35);
+    transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform .4s var(--ease)}
+  .scr{position:relative; width:100%; height:100%; border-radius:33px; overflow:hidden; background:radial-gradient(120% 70% at 50% 0%, #1A2040, #07080C 60%)}
+  .notch{position:absolute; left:50%; top:10px; width:88px; height:24px; border-radius:20px; background:#000; transform:translateX(-50%); z-index:5}
+  .sbar{position:absolute; top:13px; left:22px; right:22px; display:flex; justify-content:space-between; font-size:11px; font-weight:600; z-index:4; color:#fff}
+  .stage{position:absolute; inset:0; padding:56px 16px 18px; display:flex; flex-direction:column; opacity:0; visibility:hidden; transition:opacity .45s, visibility .45s}
+  .stage.on{opacity:1; visibility:visible}
+  /* incoming */
+  .inc{align-items:center; text-align:center}
+  .inc small{font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-top:16px}
+  .cav{position:relative; width:76px; height:76px; border-radius:50%; margin-top:36px; display:grid; place-items:center; font-size:30px; font-weight:600; background:linear-gradient(145deg,#3B4570,#1B2034)}
+  .cav::before,.cav::after{content:""; position:absolute; inset:0; border-radius:50%; border:1px solid rgba(110,136,255,.6); animation:ring 1.8s var(--ease) infinite}
+  .cav::after{animation-delay:.6s}
+  .inc h3{margin-top:18px; font-size:22px; font-weight:600; letter-spacing:-.02em}
+  .inc p{margin-top:4px; font-size:13px; color:var(--dim)}
+  .btns{margin-top:auto; width:100%; display:flex; justify-content:space-around; padding-bottom:22px}
+  .rb{width:58px; height:58px; border-radius:50%; display:grid; place-items:center}
+  .rb.no{background:#FF453A}.rb.yes{background:#30D158}
+  .rb svg{width:26px; height:26px}
+  .rb.no svg{transform:rotate(135deg)}
+  .stage.ans .rb.yes{animation:tap .6s var(--ease)}
+  @keyframes tap{50%{transform:scale(.85); box-shadow:0 0 0 14px rgba(48,209,88,.25)}}
+  /* in call */
+  .incall .who{display:flex; align-items:center; gap:10px}
+  .incall .who .sm{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font-size:14px; font-weight:600; background:linear-gradient(145deg,#3B4570,#1B2034)}
+  .incall .who b{font-size:14px; display:block}
+  .incall .who span{font-size:11px; color:var(--green); font-variant-numeric:tabular-nums}
+  .ai{margin-left:auto; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); border:1px solid rgba(110,136,255,.4); border-radius:6px; padding:3px 6px}
+  .vw{display:flex; align-items:center; justify-content:center; gap:2px; height:26px; margin:14px 0 6px}
+  .vw i{width:2px; border-radius:2px; background:var(--blue); height:15%; animation:bar 1s ease-in-out infinite}
+  .msgs{display:flex; flex-direction:column; gap:7px; overflow:hidden}
+  .msg{max-width:86%; font-size:11.5px; line-height:1.4; padding:8px 10px; border-radius:13px; opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s var(--ease)}
+  .msg.on{opacity:1; transform:none}
+  .msg.c{align-self:flex-start; background:rgba(243,241,234,.08); border-bottom-left-radius:4px}
+  .msg.m{align-self:flex-end; background:linear-gradient(135deg,#4259D9,#6E88FF); border-bottom-right-radius:4px}
+  .msg em{display:block; font-style:normal; font-size:9px; letter-spacing:.14em; text-transform:uppercase; opacity:.6; margin-bottom:2px}
+  /* sms notification */
+  .note{position:absolute; left:10px; right:10px; top:44px; z-index:6; display:flex; gap:10px; align-items:center; padding:11px 12px; border-radius:18px;
+    background:rgba(40,43,56,.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,.5);
+    transform:translateY(calc(-100% - 70px)); transition:transform .6s var(--ease)}
+  .note.on{transform:none}
+  .note .ni{flex:none; width:30px; height:30px; border-radius:8px; background:#30D158; display:grid; place-items:center}
+  .note .ni svg{width:17px; height:17px}
+  .note b{display:block; font-size:11.5px}
+  .note span{display:block; font-size:11px; color:#C9CCD8; margin-top:1px}
+  .cap{margin-top:16px; font-size:12px; color:var(--dim); text-align:center}
+  .cap u{text-decoration:none; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); border:1px solid var(--line); border-radius:6px; padding:2px 5px; margin-left:6px}
+
+  /* ── 5 tools ── */
+  .tools{width:calc(100% + 32px); margin:0 -16px; padding:4px 16px 12px; display:flex; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none}
+  .tools::-webkit-scrollbar{display:none}
+  .tool{flex:none; width:138px; scroll-snap-align:start; text-decoration:none; color:var(--paper); padding:16px 14px; border-radius:18px;
+    border:1px solid var(--line); background:var(--card); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    transition:border-color .4s, transform .4s var(--ease), background .4s; position:relative; overflow:hidden}
+  .tool .ti{width:46px; height:46px; border-radius:13px; display:grid; place-items:center; background:rgba(243,241,234,.04); box-shadow:inset 0 0 0 1px var(--line); transition:box-shadow .4s, background .4s}
+  .tool .ti svg{width:26px; height:26px}
+  .tool b{display:block; margin-top:14px; font-size:13.5px; font-weight:600; line-height:1.25; letter-spacing:-.01em}
+  .tool small{display:block; margin-top:4px; font-size:11px; color:var(--dim); line-height:1.35}
+  .tool .num{position:absolute; top:12px; right:14px; font-size:10.5px; color:var(--faint); font-variant-numeric:tabular-nums}
+  .tool.hot,.tool:hover{border-color:rgba(110,136,255,.55); transform:translateY(-4px); background:rgba(20,24,38,.85)}
+  .tool.hot .ti,.tool:hover .ti{background:rgba(110,136,255,.16); box-shadow:inset 0 0 0 1px rgba(110,136,255,.6), 0 0 24px -4px rgba(110,136,255,.7)}
+  .tool .ti svg *{transition:stroke .4s}
+  .tool.hot .ti svg [stroke]{stroke:#C9D3FF}
+  .t-wave i{animation:bar .9s ease-in-out infinite}
+  .t-bell{transform-origin:13px 4px; animation:bell 2.6s ease-in-out infinite}
+  @keyframes bell{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(14deg)}72%{transform:rotate(-12deg)}79%{transform:rotate(8deg)}86%{transform:rotate(-4deg)}}
+  .t-dots circle{animation:dot 1.2s ease-in-out infinite}
+  .t-dots circle:nth-child(2){animation-delay:.15s}.t-dots circle:nth-child(3){animation-delay:.3s}
+  @keyframes dot{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  .t-bars rect{transform-box:fill-box; transform-origin:bottom; animation:grow 2.4s var(--ease) infinite}
+  .t-bars rect:nth-child(2){animation-delay:.15s}.t-bars rect:nth-child(3){animation-delay:.3s}
+  @keyframes grow{0%{transform:scaleY(.2)}40%,100%{transform:scaleY(1)}}
+  .t-sms{animation:float 2.6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-2px)}}
+  .dots{display:flex; justify-content:center; gap:6px; margin-top:4px}
+  .dots i{width:6px; height:6px; border-radius:50%; background:var(--line2); transition:background .3s, width .3s}
+  .dots i.on{width:18px; border-radius:6px; background:var(--blue)}
+
+  /* ── founding offer countdown ── */
+  .offer{position:relative; width:100%; padding:22px 18px 18px; border-radius:22px; overflow:hidden; isolation:isolate;
+    border:1px solid rgba(160,190,255,.25); background:linear-gradient(180deg, rgba(110,136,255,.14), rgba(14,16,23,.85) 70%)}
+  .offer::before{content:""; position:absolute; inset:-40% -20% auto; height:120%; z-index:-1;
+    background:radial-gradient(closest-side, rgba(170,200,255,.22), transparent); animation:drift2 10s ease-in-out infinite alternate}
+  @keyframes drift2{to{transform:translateX(15%)}}
+  .offer .tag2{display:inline-flex; align-items:center; gap:8px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:#BFD0FF;
+    border:1px solid rgba(160,190,255,.3); border-radius:999px; padding:6px 11px; background:rgba(110,136,255,.08)}
+  .offer h2{margin-top:14px; font-size:24px; font-weight:600; letter-spacing:-.035em; line-height:1.15}
+  .offer h2 span{color:#AFC0FF}
+  .cd{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:18px}
+  .cd div{text-align:center; padding:12px 0 9px; border-radius:14px; background:rgba(6,7,11,.55); border:1px solid var(--line)}
+  .cd b{display:block; font-size:28px; font-weight:600; letter-spacing:-.04em; font-variant-numeric:tabular-nums; line-height:1}
+  .cd b.tick{animation:tk .45s var(--ease)}
+  @keyframes tk{0%{transform:translateY(-30%); opacity:.2}100%{transform:none; opacity:1}}
+  .cd span{display:block; margin-top:5px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint)}
+  .prices{margin-top:16px; display:flex; flex-direction:column; gap:8px}
+  .pr{display:flex; align-items:baseline; gap:10px; font-size:13.5px; color:var(--dim)}
+  .pr strong{margin-left:auto; color:var(--paper); font-size:17px; font-weight:600}
+  .pr s{color:var(--faint); font-size:12px}
+  .perks{margin-top:12px; display:flex; flex-wrap:wrap; gap:6px}
+  .perks span{font-size:11px; color:var(--dim); border:1px solid var(--line); border-radius:999px; padding:5px 9px}
+  .claim{margin-top:16px; display:flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; color:var(--ink); background:var(--paper);
+    font-weight:600; font-size:15px; padding:14px; border-radius:14px; position:relative; overflow:hidden; transition:transform .2s}
+  .claim::after{content:""; position:absolute; inset:0; background:linear-gradient(105deg, transparent 35%, rgba(110,136,255,.35) 50%, transparent 65%); transform:translateX(-120%); animation:shine 4s 1s var(--ease) infinite}
+  .claim:active{transform:scale(.98)}
+  .offer .fine{margin-top:10px; text-align:center; font-size:11px; color:var(--faint)}
+
+  @media (min-width:700px){ .phone{width:270px; height:540px} }
+
+  /* ── community (OMERA, a friend's Discord) ── */
+  .comm{position:relative; width:100%; padding:20px 18px 18px; border-radius:22px; overflow:hidden; isolation:isolate;
+    border:1px solid rgba(167,139,250,.28); background:linear-gradient(160deg, rgba(139,92,246,.16), rgba(14,16,23,.86) 60%)}
+  .comm::before{content:""; position:absolute; right:-30%; top:-40%; width:80%; height:120%; z-index:-1;
+    background:radial-gradient(closest-side, rgba(139,92,246,.35), transparent); animation:drift2 9s ease-in-out infinite alternate}
+  .comm .head{display:flex; align-items:center; gap:14px}
+  .comm .logo{flex:none; width:60px; height:60px; border-radius:18px; overflow:hidden; box-shadow:0 0 0 1px rgba(167,139,250,.45), 0 12px 34px -8px rgba(139,92,246,.7)}
+  .comm .logo img{width:100%; height:100%; display:block; animation:lg 8s ease-in-out infinite}
+  @keyframes lg{50%{transform:scale(1.08) rotate(-3deg)}}
+  .comm h3{font-size:19px; font-weight:600; letter-spacing:-.025em}
+  .comm .meta{margin-top:3px; display:flex; align-items:center; gap:7px; font-size:11.5px; color:#C4B5FD}
+  .comm .meta i{width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green)}
+  .comm p{margin-top:14px; font-size:14.5px; line-height:1.55; color:var(--dim)}
+  .comm p b{color:var(--paper); font-weight:500}
+  .comm .chips{margin-top:12px; display:flex; flex-wrap:wrap; gap:6px}
+  .comm .chips span{font-size:11px; color:#DDD6FE; border:1px solid rgba(167,139,250,.3); border-radius:999px; padding:5px 9px; background:rgba(139,92,246,.08)}
+  .join{margin-top:16px; display:flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; color:#fff;
+    background:linear-gradient(135deg,#5865F2,#7C5CF6); font-weight:600; font-size:15px; padding:14px; border-radius:14px;
+    box-shadow:0 12px 30px -10px rgba(88,101,242,.8); transition:transform .2s, box-shadow .2s}
+  .join:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px rgba(88,101,242,.95)}
+  .join:active{transform:scale(.98)}
+  .join svg{width:22px; height:22px}
+  .credit{margin-top:12px; text-align:center; font-size:12px; color:var(--faint)}
+  .credit a{color:#C4B5FD; text-decoration:none; border-bottom:1px solid rgba(196,181,253,.35)}
+  .credit a:hover{color:#fff}
+
   /* socials */
   .socials{margin-top:28px; display:flex; gap:12px}
   .soc{position:relative; width:50px; height:50px; border-radius:50%; display:grid; place-items:center; color:var(--dim);
@@ -227,6 +408,12 @@
 </style>
 </head>
 <body>
+<div id="prog" aria-hidden="true"></div>
+<header id="mini" aria-hidden="true">
+  <span class="mav">ņ<img src="avatar.jpg" alt="" onerror="this.remove()"></span>
+  <b>ņikita</b><span class="mdot"></span>
+  <a href="https://2folddigital.com/#consult" tabindex="-1">Konsultācija</a>
+</header>
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -257,15 +444,14 @@
   <div class="wave in" style="--d:4" aria-hidden="true"></div>
   <div class="status in" style="--d:5"><span class="dot"></span><span id="clock">rīga</span></div>
 
-  <section class="journey in" style="--d:6" aria-label="2FOLD vienā skatienā">
-    <div class="top"><span>2FOLD vienā skatienā</span><em>online</em></div>
-    <div class="stats">
-      <div class="stat goal"><b>24/7</b><span>zvani saņem<br>atbildi</span></div>
-      <div class="stat"><b data-count="3">3</b><span>valodas<br>LV · EN · RU</span></div>
-      <div class="stat"><b data-count="7">7</b><span>dienas<br>bez maksas</span></div>
+  <section class="now in" style="--d:6" aria-label="Šobrīd būvēju">
+    <div class="art" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#F3F1EA"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#D4DBFF"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#F3F1EA"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#D4DBFF"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#F3F1EA"/></svg></div>
+    <div class="nowb">
+      <div class="lbl"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>šobrīd būvēju</div>
+      <div class="nowt" id="nowT">MI atbildētājs autoservisiem</div>
+      <div class="nows" id="nowS">2FOLD · zvanu automatizācija</div>
+      <div class="bar"><span id="nowA">0:00</span><span class="tr"><i id="nowP"></i></span><span id="nowB">3:24</span></div>
     </div>
-    <div class="track"><i id="track" data-to="100"></i></div>
-    <div class="foot">neviens klients vairs neaiziet pie konkurenta<span class="blink"></span></div>
   </section>
 
   <nav class="links">
@@ -292,14 +478,87 @@
     </a>
   </nav>
 
-  <div class="sub in" style="--d:11"><span>for builders</span></div>
-  <a class="link kit in" style="--d:12" href="https://whop.com/2fold/">
+  <div class="sec rv"><span>kā tas izskatās</span></div>
+  <section class="demo rv" aria-label="Piemērs: MI atbild uz zvanu">
+    <div class="phone" id="phone">
+      <div class="scr">
+        <div class="notch"></div>
+        <div class="sbar"><span id="pClock">14:02</span><span>5G ▮▮▮</span></div>
+        <div class="note" id="pNote"><span class="ni"><svg viewBox="0 0 24 24" fill="#06070B"><path d="M4 5h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg></span><span><b>Īsziņa · Frizētava</b><span>Pieraksts apstiprināts: rīt 14:00 ✓</span></span></div>
+        <div class="stage inc on" id="pInc">
+          <small>ienākošs zvans</small>
+          <div class="cav">F</div>
+          <h3>Frizētava</h3>
+          <p>+371 2••• ••45</p>
+          <div class="btns">
+            <span class="rb no"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+            <span class="rb yes"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+          </div>
+        </div>
+        <div class="stage incall" id="pCall">
+          <div class="who"><span class="sm">F</span><span><b>Frizētava</b><span id="pTimer">00:00</span></span><span class="ai">MI atbild</span></div>
+          <div class="vw" id="pWave" aria-hidden="true"></div>
+          <div class="msgs">
+            <div class="msg c"><em>klients</em>Labdien! Vai rīt varu pieteikties uz matu griezumu?</div>
+            <div class="msg m"><em>MI</em>Labdien! Rīt ir brīvs 14:00 vai 16:30. Kurš laiks der?</div>
+            <div class="msg c"><em>klients</em>14:00 būtu lieliski.</div>
+            <div class="msg m"><em>MI</em>Pierakstīju jūs rīt 14:00. Tūlīt atsūtīšu īsziņu ar apstiprinājumu.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="cap">MI atbild uzņēmuma vārdā, arī kad neviens nevar pacelt<u>piemērs</u></p>
+  </section>
+
+  <div class="sec rv"><span>5 rīki</span><i id="toolN">01 / 05</i></div>
+  <nav class="tools rv" id="tools" aria-label="2FOLD rīki">
+    <a class="tool" href="https://2folddigital.com/#service-ai-phone"><span class="num">01</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect x="9" y="2.5" width="8" height="13" rx="4" stroke="#F3F1EA" stroke-width="1.8"/><path d="M5.5 12a7.5 7.5 0 0 0 15 0M13 19.5V23" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>MI zvanu atbildētājs</b><small>atbild, pieraksta, nodod ziņu</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-missed-call"><span class="num">02</span><span class="ti"><svg class="t-sms" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M4 5.5h18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H11l-5 4v-4H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 11.5h11M7.5 14.5h7" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>Atbilde uz neatbildētu zvanu</b><small>īsziņa uzreiz pēc zvana</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-chat-assistant"><span class="num">03</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M13 3.5c5.5 0 10 3.8 10 8.5s-4.5 8.5-10 8.5c-1.3 0-2.6-.2-3.7-.6L4 22l1.4-4.3C4 16.2 3 14.2 3 12c0-4.7 4.5-8.5 10-8.5z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><g class="t-dots" fill="#6E88FF"><circle cx="9" cy="12" r="1.5"/><circle cx="13" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/></g></svg></span><b>Tērzētava mājaslapai</b><small>LV · EN · RU, dienu un nakti</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-reminders"><span class="num">04</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><g class="t-bell"><path d="M6.5 17.5V11a6.5 6.5 0 0 1 13 0v6.5l1.8 2.2H4.7z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/></g><path d="M10.5 22.5a2.6 2.6 0 0 0 5 0" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>Atgādinājumi</b><small>mazāk neatnākušu klientu</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-summary"><span class="num">05</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3.5 22.5h19" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/><g class="t-bars" fill="#6E88FF"><rect x="5.5" y="13" width="3.6" height="7.5" rx="1"/><rect x="11.2" y="8" width="3.6" height="12.5" rx="1"/><rect x="16.9" y="4" width="3.6" height="16.5" rx="1"/></g></svg></span><b>Dienas pārskats</b><small>visi zvani vienā ziņā</small></a>
+  </nav>
+  <div class="dots rv" id="toolDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="sec rv" id="offerSec"><span>dibinātāju piedāvājums</span></div>
+  <section class="offer rv" id="offer" aria-label="Dibinātāju piedāvājums">
+    <span class="tag2">❄ ziema 2026/27 · tikai 5 vietas</span>
+    <h2>Pirmajiem 5 uzņēmumiem: <span>cena uz visu laiku.</span></h2>
+    <div class="cd" aria-label="Līdz piedāvājuma beigām">
+      <div><b id="cdD">–</b><span>dienas</span></div>
+      <div><b id="cdH">–</b><span>stundas</span></div>
+      <div><b id="cdM">–</b><span>minūtes</span></div>
+      <div><b id="cdS">–</b><span>sekundes</span></div>
+    </div>
+    <div class="prices">
+      <div class="pr">MI zvanu atbildētājs <strong>99 €</strong><s>150 €</s></div>
+      <div class="pr">Atbilde uz neatbildētu zvanu <strong>39 €</strong><s>60 €</s></div>
+    </div>
+    <div class="perks"><span>uzstādīšana bez maksas</span><span>1. nedēļa bez maksas</span><span>cena nemainās</span></div>
+    <a class="claim" href="https://2folddigital.com/#founding">Pieteikt savu vietu <span aria-hidden="true">→</span></a>
+    <p class="fine">cenas mēnesī ar PVN · piedāvājums beidzas 28. februārī</p>
+  </section>
+
+  <div class="sec rv"><span>kopiena</span></div>
+  <section class="comm rv" aria-label="OMERA Community">
+    <div class="head">
+      <span class="logo"><img src="omera.png" alt="OMERA Community logo" width="60" height="60"></span>
+      <div><h3>OMERA Community</h3><div class="meta"><i></i>Discord · jauno uzņēmēju kopiena</div></div>
+    </div>
+    <p>Ja tu <b>būvē biznesu</b>, veido kaut ko savu vai vienkārši gribi <b>dalīties idejās</b> ar citiem jaunajiem uzņēmējiem — pievienojies. Te mēs runājam, palīdzam viens otram un kopā būvējam projektus.</p>
+    <div class="chips"><span>biznesa idejas</span><span>side hustles</span><span>kontents</span><span>kopīgi projekti</span></div>
+    <a class="join" href="https://discord.gg/Aj9Z5qfhNv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.6 19.6 0 0 0-4.9 1.4C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14.1 14.1 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7zM8.2 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm7.6 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>Pievienoties Discord</a>
+    <p class="credit" id="credit" hidden>kopienu izveidoja <a id="creditLink" href="#" target="_blank" rel="noopener"></a></p>
+  </section>
+
+  <div class="sub rv"><span>for builders</span></div>
+  <a class="link kit rv" href="https://whop.com/2fold/">
     <span class="ico" style="--c:#A78BFA"><svg class="stack" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path class="l3" d="M24 30 8 22l16-8 16 8z" fill="#2A2347" stroke="#A78BFA" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 8)"/><path class="l2" d="M24 30 8 22l16-8 16 8z" fill="#3B2F66" stroke="#C4B2FF" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 2)"/><path class="l1" d="M24 30 8 22l16-8 16 8z" fill="#A78BFA" stroke="#E6DDFF" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 -4)"/></svg></span>
     <span class="txt"><strong data-scramble>Local Automation Kits</strong><small>gatavi kiti automatizāciju būvēšanai · whop</small></span>
     <span class="tag">kits</span>
   </a>
 
-  <div class="socials in" style="--d:13">
+  <div class="socials rv">
     <a class="soc" data-tip="TikTok" href="https://www.tiktok.com/@n1k.co" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.1 1.7 3.6 3.9 3.9v3.1a7.4 7.4 0 0 1-3.9-1.2v6.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.2a2.5 2.5 0 1 0 1.6 2.3V3h3.1z"/></svg></a>
     <a class="soc" data-tip="Instagram" href="https://www.instagram.com/n.kuzminskis/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></a>
     <a class="soc" data-tip="2FOLD Facebook" id="fb" href="#" aria-label="2FOLD Facebook" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z"/></svg></a>
@@ -318,9 +577,16 @@
 <script>
 /* 2FOLD Facebook page: paste the page link between the quotes to show its icon. */
 var FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595052698616';
+/* OMERA Community creator: his TikTok username without the @ (empty = credit line hidden). */
+var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
 
 (function(){
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (COMMUNITY_CREATOR_TIKTOK){
+    var cl = document.getElementById('creditLink');
+    cl.href = 'https://www.tiktok.com/@' + COMMUNITY_CREATOR_TIKTOK; cl.textContent = '@' + COMMUNITY_CREATOR_TIKTOK;
+    document.getElementById('credit').hidden = false;
+  }
   if (FACEBOOK_URL){ var fb = document.getElementById('fb'); fb.href = FACEBOOK_URL; fb.hidden = false; }
 
   /* ── living dot field: dots breathe, light follows the finger/cursor, taps send ripples ── */
@@ -461,7 +727,117 @@ var FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595052698616';
       })(start);
       setTimeout(function(){ el.textContent = to.toLocaleString('lv-LV'); }, dur + 400);
     });
-    var tr = document.getElementById('track'); setTimeout(function(){ tr.style.width = tr.dataset.to + '%'; }, 200);
+    var tr = document.getElementById('track'); if (tr) setTimeout(function(){ tr.style.width = tr.dataset.to + '%'; }, 200);
+  }
+
+  /* ── reveal on scroll ── */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -8% 0px'}) : null;
+  document.querySelectorAll('.rv').forEach(function(el){ if (io) io.observe(el); else el.classList.add('on'); });
+
+  /* ── scroll progress + sticky header ── */
+  var prog = document.getElementById('prog'), mini = document.getElementById('mini'), q = false;
+  function onScroll(){ q = false;
+    var h = document.documentElement.scrollHeight - innerHeight, y = scrollY;
+    prog.style.width = (h > 0 ? y / h * 100 : 0) + '%';
+    mini.classList.toggle('on', y > 300);
+  }
+  addEventListener('scroll', function(){ if (!q){ q = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  onScroll();
+
+  /* ── "šobrīd būvēju" — rotates like a playlist ── */
+  var tracks = [
+    ['MI atbildētājs autoservisiem', '2FOLD · zvanu automatizācija', 204],
+    ['ziemas piedāvājums santehniķiem', '2FOLD · sezonas kampaņa', 168],
+    ['personīgas lapas katram uzņēmumam', '2FOLD · pārdošana', 236],
+    ['MI, kas pieraksta klientus kalendārā', '2FOLD · pieraksti', 192],
+    ['mana link lapa', 'n1k · dizains', 145]
+  ], ti = 0, tStart = performance.now();
+  var nowT = document.getElementById('nowT'), nowS = document.getElementById('nowS'), nowA = document.getElementById('nowA'), nowB = document.getElementById('nowB'), nowP = document.getElementById('nowP');
+  function mmss(x){ x = Math.max(0, Math.floor(x)); return Math.floor(x / 60) + ':' + ('0' + x % 60).slice(-2); }
+  function setTrack(){ nowT.textContent = tracks[ti][0]; nowS.textContent = tracks[ti][1]; nowB.textContent = mmss(tracks[ti][2]); }
+  setTrack();
+  setInterval(function(){
+    if (document.hidden) return;
+    var el = (performance.now() - tStart) / 1000 * 22;          // one "song" every ~8 s
+    var len = tracks[ti][2];
+    if (el >= len){
+      nowT.classList.add('out');
+      setTimeout(function(){ ti = (ti + 1) % tracks.length; tStart = performance.now(); setTrack(); nowT.classList.remove('out'); }, 350);
+      return;
+    }
+    nowA.textContent = mmss(el); nowP.style.width = (el / len * 100) + '%';
+  }, 250);
+
+  /* ── phone: incoming → answered by AI → SMS confirmation, on a loop ── */
+  var pInc = document.getElementById('pInc'), pCall = document.getElementById('pCall'), pNote = document.getElementById('pNote'),
+      pTimer = document.getElementById('pTimer'), pWave = document.getElementById('pWave'), msgs = pCall.querySelectorAll('.msg');
+  for (var w = 0; w < 30; w++){ var wi = document.createElement('i'); wi.style.animationDelay = (-Math.random()).toFixed(2) + 's'; wi.style.animationDuration = (0.6 + Math.random() * 0.7).toFixed(2) + 's'; pWave.appendChild(wi); }
+  var timerT = null, phoneTimers = [];
+  function later(fn, ms){ phoneTimers.push(setTimeout(fn, ms)); }
+  function runPhone(){
+    phoneTimers.forEach(clearTimeout); phoneTimers = []; clearInterval(timerT);
+    pInc.classList.add('on'); pInc.classList.remove('ans'); pCall.classList.remove('on'); pNote.classList.remove('on');
+    msgs.forEach(function(m){ m.classList.remove('on'); });
+    later(function(){ pInc.classList.add('ans'); }, 1700);
+    later(function(){
+      pInc.classList.remove('on'); pCall.classList.add('on');
+      var t = 0; pTimer.textContent = '00:00';
+      timerT = setInterval(function(){ t++; pTimer.textContent = '00:' + ('0' + t).slice(-2); }, 1000);
+    }, 2300);
+    [3000, 4700, 6400, 7700].forEach(function(ms, k){ later(function(){ msgs[k].classList.add('on'); }, ms); });
+    later(function(){ clearInterval(timerT); pNote.classList.add('on'); }, 10200);
+    later(runPhone, 13800);
+  }
+  var phone = document.getElementById('phone'), phoneStarted = false;
+  if (io){ new IntersectionObserver(function(es, o){ if (es[0].isIntersecting && !phoneStarted){ phoneStarted = true; runPhone(); o.disconnect(); } }, {threshold:.3}).observe(phone); }
+  else runPhone();
+  // safety net: if the browser never reports visibility, show everything and start the phone anyway
+  setTimeout(function(){ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); }); if (!phoneStarted){ phoneStarted = true; runPhone(); } }, 6000);
+  phone.addEventListener('pointermove', function(e){
+    if (e.pointerType !== 'mouse') return;
+    var r = phone.getBoundingClientRect();
+    phone.style.setProperty('--ry', ((e.clientX - r.left) / r.width - .5) * 14 + 'deg');
+    phone.style.setProperty('--rx', ((e.clientY - r.top) / r.height - .5) * -10 + 'deg');
+  });
+  phone.addEventListener('pointerleave', function(){ phone.style.setProperty('--rx', '0deg'); phone.style.setProperty('--ry', '0deg'); });
+
+  /* ── 5 tools: spotlight walks through them ── */
+  var tools = document.querySelectorAll('.tool'), tdots = document.querySelectorAll('#toolDots i'), toolN = document.getElementById('toolN'), hot = 0, hoverTool = false;
+  var toolsBox = document.getElementById('tools');
+  toolsBox.addEventListener('pointerenter', function(){ hoverTool = true; });
+  toolsBox.addEventListener('pointerleave', function(){ hoverTool = false; });
+  function light(k){
+    tools.forEach(function(t, i){ t.classList.toggle('hot', i === k); });
+    tdots.forEach(function(d, i){ d.classList.toggle('on', i === k); });
+    toolN.textContent = '0' + (k + 1) + ' / 05';
+  }
+  light(0);
+  setInterval(function(){
+    if (document.hidden || hoverTool) return;
+    hot = (hot + 1) % tools.length; light(hot);
+    var t = tools[hot], box = toolsBox;
+    if (box.scrollWidth > box.clientWidth + 4){
+      var target = t.offsetLeft - 16;
+      if (Math.abs(box.scrollLeft - target) > 4) box.scrollTo({left:target, behavior:'smooth'});
+    }
+  }, 2200);
+
+  /* ── founding offer countdown (same deadline as the website: 28 Feb 2027 23:59 Riga) ── */
+  var END = new Date('2027-02-28T23:59:59+02:00').getTime();
+  if (Date.now() > END){ document.getElementById('offer').hidden = true; document.getElementById('offerSec').hidden = true; }
+  else {
+    var cd = {D:document.getElementById('cdD'), H:document.getElementById('cdH'), M:document.getElementById('cdM'), S:document.getElementById('cdS')}, last = {};
+    function cdTick(){
+      var s = Math.max(0, END - Date.now()) / 1000;
+      var v = {D:Math.floor(s / 86400), H:Math.floor(s % 86400 / 3600), M:Math.floor(s % 3600 / 60), S:Math.floor(s % 60)};
+      for (var k in v){
+        var txt = k === 'D' ? String(v[k]) : ('0' + v[k]).slice(-2);
+        if (last[k] !== txt){ cd[k].textContent = txt; cd[k].classList.remove('tick'); void cd[k].offsetWidth; cd[k].classList.add('tick'); last[k] = txt; }
+      }
+    }
+    cdTick(); setInterval(cdTick, 1000);
   }
 
   /* ── intro: incoming call → answered → page ── */
