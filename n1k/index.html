@@ -205,6 +205,19 @@
   #mini a{margin-left:auto; text-decoration:none; color:var(--ink); background:var(--paper); font-size:13px; font-weight:600; padding:9px 14px; border-radius:999px; transition:transform .2s}
   #mini a:active{transform:scale(.96)}
 
+  /* ── language switch LV / EN in the top-right corner (2026-11-21).
+     When the mini header slides in, the switch steps down below it. ── */
+  #lang{position:fixed; right:calc(12px + env(safe-area-inset-right)); top:calc(12px + env(safe-area-inset-top)); z-index:41;
+    display:flex; padding:3px; border-radius:999px; border:1px solid var(--line2); background:rgba(10,11,16,.72);
+    -webkit-backdrop-filter:blur(14px) saturate(1.4); backdrop-filter:blur(14px) saturate(1.4);
+    font:600 12px/1 'Archivo',system-ui,sans-serif; letter-spacing:.1em; color:var(--dim); cursor:pointer;
+    box-shadow:0 8px 28px rgba(0,0,0,.4); transition:top .5s var(--ease), transform .2s}
+  #lang span{padding:10px 12px; border-radius:999px; transition:background .25s, color .25s}
+  #lang span.on{background:var(--paper); color:var(--ink)}
+  #lang:active{transform:scale(.95)}
+  #lang:focus-visible{outline:2px solid var(--blue); outline-offset:3px}
+  #mini.on ~ #lang{top:calc(70px + env(safe-area-inset-top))}
+
   /* reveal on scroll */
   .rv{opacity:0; transform:translateY(24px); transition:opacity .9s var(--ease), transform .9s var(--ease)}
   .rv.on{opacity:1; transform:none}
@@ -360,8 +373,9 @@
 <header id="mini" aria-hidden="true">
   <span class="mav">ņ<img src="avatar.jpg" alt="" onerror="this.remove()"></span>
   <b>ņikita</b><span class="mdot"></span>
-  <a href="https://2folddigital.com/#consult" tabindex="-1">Konsultācija</a>
+  <a href="https://2folddigital.com/#consult" tabindex="-1" data-en="Consultation">Konsultācija</a>
 </header>
+<button id="lang" type="button" aria-label="Valoda: latviešu. Pārslēgt uz angļu"><span data-l="lv" class="on">LV</span><span data-l="en">EN</span></button>
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -371,7 +385,7 @@
     <div class="rings"><i></i><i></i><i></i>
       <b><svg viewBox="0 0 24 24" fill="#06070B"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></b>
     </div>
-    <p id="callText">ienākošs zvans</p>
+    <p id="callText" data-en="incoming call">ienākošs zvans</p>
   </div>
 </div>
 
@@ -392,10 +406,10 @@
   <div class="wave in" style="--d:4" aria-hidden="true"></div>
   <div class="status in" style="--d:5"><span class="dot"></span><span id="clock">rīga</span></div>
 
-  <section class="now in" style="--d:6" aria-label="Šobrīd būvēju">
+  <section class="now in" style="--d:6" aria-label="Šobrīd būvēju" data-en-label="Building right now">
     <div class="art" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#F3F1EA"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#D4DBFF"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#F3F1EA"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#D4DBFF"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#F3F1EA"/></svg></div>
     <div class="nowb">
-      <div class="lbl"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>šobrīd būvēju</div>
+      <div class="lbl"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-en="building right now">šobrīd būvēju</span></div>
       <div class="nowt" id="nowT">MI atbildētājs autoservisiem</div>
       <div class="nows" id="nowS">2FOLD · zvanu automatizācija</div>
       <div class="bar"><span id="nowA">0:00</span><span class="tr"><i id="nowP"></i></span><span id="nowB">3:24</span></div>
@@ -406,71 +420,71 @@
     <a class="link main in" style="--d:7" href="https://2folddigital.com/">
       <span class="shine" aria-hidden="true"></span>
       <span class="ico" style="--c:#6E88FF"><svg class="fold" viewBox="0 0 100 100" aria-hidden="true"><path style="--tx:-6px;--ty:-8px" d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path style="--tx:8px;--ty:-4px" d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path style="--tx:4px;--ty:2px" d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#8FA2FF"/><path style="--tx:-8px;--ty:4px" d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path style="--tx:4px;--ty:8px" d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg></span>
-      <span class="txt"><strong data-scramble>2FOLD — MI aģentūra</strong><small>MI atbild uz zvaniem, kad tu nevari</small><span class="feed"><i class="fd"></i><em id="feed">zvans 14:02 · autoserviss · MI atbildēja</em><u>piemērs</u></span></span>
+      <span class="txt"><strong data-scramble data-en="2FOLD — AI agency">2FOLD — MI aģentūra</strong><small data-en="AI answers calls when you can't">MI atbild uz zvaniem, kad tu nevari</small><span class="feed"><i class="fd"></i><em id="feed">zvans 14:02 · autoserviss · MI atbildēja</em><u data-en="example">piemērs</u></span></span>
       <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <a class="link in" style="--d:8" href="https://2folddigital.com/#consult">
       <span class="ico" style="--c:#3DDC97"><svg class="cal" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="8" y="11" width="32" height="29" rx="6" stroke="#F3F1EA" stroke-width="2.2"/><path d="M8 19.5h32" stroke="#F3F1EA" stroke-width="2.2"/><path d="M16 7v8M32 7v8" stroke="#F3F1EA" stroke-width="2.4" stroke-linecap="round"/><g fill="#5F6478"><circle cx="15" cy="26" r="1.6"/><circle cx="21" cy="26" r="1.6"/><circle cx="15" cy="33" r="1.6"/><circle cx="21" cy="33" r="1.6"/><circle cx="27" cy="26" r="1.6"/></g><rect class="day" x="25.5" y="29" width="9" height="8" rx="2.4" fill="#3DDC97"/><path class="tick" d="M27.6 33.2l1.9 1.8 3.4-3.6" stroke="#06070B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="txt"><strong data-scramble>Bezmaksas konsultācija</strong><small>15 min · ko MI var tavam uzņēmumam</small></span>
+      <span class="txt"><strong data-scramble data-en="Free consultation">Bezmaksas konsultācija</strong><small data-en="15 min · what AI can do for your business">15 min · ko MI var tavam uzņēmumam</small></span>
       <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <a class="link in" style="--d:9" href="https://2folddigital.com/#calculator">
       <span class="ico" style="--c:#F5B544"><svg class="miss" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path class="hand" d="M14.6 21.6a22 22 0 0 0 11.8 11.8l3.9-3.9a1.8 1.8 0 0 1 1.8-.45 20 20 0 0 0 6.3 1 1.8 1.8 0 0 1 1.8 1.8v6.2a1.8 1.8 0 0 1-1.8 1.8C22.6 39.85 8.15 25.4 8.15 7.6A1.8 1.8 0 0 1 9.95 5.8h6.3a1.8 1.8 0 0 1 1.8 1.8c0 2.2.35 4.3 1 6.3a1.8 1.8 0 0 1-.45 1.8z" stroke="#F3F1EA" stroke-width="2.2" stroke-linejoin="round"/><circle class="badge" cx="36" cy="12" r="6.5" fill="#FF5A5F"/><path class="badge" d="M33.6 9.6l4.8 4.8M38.4 9.6l-4.8 4.8" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><g class="coin"><circle cx="24" cy="14" r="5.2" fill="#F5B544"/><text x="24" y="16.6" text-anchor="middle" font-size="7.5" font-weight="700" fill="#06070B" font-family="Archivo,sans-serif">€</text></g></svg></span>
-      <span class="txt"><strong data-scramble>Cik maksā neatbildēts zvans?</strong><small>kalkulators · 30 sekundes</small></span>
+      <span class="txt"><strong data-scramble data-en="What does a missed call cost?">Cik maksā neatbildēts zvans?</strong><small data-en="calculator · 30 seconds">kalkulators · 30 sekundes</small></span>
       <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <a class="link in" style="--d:10" href="mailto:info@2folddigital.com?subject=Sadarb%C4%ABba">
       <span class="ico" style="--c:#9FB2FF"><svg class="env" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect class="letter" x="13" y="13" width="22" height="18" rx="2.5" fill="#F3F1EA"/><path class="letter" d="M17 19h14M17 23.5h9" stroke="#5F6478" stroke-width="1.8" stroke-linecap="round"/><path d="M7 19.5 24 31l17-11.5V36a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3z" fill="#1B2034" stroke="#F3F1EA" stroke-width="2.2" stroke-linejoin="round"/><path class="flap" d="M7 19.5 24 8l17 11.5" stroke="#F3F1EA" stroke-width="2.2" stroke-linejoin="round"/><circle class="ping" cx="39" cy="11" r="4" fill="#6E88FF"/></svg></span>
-      <span class="txt"><strong data-scramble>Sadarbība / inquiries</strong><small>info@2folddigital.com</small></span>
-      <button class="copy" type="button" data-copy="info@2folddigital.com">kopēt</button>
+      <span class="txt"><strong data-scramble data-en="Collaboration / inquiries">Sadarbība / inquiries</strong><small>info@2folddigital.com</small></span>
+      <button class="copy" type="button" data-copy="info@2folddigital.com" data-en="copy">kopēt</button>
     </a>
   </nav>
 
-  <div class="sec rv"><span>5 rīki</span><i id="toolN">01 / 05</i></div>
-  <nav class="tools rv" id="tools" aria-label="2FOLD rīki">
-    <a class="tool" href="https://2folddigital.com/#service-ai-phone"><span class="num">01</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect x="9" y="2.5" width="8" height="13" rx="4" stroke="#F3F1EA" stroke-width="1.8"/><path d="M5.5 12a7.5 7.5 0 0 0 15 0M13 19.5V23" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>MI zvanu atbildētājs</b><small>atbild, pieraksta, nodod ziņu</small></a>
-    <a class="tool" href="https://2folddigital.com/#service-missed-call"><span class="num">02</span><span class="ti"><svg class="t-sms" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M4 5.5h18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H11l-5 4v-4H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 11.5h11M7.5 14.5h7" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>Atbilde uz neatbildētu zvanu</b><small>īsziņa uzreiz pēc zvana</small></a>
-    <a class="tool" href="https://2folddigital.com/#service-chat-assistant"><span class="num">03</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M13 3.5c5.5 0 10 3.8 10 8.5s-4.5 8.5-10 8.5c-1.3 0-2.6-.2-3.7-.6L4 22l1.4-4.3C4 16.2 3 14.2 3 12c0-4.7 4.5-8.5 10-8.5z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><g class="t-dots" fill="#6E88FF"><circle cx="9" cy="12" r="1.5"/><circle cx="13" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/></g></svg></span><b>Tērzētava mājaslapai</b><small>LV · EN · RU, dienu un nakti</small></a>
-    <a class="tool" href="https://2folddigital.com/#service-reminders"><span class="num">04</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><g class="t-bell"><path d="M6.5 17.5V11a6.5 6.5 0 0 1 13 0v6.5l1.8 2.2H4.7z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/></g><path d="M10.5 22.5a2.6 2.6 0 0 0 5 0" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b>Atgādinājumi</b><small>mazāk neatnākušu klientu</small></a>
-    <a class="tool" href="https://2folddigital.com/#service-summary"><span class="num">05</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3.5 22.5h19" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/><g class="t-bars" fill="#6E88FF"><rect x="5.5" y="13" width="3.6" height="7.5" rx="1"/><rect x="11.2" y="8" width="3.6" height="12.5" rx="1"/><rect x="16.9" y="4" width="3.6" height="16.5" rx="1"/></g></svg></span><b>Dienas pārskats</b><small>visi zvani vienā ziņā</small></a>
+  <div class="sec rv"><span data-en="5 tools">5 rīki</span><i id="toolN">01 / 05</i></div>
+  <nav class="tools rv" id="tools" aria-label="2FOLD rīki" data-en-label="2FOLD tools">
+    <a class="tool" href="https://2folddigital.com/#service-ai-phone"><span class="num">01</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect x="9" y="2.5" width="8" height="13" rx="4" stroke="#F3F1EA" stroke-width="1.8"/><path d="M5.5 12a7.5 7.5 0 0 0 15 0M13 19.5V23" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/></svg></span><b data-en="AI phone answering">MI zvanu atbildētājs</b><small data-en="answers, books, passes the message on">atbild, pieraksta, nodod ziņu</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-missed-call"><span class="num">02</span><span class="ti"><svg class="t-sms" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M4 5.5h18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H11l-5 4v-4H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><path d="M7.5 11.5h11M7.5 14.5h7" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b data-en="Missed-call text-back">Atbilde uz neatbildētu zvanu</b><small data-en="a text right after the call">īsziņa uzreiz pēc zvana</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-chat-assistant"><span class="num">03</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M13 3.5c5.5 0 10 3.8 10 8.5s-4.5 8.5-10 8.5c-1.3 0-2.6-.2-3.7-.6L4 22l1.4-4.3C4 16.2 3 14.2 3 12c0-4.7 4.5-8.5 10-8.5z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/><g class="t-dots" fill="#6E88FF"><circle cx="9" cy="12" r="1.5"/><circle cx="13" cy="12" r="1.5"/><circle cx="17" cy="12" r="1.5"/></g></svg></span><b data-en="Website chat assistant">Tērzētava mājaslapai</b><small data-en="LV · EN · RU, day and night">LV · EN · RU, dienu un nakti</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-reminders"><span class="num">04</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><g class="t-bell"><path d="M6.5 17.5V11a6.5 6.5 0 0 1 13 0v6.5l1.8 2.2H4.7z" stroke="#F3F1EA" stroke-width="1.8" stroke-linejoin="round"/></g><path d="M10.5 22.5a2.6 2.6 0 0 0 5 0" stroke="#6E88FF" stroke-width="1.8" stroke-linecap="round"/></svg></span><b data-en="Appointment reminders">Atgādinājumi</b><small data-en="fewer no-shows">mazāk neatnākušu klientu</small></a>
+    <a class="tool" href="https://2folddigital.com/#service-summary"><span class="num">05</span><span class="ti"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M3.5 22.5h19" stroke="#F3F1EA" stroke-width="1.8" stroke-linecap="round"/><g class="t-bars" fill="#6E88FF"><rect x="5.5" y="13" width="3.6" height="7.5" rx="1"/><rect x="11.2" y="8" width="3.6" height="12.5" rx="1"/><rect x="16.9" y="4" width="3.6" height="16.5" rx="1"/></g></svg></span><b data-en="Daily summary">Dienas pārskats</b><small data-en="every call in one message">visi zvani vienā ziņā</small></a>
   </nav>
   <div class="dots rv" id="toolDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
 
-  <div class="sec rv" id="offerSec"><span>dibinātāju piedāvājums</span></div>
-  <section class="offer rv" id="offer" aria-label="Dibinātāju piedāvājums">
-    <span class="tag2">❄ ziema 2026/27 · tikai 5 vietas</span>
-    <h2>Pirmajiem 5 uzņēmumiem: <span>cena uz visu laiku.</span></h2>
-    <div class="cd" aria-label="Līdz piedāvājuma beigām">
-      <div><b id="cdD">–</b><span>dienas</span></div>
-      <div><b id="cdH">–</b><span>stundas</span></div>
-      <div><b id="cdM">–</b><span>minūtes</span></div>
-      <div><b id="cdS">–</b><span>sekundes</span></div>
+  <div class="sec rv" id="offerSec"><span data-en="founding offer">dibinātāju piedāvājums</span></div>
+  <section class="offer rv" id="offer" aria-label="Dibinātāju piedāvājums" data-en-label="Founding offer">
+    <span class="tag2" data-en="❄ winter 2026/27 · only 5 spots">❄ ziema 2026/27 · tikai 5 vietas</span>
+    <h2 data-en="For the first 5 businesses: &lt;span&gt;a price for life.&lt;/span&gt;">Pirmajiem 5 uzņēmumiem: <span>cena uz visu laiku.</span></h2>
+    <div class="cd" aria-label="Līdz piedāvājuma beigām" data-en-label="Until the offer ends">
+      <div><b id="cdD">–</b><span data-en="days">dienas</span></div>
+      <div><b id="cdH">–</b><span data-en="hours">stundas</span></div>
+      <div><b id="cdM">–</b><span data-en="minutes">minūtes</span></div>
+      <div><b id="cdS">–</b><span data-en="seconds">sekundes</span></div>
     </div>
     <div class="prices">
-      <div class="pr">MI zvanu atbildētājs <strong>99 €</strong><s>150 €</s></div>
-      <div class="pr">Atbilde uz neatbildētu zvanu <strong>39 €</strong><s>60 €</s></div>
+      <div class="pr"><span data-en="AI phone answering">MI zvanu atbildētājs</span> <strong>99 €</strong><s>150 €</s></div>
+      <div class="pr"><span data-en="Missed-call text-back">Atbilde uz neatbildētu zvanu</span> <strong>39 €</strong><s>60 €</s></div>
     </div>
-    <div class="perks"><span>uzstādīšana bez maksas</span><span>1. nedēļa bez maksas</span><span>cena nemainās</span></div>
-    <a class="claim" href="https://2folddigital.com/#founding">Pieteikt savu vietu <span aria-hidden="true">→</span></a>
-    <p class="fine">cenas mēnesī ar PVN · piedāvājums beidzas 28. februārī</p>
+    <div class="perks"><span data-en="free setup">uzstādīšana bez maksas</span><span data-en="first week free">1. nedēļa bez maksas</span><span data-en="price never goes up">cena nemainās</span></div>
+    <a class="claim" href="https://2folddigital.com/#founding"><span data-en="Claim your spot">Pieteikt savu vietu</span> <span aria-hidden="true">→</span></a>
+    <p class="fine" data-en="monthly prices incl. VAT · offer ends 28 February">cenas mēnesī ar PVN · piedāvājums beidzas 28. februārī</p>
   </section>
 
-  <div class="sec rv"><span>kopiena</span></div>
+  <div class="sec rv"><span data-en="community">kopiena</span></div>
   <section class="comm rv" aria-label="OMERA Community">
     <div class="head">
       <span class="logo"><img src="omera.png" alt="OMERA Community logo" width="60" height="60"></span>
-      <div><h3>OMERA Community</h3><div class="meta"><i></i>Discord · jauno uzņēmēju kopiena</div></div>
+      <div><h3>OMERA Community</h3><div class="meta"><i></i><span data-en="Discord · young entrepreneurs community">Discord · jauno uzņēmēju kopiena</span></div></div>
     </div>
-    <p>Ja tu <b>būvē biznesu</b>, veido kaut ko savu vai vienkārši gribi <b>dalīties idejās</b> ar citiem jaunajiem uzņēmējiem — pievienojies. Te mēs runājam, palīdzam viens otram un kopā būvējam projektus.</p>
-    <div class="chips"><span>biznesa idejas</span><span>side hustles</span><span>kontents</span><span>kopīgi projekti</span></div>
-    <a class="join" href="https://discord.gg/Aj9Z5qfhNv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.6 19.6 0 0 0-4.9 1.4C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14.1 14.1 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7zM8.2 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm7.6 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>Pievienoties Discord</a>
-    <p class="credit" id="credit" hidden>kopienu izveidoja <a id="creditLink" href="#" target="_blank" rel="noopener"></a></p>
+    <p data-en="If you're &lt;b&gt;building a business&lt;/b&gt;, making something of your own or just want to &lt;b&gt;share ideas&lt;/b&gt; with other young entrepreneurs — join. Here we talk, help each other and build projects together.">Ja tu <b>būvē biznesu</b>, veido kaut ko savu vai vienkārši gribi <b>dalīties idejās</b> ar citiem jaunajiem uzņēmējiem — pievienojies. Te mēs runājam, palīdzam viens otram un kopā būvējam projektus.</p>
+    <div class="chips"><span data-en="business ideas">biznesa idejas</span><span>side hustles</span><span data-en="content">kontents</span><span data-en="projects together">kopīgi projekti</span></div>
+    <a class="join" href="https://discord.gg/Aj9Z5qfhNv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.6 19.6 0 0 0-4.9 1.4C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14.1 14.1 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7zM8.2 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm7.6 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg><span data-en="Join the Discord">Pievienoties Discord</span></a>
+    <p class="credit" id="credit" hidden><span data-en="community made by">kopienu izveidoja</span> <a id="creditLink" href="#" target="_blank" rel="noopener"></a></p>
   </section>
 
   <div class="sub rv"><span>for builders</span></div>
   <a class="link kit rv" href="https://whop.com/2fold/">
     <span class="ico" style="--c:#A78BFA"><svg class="stack" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path class="l3" d="M24 30 8 22l16-8 16 8z" fill="#2A2347" stroke="#A78BFA" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 8)"/><path class="l2" d="M24 30 8 22l16-8 16 8z" fill="#3B2F66" stroke="#C4B2FF" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 2)"/><path class="l1" d="M24 30 8 22l16-8 16 8z" fill="#A78BFA" stroke="#E6DDFF" stroke-width="1.8" stroke-linejoin="round" transform="translate(0 -4)"/></svg></span>
-    <span class="txt"><strong data-scramble>Local Automation Kits</strong><small>gatavi kiti automatizāciju būvēšanai · whop</small></span>
+    <span class="txt"><strong data-scramble>Local Automation Kits</strong><small data-en="ready-made kits for building automations · whop">gatavi kiti automatizāciju būvēšanai · whop</small></span>
     <span class="tag">kits</span>
   </a>
 
@@ -478,7 +492,7 @@
     <a class="soc" data-tip="TikTok" href="https://www.tiktok.com/@n1k.co" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.1 1.7 3.6 3.9 3.9v3.1a7.4 7.4 0 0 1-3.9-1.2v6.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.2a2.5 2.5 0 1 0 1.6 2.3V3h3.1z"/></svg></a>
     <a class="soc" data-tip="Instagram" href="https://www.instagram.com/n.kuzminskis/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></a>
     <a class="soc" data-tip="2FOLD Facebook" id="fb" href="#" aria-label="2FOLD Facebook" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z"/></svg></a>
-    <a class="soc" data-tip="E-pasts" href="mailto:info@2folddigital.com" aria-label="E-pasts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></a>
+    <a class="soc" data-tip="E-pasts" href="mailto:info@2folddigital.com" aria-label="E-pasts" data-en-tip="Email" data-en-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></a>
   </div>
 </main>
 
@@ -488,7 +502,7 @@
 </div></div>
 <footer><a href="https://2folddigital.com/"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>2folddigital.com</a></footer>
 
-<div class="toast" id="toast">nokopēts ✓</div>
+<div class="toast" id="toast" data-en="copied ✓">nokopēts ✓</div>
 
 <script>
 /* 2FOLD Facebook page: paste the page link between the quotes to show its icon. */
@@ -498,6 +512,51 @@ var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
 
 (function(){
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── language LV / EN (2026-11-21). Text in the page carries its English in
+     data-en (data-en-label / data-en-tip for aria-label / tooltip); text the
+     script writes lives in STR. The choice is remembered on this phone, and
+     2folddigital.com/n1k/?lang=en opens English straight away. ── */
+  var STR = {
+    lv:{city:'rīga', answered:'atbildēts · 00:01',
+      moods:['vēl strādāju', 'rīts · plānoju dienu', 'skolā · atbildu vēlāk', 'zvanu uzņēmumiem', 'būvēju 2FOLD'],
+      feed:['zvans 14:02 · autoserviss · MI atbildēja', 'zvans 14:07 · frizētava · īsziņa nosūtīta', 'zvans 14:11 · zobārsts · pieraksts izveidots', 'zvans 19:40 · santehniķis · ziņa saglabāta', 'zvans 22:15 · salons · atbildēts naktī'],
+      tracks:[['MI atbildētājs autoservisiem', '2FOLD · zvanu automatizācija'], ['ziemas piedāvājums santehniķiem', '2FOLD · sezonas kampaņa'], ['personīgas lapas katram uzņēmumam', '2FOLD · pārdošana'], ['MI, kas pieraksta klientus kalendārā', '2FOLD · pieraksti'], ['mana link lapa', 'n1k · dizains']],
+      btn:'Valoda: latviešu. Pārslēgt uz angļu'},
+    en:{city:'riga', answered:'answered · 00:01',
+      moods:['still working', 'morning · planning the day', 'at school · will reply later', 'calling businesses', 'building 2FOLD'],
+      feed:['call 14:02 · car service · AI answered', 'call 14:07 · hair salon · text sent', 'call 14:11 · dentist · booking made', 'call 19:40 · plumber · message saved', 'call 22:15 · salon · answered at night'],
+      tracks:[['AI receptionist for car services', '2FOLD · call automation'], ['winter offer for plumbers', '2FOLD · seasonal campaign'], ['a personal page for every business', '2FOLD · sales'], ['AI that books clients into the calendar', '2FOLD · bookings'], ['my link page', 'n1k · design']],
+      btn:'Language: English. Switch to Latvian'}
+  };
+  var lang = 'lv';
+  try {
+    var qLang = new URLSearchParams(location.search).get('lang');
+    if (qLang === 'en' || qLang === 'lv') lang = qLang;
+    else if (localStorage.getItem('n1k-lang') === 'en') lang = 'en';
+  } catch (e) {}
+  function S(){ return STR[lang]; }
+  var langBtn = document.getElementById('lang');
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if (el.dataset.lv === undefined) el.dataset.lv = el.innerHTML;
+      clearInterval(el._t); delete el.dataset.final;          // stop a running scramble
+      el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.lv;
+    });
+    document.querySelectorAll('[data-en-label]').forEach(function(el){
+      if (el.dataset.lvLabel === undefined) el.dataset.lvLabel = el.getAttribute('aria-label');
+      el.setAttribute('aria-label', lang === 'en' ? el.dataset.enLabel : el.dataset.lvLabel);
+    });
+    document.querySelectorAll('[data-en-tip]').forEach(function(el){
+      if (el.dataset.lvTip === undefined) el.dataset.lvTip = el.getAttribute('data-tip');
+      el.setAttribute('data-tip', lang === 'en' ? el.dataset.enTip : el.dataset.lvTip);
+    });
+    langBtn.querySelectorAll('span').forEach(function(s){ s.classList.toggle('on', s.dataset.l === lang); });
+    langBtn.setAttribute('aria-label', S().btn);
+  }
+  if (lang !== 'lv') applyLang();
+
   if (COMMUNITY_CREATOR_TIKTOK){
     var cl = document.getElementById('creditLink');
     cl.href = 'https://www.tiktok.com/@' + COMMUNITY_CREATOR_TIKTOK; cl.textContent = '@' + COMMUNITY_CREATOR_TIKTOK;
@@ -581,17 +640,12 @@ var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
   });
 
   /* ── live demo feed (labelled "piemērs") ── */
-  var feed = document.getElementById('feed'), items = [
-    'zvans 14:02 · autoserviss · MI atbildēja',
-    'zvans 14:07 · frizētava · īsziņa nosūtīta',
-    'zvans 14:11 · zobārsts · pieraksts izveidots',
-    'zvans 19:40 · santehniķis · ziņa saglabāta',
-    'zvans 22:15 · salons · atbildēts naktī'
-  ], fi = 0;
+  var feed = document.getElementById('feed'), fi = 0;
+  feed.textContent = S().feed[0];
   setInterval(function(){
     if (document.hidden) return;
     feed.classList.add('out');
-    setTimeout(function(){ fi = (fi + 1) % items.length; feed.textContent = items[fi]; feed.classList.remove('out'); }, 300);
+    setTimeout(function(){ fi = (fi + 1) % S().feed.length; feed.textContent = S().feed[fi]; feed.classList.remove('out'); }, 300);
   }, 2800);
 
   /* ── a tiny tap feel on phones that support it ── */
@@ -627,8 +681,8 @@ var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
     var now = new Date();
     var hm = new Intl.DateTimeFormat('lv-LV',{timeZone:'Europe/Riga',hour:'2-digit',minute:'2-digit'}).format(now);
     var h = +new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Riga',hour:'2-digit',hour12:false}).format(now);
-    var mood = h < 6 ? 'vēl strādāju' : h < 9 ? 'rīts · plānoju dienu' : h < 15 ? 'skolā · atbildu vēlāk' : h < 19 ? 'zvanu uzņēmumiem' : 'būvēju 2FOLD';
-    clock.textContent = 'rīga ' + hm + ' · ' + mood;
+    var m = S().moods, mood = h < 6 ? m[0] : h < 9 ? m[1] : h < 15 ? m[2] : h < 19 ? m[3] : m[4];
+    clock.textContent = S().city + ' ' + hm + ' · ' + mood;
   }
   tick(); setInterval(tick, 20000);
 
@@ -663,21 +717,15 @@ var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
   onScroll();
 
   /* ── "šobrīd būvēju" — rotates like a playlist ── */
-  var tracks = [
-    ['MI atbildētājs autoservisiem', '2FOLD · zvanu automatizācija', 204],
-    ['ziemas piedāvājums santehniķiem', '2FOLD · sezonas kampaņa', 168],
-    ['personīgas lapas katram uzņēmumam', '2FOLD · pārdošana', 236],
-    ['MI, kas pieraksta klientus kalendārā', '2FOLD · pieraksti', 192],
-    ['mana link lapa', 'n1k · dizains', 145]
-  ], ti = 0, tStart = performance.now();
+  var tracks = [204, 168, 236, 192, 145], ti = 0, tStart = performance.now();   // "song" lengths; titles in STR
   var nowT = document.getElementById('nowT'), nowS = document.getElementById('nowS'), nowA = document.getElementById('nowA'), nowB = document.getElementById('nowB'), nowP = document.getElementById('nowP');
   function mmss(x){ x = Math.max(0, Math.floor(x)); return Math.floor(x / 60) + ':' + ('0' + x % 60).slice(-2); }
-  function setTrack(){ nowT.textContent = tracks[ti][0]; nowS.textContent = tracks[ti][1]; nowB.textContent = mmss(tracks[ti][2]); }
+  function setTrack(){ nowT.textContent = S().tracks[ti][0]; nowS.textContent = S().tracks[ti][1]; nowB.textContent = mmss(tracks[ti]); }
   setTrack();
   setInterval(function(){
     if (document.hidden) return;
     var el = (performance.now() - tStart) / 1000 * 22;          // one "song" every ~8 s
-    var len = tracks[ti][2];
+    var len = tracks[ti];
     if (el >= len){
       nowT.classList.add('out');
       setTimeout(function(){ ti = (ti + 1) % tracks.length; tStart = performance.now(); setTrack(); nowT.classList.remove('out'); }, 350);
@@ -736,10 +784,18 @@ var COMMUNITY_CREATOR_TIKTOK = 'erv1nss';
   }
   if (seen || reduce){ intro.style.transition = 'none'; reveal(); }
   else {
-    var t1 = setTimeout(function(){ intro.classList.add('answered'); callText.textContent = 'atbildēts · 00:01'; }, 1300);
+    var t1 = setTimeout(function(){ intro.classList.add('answered'); callText.textContent = S().answered; }, 1300);
     var t2 = setTimeout(reveal, 2100);
     intro.addEventListener('click', function(){ clearTimeout(t1); clearTimeout(t2); reveal(); });
   }
+
+  /* ── language switch: tap flips LV <-> EN ── */
+  langBtn.addEventListener('click', function(){
+    lang = lang === 'lv' ? 'en' : 'lv';
+    try { localStorage.setItem('n1k-lang', lang); } catch (e) {}
+    applyLang();
+    tick(); setTrack(); feed.textContent = S().feed[fi];
+  });
 })();
 </script>
 </body>

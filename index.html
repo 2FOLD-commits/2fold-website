@@ -2497,14 +2497,33 @@
   bg.classList.add('still');
   video.addEventListener('playing', function(){ bg.classList.remove('still'); });
   video.addEventListener('pause', function(){ bg.classList.add('still'); });
+  // In-app browsers on iPhone (TikTok, Instagram, Facebook ...) may not allow
+  // a video to play inside the page: there every play() opens the video full
+  // screen, so a tap anywhere on the site showed the backdrop as a movie.
+  // There the script never starts the video itself; the autoplay attribute
+  // alone decides, and if it cannot play the still picture stays. 2026-11-21
+  var inApp = /TikTok|musical_ly|Bytedance|Instagram|FBAN|FBAV|FB_IAB|Snapchat|Twitter|LinkedInApp|Line\//i.test(navigator.userAgent || '');
+  var gaveUp = false;
+  function giveUp(){
+    gaveUp = true;
+    ['touchend', 'click'].forEach(function(type){ window.removeEventListener(type, start); });
+    try { video.pause(); } catch (e) {}
+    bg.classList.add('still');
+  }
+  // Safety net for any other browser that does the same: close the full
+  // screen player at once and never try again on this visit.
+  video.addEventListener('webkitbeginfullscreen', function(){
+    giveUp();
+    try { video.webkitExitFullscreen(); } catch (e) {}
+  });
   function start(){
-    if (!video.paused) return;
+    if (gaveUp || inApp || !video.paused) return;
     var p = video.play();
     if (p && p.then) p.then(function(){ bg.classList.remove('still'); }, function(){ bg.classList.add('still'); });
   }
   video.muted = true;
   start();
-  ['touchend', 'click'].forEach(function(type){ window.addEventListener(type, start, {passive:true}); });
+  if (!inApp) ['touchend', 'click'].forEach(function(type){ window.addEventListener(type, start, {passive:true}); });
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) start(); });
 })();
 </script>
