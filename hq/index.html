@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#06070B">
+<meta name="theme-color" content="#05060A">
 <title>2FOLD HQ</title>
 <!-- 2FOLD HQ. This file holds NO business data: everything is loaded after
      login from the private HQ store on the missed-call server (automations/
      missed-call/hq.mjs) with the HQ key. Numbers, leads, cards and charts are
-     changed there, so this page only has to be uploaded once. -->
+     changed there, so this page only has to be uploaded when its design changes. -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMEEwQjEwIi8+PHBhdGggZD0iTTMwLjg3IDIyIEw2OS4xMyAyMiBMNTcuNDcgMzMuNjcgTDMwLjg3IDMzLjY3IFoiIGZpbGw9IiM2RTg4RkYiLz48cGF0aCBkPSJNNjkuMTMgMjIgTDY5LjEzIDU1LjgzIEw1Ny40NyA0NC4xNyBMNTcuNDcgMzMuNjcgWiIgZmlsbD0iIzQyNTlEOSIvPjxwYXRoIGQ9Ik01Ny40NyA0NC4xNyBMNjkuMTMgNTUuODMgTDQyLjUzIDU1LjgzIEwzMC44NyA0NC4xNyBaIiBmaWxsPSIjNkU4OEZGIi8+PHBhdGggZD0iTTMwLjg3IDQ0LjE3IEw0Mi41MyA1NS44MyBMNDIuNTMgNjYuMzMgTDMwLjg3IDc4IFoiIGZpbGw9IiM0MjU5RDkiLz48cGF0aCBkPSJNNDIuNTMgNjYuMzMgTDY5LjEzIDY2LjMzIEw2OS4xMyA3OCBMMzAuODcgNzggWiIgZmlsbD0iIzZFODhGRiIvPjwvc3ZnPg==">
 <link rel="stylesheet" href="../assets/fonts.css">
 <style>
 :root{
-  --ink:#06070B;--ink2:#0B0D14;--card:rgba(15,17,27,.72);--card2:rgba(22,25,38,.8);
+  --ink:#05060A;--card:rgba(14,16,26,.66);--card2:rgba(21,24,38,.82);
   --line:rgba(243,241,234,.07);--line2:rgba(243,241,234,.13);
   --paper:#F3F1EA;--dim:#9BA0B4;--faint:#5F6478;
   --blue:#6E88FF;--blue2:#4259D9;--blue3:#A9B8FF;--mint:#3DDC97;--pink:#FF6AD5;--amber:#F5B544;--red:#FF5A5F;--violet:#A78BFA;
-  --ease:cubic-bezier(.2,.7,.15,1);--r:20px;
+  --ease:cubic-bezier(.2,.7,.15,1);--spring:cubic-bezier(.34,1.56,.64,1);--r:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--ink);color-scheme:dark}
@@ -26,177 +26,259 @@ body{font-family:'Archivo',system-ui,sans-serif;color:var(--paper);background:va
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:inherit}
 ::selection{background:var(--blue);color:var(--ink)}
-.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(50% 40% at 80% -5%,rgba(110,136,255,.18),transparent 70%),radial-gradient(40% 35% at -5% 105%,rgba(66,89,217,.16),transparent 70%),radial-gradient(30% 30% at 50% 50%,rgba(61,220,151,.04),transparent 70%)}
-.bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(243,241,234,.06) 1px,transparent 1.2px);background-size:28px 28px;-webkit-mask-image:radial-gradient(80% 70% at 50% 30%,#000,transparent)}
-.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:rgba(243,241,234,.1);border-radius:10px;border:2px solid transparent;background-clip:padding-box}
 .num{font-variant-numeric:tabular-nums}
+
+/* ── living background: aurora blobs + dot grid + grain ── */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}
+.bg i:nth-child(1){width:46vw;height:46vw;left:58%;top:-22%;background:radial-gradient(circle,#4259D9,transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
+.bg i:nth-child(2){width:40vw;height:40vw;left:-14%;top:55%;background:radial-gradient(circle,#2B3A9E,transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
+.bg i:nth-child(3){width:30vw;height:30vw;left:35%;top:40%;background:radial-gradient(circle,rgba(61,220,151,.45),transparent 65%);opacity:.18;animation:drift3 38s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(-14vw,10vh) scale(1.15)}}
+@keyframes drift2{to{transform:translate(18vw,-14vh) scale(1.2)}}
+@keyframes drift3{to{transform:translate(-10vw,-18vh) scale(.85)}}
+.bg::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(243,241,234,.07) 1px,transparent 1.3px);background-size:26px 26px;-webkit-mask-image:radial-gradient(75% 65% at 55% 35%,#000,transparent)}
+.bg::after{content:"";position:absolute;inset:-50%;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain 1.4s steps(5) infinite}
+@keyframes grain{20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}}
+
+/* ── intro ── */
+#intro{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:var(--ink);cursor:pointer}
+#intro.on{display:grid}
+#intro .in{display:flex;flex-direction:column;align-items:center}
+#intro svg{width:120px;height:120px;overflow:visible}
+#intro .seg{transform-box:fill-box;transform-origin:center;opacity:0;animation:segIn .7s var(--spring) forwards}
+#intro .seg:nth-child(1){--tx:-70px;--ty:-60px;--r:-40deg;animation-delay:.05s}
+#intro .seg:nth-child(2){--tx:80px;--ty:-40px;--r:50deg;animation-delay:.15s}
+#intro .seg:nth-child(3){--tx:60px;--ty:20px;--r:-30deg;animation-delay:.25s}
+#intro .seg:nth-child(4){--tx:-80px;--ty:40px;--r:40deg;animation-delay:.35s}
+#intro .seg:nth-child(5){--tx:40px;--ty:80px;--r:-50deg;animation-delay:.45s}
+@keyframes segIn{from{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--r)) scale(.4)}to{opacity:1;transform:none}}
+#intro .glow{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(110,136,255,.55),transparent 65%);filter:blur(20px);opacity:0;animation:pulseIn 1.2s .6s ease-out forwards}
+@keyframes pulseIn{40%{opacity:1;transform:scale(1.1)}to{opacity:.35;transform:scale(1)}}
+#intro h1{margin-top:28px;font-size:34px;letter-spacing:.32em;font-weight:700;padding-left:.32em;opacity:0;animation:fadeUp .6s .75s var(--ease) forwards}
+#intro h1 b{color:var(--blue)}
+#intro p{margin-top:10px;font-size:11px;letter-spacing:.5em;color:var(--faint);opacity:0;animation:fadeUp .6s .9s var(--ease) forwards}
+#intro .load{margin-top:30px;width:220px;height:2px;border-radius:2px;background:rgba(243,241,234,.08);overflow:hidden;opacity:0;animation:fadeUp .4s .9s forwards}
+#intro .load i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue2),var(--blue),var(--mint));box-shadow:0 0 12px var(--blue);transition:width .5s var(--ease)}
+#intro.out{animation:introOut .7s var(--ease) forwards}
+@keyframes introOut{to{opacity:0;transform:scale(1.06);filter:blur(6px);visibility:hidden}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 /* ── login ── */
 #login{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px}
-#login .box{width:min(420px,100%);padding:38px 34px 30px;border-radius:28px;background:var(--card);border:1px solid var(--line2);backdrop-filter:blur(18px);box-shadow:0 40px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(110,136,255,.08) inset;text-align:center}
-#login svg.mark{width:64px;height:64px;filter:drop-shadow(0 8px 30px rgba(110,136,255,.55))}
+#login .box{position:relative;width:min(420px,100%);padding:40px 34px 30px;border-radius:30px;background:var(--card);border:1px solid var(--line2);backdrop-filter:blur(22px);box-shadow:0 50px 140px -30px rgba(0,0,0,.9);text-align:center;animation:fadeUp .7s var(--ease)}
+#login .box::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:conic-gradient(from var(--a,0deg),transparent 0 70%,var(--blue) 85%,var(--mint) 95%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 5s linear infinite}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+#login svg.mark{width:68px;height:68px;filter:drop-shadow(0 8px 30px rgba(110,136,255,.6));animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
 #login h1{margin-top:18px;font-size:30px;letter-spacing:-.03em}
 #login h1 span{color:var(--blue)}
 #login p{margin-top:8px;color:var(--dim);font-size:14px}
-#login input{margin-top:24px;width:100%;padding:15px 16px;border-radius:14px;border:1px solid var(--line2);background:rgba(0,0,0,.35);font-size:15px;outline:none;text-align:center;letter-spacing:.06em}
+#login input{margin-top:24px;width:100%;padding:15px 16px;border-radius:14px;border:1px solid var(--line2);background:rgba(0,0,0,.35);font-size:15px;outline:none;text-align:center;letter-spacing:.06em;transition:border-color .2s,box-shadow .2s}
 #login input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(110,136,255,.18)}
-#login .go{margin-top:12px;width:100%;padding:14px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 12px 30px -10px rgba(110,136,255,.8)}
+#login .go{margin-top:12px;width:100%;padding:14px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 12px 30px -10px rgba(110,136,255,.8);transition:transform .15s}
+#login .go:active{transform:scale(.98)}
 #login .err{margin-top:12px;color:var(--red);font-size:13px;min-height:18px}
 #login details{margin-top:14px;font-size:12px;color:var(--faint);text-align:left}
 #login details input{margin-top:8px;padding:10px;font-size:12px;text-align:left;letter-spacing:0}
 
 /* ── shell ── */
 #app{position:relative;z-index:1;display:none;min-height:100vh}
-#app.on{display:grid;grid-template-columns:248px 1fr}
-aside{position:sticky;top:0;height:100vh;padding:22px 16px;border-right:1px solid var(--line);background:rgba(8,9,14,.6);backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:6px}
-.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 22px}
-.brand svg{width:36px;height:36px;filter:drop-shadow(0 4px 18px rgba(110,136,255,.6))}
+#app.on{display:grid;grid-template-columns:250px 1fr}
+aside{position:sticky;top:0;height:100vh;padding:22px 16px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(9,10,16,.75),rgba(6,7,11,.6));backdrop-filter:blur(16px);display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 20px}
+.brand svg{width:38px;height:38px;filter:drop-shadow(0 4px 18px rgba(110,136,255,.6));animation:float 5s ease-in-out infinite}
 .brand b{font-size:19px;letter-spacing:.02em}
-.brand small{display:block;font-size:10.5px;letter-spacing:.28em;color:var(--faint);margin-top:2px}
-nav.side a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:var(--dim);text-decoration:none;font-size:14.5px;font-weight:500;transition:background .2s,color .2s;position:relative}
-nav.side a svg{width:18px;height:18px;flex:none}
-nav.side a:hover{background:rgba(243,241,234,.04);color:var(--paper)}
-nav.side a.on{background:linear-gradient(90deg,rgba(110,136,255,.18),rgba(110,136,255,.02));color:var(--paper)}
-nav.side a.on::before{content:"";position:absolute;left:-16px;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--blue);box-shadow:0 0 12px var(--blue)}
-nav.side a .badge{margin-left:auto;font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(110,136,255,.18);color:var(--blue3)}
+.brand small{display:block;font-size:10px;letter-spacing:.3em;color:var(--faint);margin-top:3px}
+.clock{margin:0 8px 14px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.25)}
+.clock b{font-size:26px;letter-spacing:-.03em;font-weight:700}
+.clock b span{color:var(--blue);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+.clock small{display:block;font-size:11px;color:var(--faint);letter-spacing:.14em;margin-top:2px}
+nav.side{position:relative}
+nav.side a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:var(--dim);text-decoration:none;font-size:14.5px;font-weight:500;transition:color .2s,background .2s;position:relative;z-index:1}
+nav.side a svg{width:18px;height:18px;flex:none;transition:transform .3s var(--spring)}
+nav.side a:hover{color:var(--paper);background:rgba(243,241,234,.035)}
+nav.side a:hover svg{transform:scale(1.15) rotate(-6deg)}
+nav.side a.on{color:var(--paper)}
+nav.side a.on svg{color:var(--blue3)}
+nav.side .pill-bg{position:absolute;left:0;right:0;height:42px;border-radius:12px;background:linear-gradient(90deg,rgba(110,136,255,.2),rgba(110,136,255,.03));border:1px solid rgba(110,136,255,.18);transition:top .45s var(--spring);z-index:0}
+nav.side .pill-bg::before{content:"";position:absolute;left:-16px;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--blue);box-shadow:0 0 14px var(--blue)}
+nav.side a .badge{margin-left:auto;font-size:11px;min-width:20px;text-align:center;padding:2px 7px;border-radius:999px;background:rgba(255,106,213,.16);color:var(--pink)}
 .side-foot{margin-top:auto;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.25);font-size:12px;color:var(--dim)}
 .side-foot .row{display:flex;align-items:center;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);flex:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);flex:none;position:relative}
+.dot.live::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid currentColor;color:inherit;opacity:0;animation:ping 2s ease-out infinite}
+.dot.live{color:var(--mint)}
+@keyframes ping{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(2.2)}}
 .dot.off{background:var(--red);box-shadow:0 0 10px var(--red)}
-.side-foot button{margin-top:10px;width:100%;padding:8px;border-radius:10px;border:1px solid var(--line2);background:transparent;color:var(--dim);cursor:pointer;font-size:12px}
-.side-foot button:hover{color:var(--paper);border-color:var(--blue)}
+.side-foot button{margin-top:8px;width:100%;padding:8px;border-radius:10px;border:1px solid var(--line2);background:transparent;color:var(--dim);cursor:pointer;font-size:12px;transition:all .2s}
+.side-foot button:hover{color:var(--paper);border-color:var(--blue);background:rgba(110,136,255,.08)}
 
-main{min-width:0;padding:26px 34px 80px}
-.top{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+main{min-width:0;padding:26px 34px 90px}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:24px}
 .top h2{font-size:30px;letter-spacing:-.035em;font-weight:700}
 .top .sub{color:var(--dim);font-size:13.5px;margin-top:3px}
 .top .grow{flex:1}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(243,241,234,.03);cursor:pointer;font-size:13.5px;font-weight:600;transition:transform .15s,border-color .2s,background .2s;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--line2);background:rgba(243,241,234,.03);cursor:pointer;font-size:13.5px;font-weight:600;transition:transform .15s,border-color .2s,background .2s,box-shadow .2s;white-space:nowrap}
 .btn:hover{border-color:var(--blue);background:rgba(110,136,255,.08)}
-.btn:active{transform:scale(.97)}
+.btn:active{transform:scale(.96)}
 .btn.primary{border:0;background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 10px 26px -10px rgba(110,136,255,.9)}
+.btn.primary:hover{box-shadow:0 14px 34px -8px rgba(110,136,255,1)}
 .btn.sm{padding:6px 10px;font-size:12px;border-radius:9px}
 .kbd{font-size:11px;padding:2px 6px;border-radius:6px;border:1px solid var(--line2);color:var(--faint)}
+#view{animation:pageIn .55s var(--ease)}
+#view.swap{animation:none}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
 
 /* ── cards ── */
 .grid{display:grid;gap:16px}
 .g6{grid-template-columns:repeat(6,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
 .span2{grid-column:span 2}.span3{grid-column:span 3}.span4{grid-column:span 4}.span6{grid-column:1/-1}
-.card{position:relative;border-radius:var(--r);background:var(--card);border:1px solid var(--line);padding:18px 20px;backdrop-filter:blur(12px);overflow:hidden;animation:rise .6s var(--ease) both}
-.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(110,136,255,.35),transparent 35%,transparent 70%,rgba(61,220,151,.18));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.6}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.card h3{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:8px}
+.mt{margin-top:16px}
+.card{--mx:50%;--my:50%;position:relative;border-radius:var(--r);background:var(--card);border:1px solid var(--line);padding:18px 20px;backdrop-filter:blur(14px);overflow:hidden;animation:rise .7s var(--ease) both;animation-delay:calc(var(--i,0) * 55ms);transition:border-color .3s,transform .3s var(--ease),box-shadow .3s}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(110,136,255,.4),transparent 35%,transparent 70%,rgba(61,220,151,.2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.55;transition:opacity .3s}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(110,136,255,.11),transparent 45%);opacity:0;transition:opacity .3s}
+.card:hover{border-color:var(--line2);box-shadow:0 20px 60px -30px rgba(110,136,255,.45)}
+.card:hover::after{opacity:1}.card:hover::before{opacity:1}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.card h3{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:8px;position:relative;z-index:1}
 .card h3 .r{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500;color:var(--faint);font-size:12px}
-.kpi .v{margin-top:12px;font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.kpi .v small{font-size:15px;color:var(--dim);font-weight:500;letter-spacing:0;margin-left:3px}
-.kpi .d{margin-top:8px;font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:6px}
-.kpi .d .up{color:var(--mint)}.kpi .d .down{color:var(--red)}
-.kpi .spark{position:absolute;right:14px;bottom:12px;width:92px;height:34px;opacity:.9}
-.kpi .ic{position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(110,136,255,.12);color:var(--blue3)}
-.kpi .ic svg{width:18px;height:18px}
-.chart{width:100%;display:block;overflow:visible}
+.kpi{min-height:136px}
+.kpi h3{padding-right:44px;display:block;line-height:1.35;letter-spacing:.09em;min-height:2.7em}
+.kpi .v{margin-top:14px;font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1;position:relative;z-index:1}
+.kpi .v small{font-size:14px;color:var(--dim);font-weight:500;letter-spacing:0;margin-left:4px}
+.kpi .d{margin-top:9px;font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:6px;position:relative;z-index:1;max-width:calc(100% - 96px)}
+.kpi .d .up{color:var(--mint);font-weight:600}
+.kpi .spark{position:absolute;right:12px;bottom:12px;width:96px;height:38px}
+.kpi .ic{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(110,136,255,.12);color:var(--blue3);transition:transform .4s var(--spring)}
+.kpi:hover .ic{transform:rotate(-10deg) scale(1.1)}
+.kpi .ic svg{width:17px;height:17px}
+.chart{width:100%;display:block;overflow:visible;position:relative;z-index:1}
 .chart text{font-family:'Archivo',sans-serif}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--dim)}
+.chart .colg .hl{opacity:0;transition:opacity .15s}
+.chart .colg:hover .hl{opacity:1}
+.chart .colg:hover .bar{filter:brightness(1.35) drop-shadow(0 0 8px currentColor)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--dim);position:relative;z-index:1}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.empty{padding:26px 10px;text-align:center;color:var(--faint);font-size:13px}
-.tip{position:fixed;z-index:80;pointer-events:none;padding:8px 11px;border-radius:10px;background:rgba(10,11,18,.95);border:1px solid var(--line2);font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.6);opacity:0;transition:opacity .12s;white-space:nowrap}
+.empty{padding:26px 10px;text-align:center;color:var(--faint);font-size:13px;position:relative;z-index:1}
+.tip{position:fixed;z-index:80;pointer-events:none;padding:9px 12px;border-radius:12px;background:rgba(10,11,18,.92);backdrop-filter:blur(8px);border:1px solid var(--line2);font-size:12px;line-height:1.5;box-shadow:0 14px 40px rgba(0,0,0,.6);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;white-space:nowrap}
+.tip.on{opacity:1;transform:none}
 .tip b{color:var(--paper)}.tip span{color:var(--dim)}
 
 /* ── lists / tables ── */
-.list{margin-top:12px;display:flex;flex-direction:column;gap:2px}
-.li{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:12px;transition:background .15s}
-.li:hover{background:rgba(243,241,234,.035)}
+.list{margin-top:12px;display:flex;flex-direction:column;gap:2px;position:relative;z-index:1}
+.li{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;transition:background .15s,transform .2s}
+.li:hover{background:rgba(243,241,234,.04)}
 .li .t{flex:1;min-width:0}
 .li .t b{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .li .t small{display:block;margin-top:2px;font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pill{font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--dim);white-space:nowrap}
+.pill{font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--dim);white-space:nowrap;text-decoration:none}
 .pill.mint{color:var(--mint);border-color:rgba(61,220,151,.35);background:rgba(61,220,151,.08)}
 .pill.blue{color:var(--blue3);border-color:rgba(110,136,255,.35);background:rgba(110,136,255,.08)}
 .pill.amber{color:var(--amber);border-color:rgba(245,181,68,.35);background:rgba(245,181,68,.08)}
 .pill.red{color:var(--red);border-color:rgba(255,90,95,.35);background:rgba(255,90,95,.08)}
 .pill.pink{color:var(--pink);border-color:rgba(255,106,213,.35);background:rgba(255,106,213,.08)}
-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px;position:relative;z-index:1}
 th{text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
 td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
-tr:hover td{background:rgba(243,241,234,.02)}
+tr:hover td{background:rgba(243,241,234,.025)}
 td.amt{text-align:right;font-weight:700}
-.check{width:22px;height:22px;border-radius:7px;border:1.6px solid var(--faint);display:grid;place-items:center;cursor:pointer;flex:none;background:transparent;transition:all .2s}
-.check.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 14px rgba(61,220,151,.5)}
-.check.on::after{content:"";width:9px;height:5px;border-left:2.2px solid #06070B;border-bottom:2.2px solid #06070B;transform:rotate(-45deg) translate(1px,-1px)}
+.check{width:22px;height:22px;border-radius:7px;border:1.6px solid var(--faint);display:grid;place-items:center;cursor:pointer;flex:none;background:transparent;transition:all .25s var(--spring)}
+.check:hover{border-color:var(--mint);transform:scale(1.1)}
+.check.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 16px rgba(61,220,151,.55)}
+.check.on::after{content:"";width:9px;height:5px;border-left:2.2px solid #05060A;border-bottom:2.2px solid #05060A;transform:rotate(-45deg) translate(1px,-1px)}
 .done .t b{color:var(--faint);text-decoration:line-through}
-.bar-in{height:7px;border-radius:999px;background:rgba(243,241,234,.06);overflow:hidden}
-.bar-in i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue2),var(--blue));box-shadow:0 0 12px rgba(110,136,255,.6);transition:width 1s var(--ease)}
+.bar-in{height:8px;border-radius:999px;background:rgba(243,241,234,.06);overflow:hidden;position:relative}
+.bar-in i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue2),var(--blue));box-shadow:0 0 12px rgba(110,136,255,.6);animation:fill 1.2s var(--ease) both;position:relative;overflow:hidden}
+.bar-in i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:shine 2.6s 1.2s ease-in-out infinite}
+@keyframes fill{from{width:0!important}}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
 
 /* ── forms ── */
-.form{display:grid;gap:10px;margin-top:12px}
+.form{display:grid;gap:10px;margin-top:12px;position:relative;z-index:1}
 .form .row{display:grid;gap:10px;grid-template-columns:1fr 1fr}
 .form label{font-size:11.5px;color:var(--dim);display:flex;flex-direction:column;gap:5px}
-.form input,.form select,.form textarea{padding:10px 12px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.3);outline:none;font-size:13.5px}
-.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--blue)}
+.form input,.form select,.form textarea{padding:10px 12px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.3);outline:none;font-size:13.5px;transition:border-color .2s,box-shadow .2s}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(110,136,255,.15)}
 .form textarea{min-height:70px;resize:vertical}
-.seg{display:inline-flex;padding:3px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.25)}
-.seg button{padding:7px 12px;border:0;border-radius:8px;background:transparent;color:var(--dim);cursor:pointer;font-size:12.5px;font-weight:600}
-.seg button.on{background:rgba(110,136,255,.2);color:var(--paper)}
+.seg{display:inline-flex;padding:3px;border-radius:12px;border:1px solid var(--line2);background:rgba(0,0,0,.25);flex-wrap:wrap}
+.seg button{padding:7px 12px;border:0;border-radius:9px;background:transparent;color:var(--dim);cursor:pointer;font-size:12.5px;font-weight:600;transition:all .2s}
+.seg button:hover{color:var(--paper)}
+.seg button.on{background:rgba(110,136,255,.22);color:var(--paper);box-shadow:0 0 0 1px rgba(110,136,255,.3) inset}
 
 /* ── kanban ── */
-.kanban{display:grid;grid-template-columns:repeat(6,minmax(165px,1fr));gap:14px;overflow-x:auto;padding-bottom:10px}
-.col{border-radius:18px;border:1px solid var(--line);background:rgba(10,12,19,.55);padding:12px;min-height:200px;transition:border-color .2s,background .2s}
-.col.over{border-color:var(--blue);background:rgba(110,136,255,.06)}
-.col h4{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:4px 4px 10px}
+.kanban{display:grid;grid-template-columns:repeat(6,minmax(165px,1fr));gap:12px;overflow-x:auto;padding-bottom:10px}
+.col{border-radius:18px;border:1px solid var(--line);background:rgba(10,12,19,.55);padding:12px;min-height:220px;transition:border-color .2s,background .2s,transform .2s;animation:rise .6s var(--ease) both;animation-delay:calc(var(--i,0) * 60ms)}
+.col.over{border-color:var(--blue);background:rgba(110,136,255,.07);transform:scale(1.01)}
+.col h4{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:4px 4px 10px}
 .col h4 i{width:8px;height:8px;border-radius:50%}
 .col h4 span{margin-left:auto;color:var(--faint);letter-spacing:0}
-.deal{padding:12px 13px;border-radius:14px;background:var(--card2);border:1px solid var(--line);margin-bottom:9px;cursor:grab;transition:transform .15s,border-color .2s}
-.deal:hover{border-color:var(--line2);transform:translateY(-1px)}
+.deal{position:relative;padding:12px 13px;border-radius:14px;background:var(--card2);border:1px solid var(--line);margin-bottom:9px;cursor:grab;transition:transform .2s var(--ease),border-color .2s,box-shadow .2s;overflow:hidden}
+.deal::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--sc,#6E88FF);box-shadow:0 0 12px var(--sc,#6E88FF)}
+.deal:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(0,0,0,.8)}
+.deal.dragging{opacity:.4}
 .deal b{font-size:13.5px;display:block}
 .deal small{display:block;color:var(--dim);font-size:11.5px;margin-top:3px}
 .deal .meta{display:flex;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap}
 .deal .sig{margin-top:8px;font-size:11.5px;color:var(--amber)}
 
 /* ── modal, palette, toast ── */
-.veil{position:fixed;inset:0;z-index:60;background:rgba(3,4,8,.6);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:10vh 16px}
-.veil.on{display:flex}
-.modal{width:min(520px,100%);border-radius:22px;background:#0D0F18;border:1px solid var(--line2);padding:22px;box-shadow:0 40px 120px rgba(0,0,0,.8);animation:rise .3s var(--ease)}
+.veil{position:fixed;inset:0;z-index:60;background:rgba(3,4,8,.62);backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;padding:10vh 16px}
+.veil.on{display:flex;animation:fadeUp .25s}
+.modal{width:min(520px,100%);border-radius:24px;background:#0C0E17;border:1px solid var(--line2);padding:22px;box-shadow:0 40px 120px rgba(0,0,0,.8);animation:pop .35s var(--spring)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
 .modal h3{font-size:18px;letter-spacing:-.02em}
 .modal .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 #palette input{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line2);background:rgba(0,0,0,.35);outline:none;font-size:15px}
 #palette .opts{margin-top:10px;max-height:50vh;overflow:auto}
 #palette .opt{padding:11px 12px;border-radius:11px;cursor:pointer;display:flex;gap:10px;align-items:center;font-size:14px;color:var(--dim)}
 #palette .opt.on,#palette .opt:hover{background:rgba(110,136,255,.14);color:var(--paper)}
-#toast{position:fixed;left:50%;bottom:26px;z-index:90;transform:translate(-50%,20px);opacity:0;transition:all .3s var(--ease);padding:12px 18px;border-radius:14px;background:#11131D;border:1px solid var(--line2);font-size:13.5px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
-#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast{position:fixed;left:50%;bottom:28px;z-index:90;transform:translate(-50%,20px) scale(.96);opacity:0;transition:all .35s var(--spring);padding:12px 18px;border-radius:14px;background:#11131D;border:1px solid rgba(110,136,255,.35);font-size:13.5px;box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px -10px rgba(110,136,255,.6)}
+#toast.on{opacity:1;transform:translate(-50%,0) scale(1)}
 
 /* ── hero ── */
 .hero{display:flex;align-items:flex-end;gap:18px;margin-bottom:22px;flex-wrap:wrap}
-.hero h1{font-size:40px;letter-spacing:-.045em;line-height:1}
-.hero h1 em{font-style:normal;background:linear-gradient(100deg,var(--blue3),var(--blue) 50%,var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{font-size:42px;letter-spacing:-.045em;line-height:1.05}
+.hero h1 em{font-style:normal;background:linear-gradient(100deg,var(--blue3),var(--blue) 35%,var(--mint) 65%,var(--blue3));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 6s linear infinite}
+@keyframes sheen{to{background-position:-200% 0}}
 .hero p{color:var(--dim);font-size:14px;margin-top:8px}
-.ring-wrap{display:flex;align-items:center;gap:18px;margin-top:10px}
-.ring-wrap .big{font-size:42px;font-weight:700;letter-spacing:-.04em}
-.count-days{font-size:12px;color:var(--dim)}
+.ticker{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ring-wrap{display:flex;align-items:center;gap:18px;margin-top:12px;position:relative;z-index:1}
+.cd{display:flex;gap:8px;margin-top:4px}
+.cd div{text-align:center;min-width:50px;padding:8px 6px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+.cd b{display:block;font-size:20px;font-weight:700;letter-spacing:-.03em}
+.cd span{display:block;font-size:9.5px;letter-spacing:.14em;color:var(--faint);margin-top:2px}
 
-@media (max-width:1300px){.g6{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1350px){.g6{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:1000px){
   #app.on{grid-template-columns:1fr}
   aside{position:fixed;bottom:0;top:auto;left:0;right:0;height:auto;z-index:40;flex-direction:row;padding:8px 8px calc(8px + env(safe-area-inset-bottom));border-right:0;border-top:1px solid var(--line);overflow-x:auto}
-  .brand,.side-foot{display:none}
-  nav.side{display:flex;gap:4px}
+  .brand,.side-foot,.clock{display:none}
+  nav.side{display:flex;gap:2px}
+  nav.side .pill-bg{display:none}
   nav.side a{flex-direction:column;gap:4px;font-size:10.5px;padding:8px 10px}
-  nav.side a.on::before{display:none}
+  nav.side a.on{background:rgba(110,136,255,.16)}
   nav.side a .badge{display:none}
   main{padding:18px 16px 110px}
   .g4,.g3,.g2{grid-template-columns:1fr}.g6{grid-template-columns:repeat(2,1fr)}
   .span2,.span3,.span4{grid-column:auto}
   .top h2{font-size:24px}.hero h1{font-size:30px}
   .top .hide-m{display:none}
+  .kpi .v{font-size:28px}.kpi .spark{display:none}.kpi .d{max-width:100%}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="bg"></div>
+<div class="bg"><i></i><i></i><i></i></div>
 
-<!-- login -->
+<div id="intro"><div class="in"><div class="glow"></div>
+  <svg viewBox="0 0 100 100"><path class="seg" d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path class="seg" d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path class="seg" d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path class="seg" d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path class="seg" d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>
+  <h1>2FOLD <b>HQ</b></h1><p>COMMAND CENTER</p><div class="load"><i id="introBar"></i></div></div></div>
+
 <div id="login">
   <form class="box" id="loginForm" autocomplete="off">
     <svg class="mark" viewBox="0 0 100 100"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>
@@ -215,9 +297,10 @@ td.amt{text-align:right;font-weight:700}
       <svg viewBox="0 0 100 100"><path d="M30.87 22 L69.13 22 L57.47 33.67 L30.87 33.67 Z" fill="#6E88FF"/><path d="M69.13 22 L69.13 55.83 L57.47 44.17 L57.47 33.67 Z" fill="#4259D9"/><path d="M57.47 44.17 L69.13 55.83 L42.53 55.83 L30.87 44.17 Z" fill="#6E88FF"/><path d="M30.87 44.17 L42.53 55.83 L42.53 66.33 L30.87 78 Z" fill="#4259D9"/><path d="M42.53 66.33 L69.13 66.33 L69.13 78 L30.87 78 Z" fill="#6E88FF"/></svg>
       <div><b>2FOLD HQ</b><small>COMMAND CENTER</small></div>
     </div>
+    <div class="clock"><b class="num" id="clockT">--<span>:</span>--</b><small>RĪGA · <span id="clockD"></span></small></div>
     <nav class="side" id="nav"></nav>
     <div class="side-foot">
-      <div class="row"><span class="dot" id="syncDot"></span><span id="syncTxt">Connecting…</span></div>
+      <div class="row"><span class="dot live" id="syncDot"></span><span id="syncTxt">Connecting…</span></div>
       <button id="refreshBtn">Refresh now</button>
       <button id="logoutBtn">Log out</button>
     </div>
@@ -244,8 +327,10 @@ td.amt{text-align:right;font-weight:700}
 /* ═════════ data layer ═════════ */
 const DEFAULT_API = 'https://missed-call-production-1689.up.railway.app';
 const ls = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} } };
+const ss = { get: k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) {} } };
 let API = ls.get('hq-api') || DEFAULT_API, KEY = ls.get('hq-key') || '';
-let S = { cols: {}, live: { pages: [], pageDays: {}, callDays: {} }, now: null }, lastSync = 0, page = ls.get('hq-page') || 'overview';
+let S = { cols: {}, live: { pages: [], pageDays: {}, callDays: {} }, now: null }, lastSync = 0, page = ls.get('hq-page') || 'overview', lastPage = '';
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 async function api(path, method = 'GET', body) {
   const r = await fetch(API + path, { method, headers: { 'content-type': 'application/json', 'x-hq-key': KEY }, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
@@ -257,7 +342,7 @@ async function load(quiet) {
   try {
     const j = await api('/hq/all');
     S = { cols: j.collections || {}, live: j.live || { pages: [], pageDays: {}, callDays: {} }, now: j.now };
-    lastSync = Date.now(); setSync(true); render(); return true;
+    lastSync = Date.now(); setSync(true); render(quiet === 'soft'); return true;
   } catch (e) {
     setSync(false, e.status === 403 ? 'Wrong key' : 'Offline');
     if (e.status === 403) { ls.set('hq-key', null); KEY = ''; showLogin('That key was not accepted.'); }
@@ -267,9 +352,9 @@ async function load(quiet) {
 }
 const docs = col => Object.entries(S.cols[col] || {}).map(([id, d]) => ({ id, ...d.data, _v: d.v, _at: d.at }));
 const doc = (col, id) => { const d = (S.cols[col] || {})[id]; return d ? { id, ...d.data, _v: d.v } : null; };
-async function put(col, id, data) { await api(`/hq/c/${col}/${id}`, 'PUT', { data }); await load(true); }
-async function patch(col, id, data) { await api(`/hq/c/${col}/${id}`, 'PATCH', { data }); await load(true); }
-async function del(col, id) { await api(`/hq/c/${col}/${id}`, 'DELETE', {}); await load(true); }
+async function put(col, id, data) { await api(`/hq/c/${col}/${id}`, 'PUT', { data }); await load('soft'); }
+async function patch(col, id, data) { await api(`/hq/c/${col}/${id}`, 'PATCH', { data }); await load('soft'); }
+async function del(col, id) { await api(`/hq/c/${col}/${id}`, 'DELETE', {}); await load('soft'); }
 const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 /* ═════════ helpers ═════════ */
@@ -285,8 +370,20 @@ const ago = t => { if (!t) return ''; const s = (Date.now() - new Date(t)) / 100
 const rigaTime = t => new Date(t).toLocaleString('en-GB', { timeZone: 'Europe/Riga', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 const sum = (a, f = x => x) => a.reduce((s, x) => s + (+f(x) || 0), 0);
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2200); }
-function setSync(ok, why) { $('#syncDot').className = 'dot' + (ok ? '' : ' off'); $('#syncTxt').textContent = ok ? 'Synced ' + ago(lastSync) : (why || 'Offline'); }
+function setSync(ok, why) { $('#syncDot').className = 'dot' + (ok ? ' live' : ' off'); $('#syncTxt').textContent = ok ? 'Synced ' + ago(lastSync) : (why || 'Offline'); }
 setInterval(() => { if (lastSync) setSync(true); }, 15000);
+function tickClock() {
+  const n = new Date(), hm = n.toLocaleTimeString('en-GB', { timeZone: 'Europe/Riga', hour: '2-digit', minute: '2-digit' }).split(':');
+  $('#clockT').innerHTML = `${hm[0]}<span>:</span>${hm[1]}`;
+  $('#clockD').textContent = n.toLocaleDateString('en-GB', { timeZone: 'Europe/Riga', weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
+  const cd = $('#cdLive'); if (cd) cd.innerHTML = countdownHTML(cd.dataset.until);
+}
+setInterval(tickClock, 1000);
+function countdownHTML(until) {
+  let s = Math.max(0, (new Date(until + 'T23:59:59+02:00') - Date.now()) / 1000);
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = Math.floor(s % 60);
+  return [[d, 'DAYS'], [h, 'HRS'], [m, 'MIN'], [x, 'SEC']].map(([v, l]) => `<div><b class="num">${String(v).padStart(l === 'DAYS' ? 1 : 2, '0')}</b><span>${l}</span></div>`).join('');
+}
 
 const ICON = {
   overview: '<path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/>',
@@ -299,6 +396,7 @@ const ICON = {
   spark: '<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/>',
   mail: '<path d="M4 4h16v16H4z"/><path d="M4 7l8 6 8-6"/>', eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   fire: '<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 3-6 0 2 1 3 2 3 0-3-.5-5 0-7z"/>',
+  trend: '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
 };
 const ico = (n, s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[n] || ''}</svg>`;
 
@@ -306,110 +404,136 @@ const ico = (n, s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" 
 const tip = $('#tip');
 function bindTips(root) {
   root.querySelectorAll('[data-tip]').forEach(el => {
-    el.addEventListener('pointermove', e => { tip.innerHTML = el.dataset.tip; tip.style.opacity = 1; const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8); tip.style.left = x + 'px'; tip.style.top = (e.clientY - tip.offsetHeight - 12) + 'px'; });
-    el.addEventListener('pointerleave', () => tip.style.opacity = 0);
+    el.addEventListener('pointermove', e => { tip.innerHTML = el.dataset.tip; tip.classList.add('on'); const x = Math.min(e.clientX + 16, innerWidth - tip.offsetWidth - 8); tip.style.left = x + 'px'; tip.style.top = Math.max(8, e.clientY - tip.offsetHeight - 14) + 'px'; });
+    el.addEventListener('pointerleave', () => tip.classList.remove('on'));
   });
 }
-function smooth(pts) {
-  if (pts.length < 2) return pts.length ? `M${pts[0][0]},${pts[0][1]}` : '';
+// "nice" axis: max rounded up to 1/2/2.5/5 x 10^n, 4 steps
+function nice(max) {
+  max = Math.max(1, max);
+  const raw = max / 4, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+  return { step, top: step * 4 };
+}
+// monotone cubic curve through points (no overshoot below zero)
+function curve(pts) {
+  const n = pts.length; if (!n) return ''; if (n === 1) return `M${pts[0][0]},${pts[0][1]}`;
+  const dx = [], m = [], t = [];
+  for (let i = 0; i < n - 1; i++) { dx[i] = pts[i + 1][0] - pts[i][0]; m[i] = (pts[i + 1][1] - pts[i][1]) / (dx[i] || 1); }
+  t[0] = m[0]; t[n - 1] = m[n - 2];
+  for (let i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2;
+  for (let i = 0; i < n - 1; i++) { if (m[i] === 0) { t[i] = t[i + 1] = 0; continue; } const a = t[i] / m[i], b = t[i + 1] / m[i], h = a * a + b * b; if (h > 9) { const k = 3 / Math.sqrt(h); t[i] = k * a * m[i]; t[i + 1] = k * b * m[i]; } }
   let d = `M${pts[0][0]},${pts[0][1]}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1]}`;
-  }
+  for (let i = 0; i < n - 1; i++) { const h = dx[i] / 3; d += ` C${(pts[i][0] + h).toFixed(1)},${(pts[i][1] + h * t[i]).toFixed(1)} ${(pts[i + 1][0] - h).toFixed(1)},${(pts[i + 1][1] - h * t[i + 1]).toFixed(1)} ${pts[i + 1][0]},${pts[i + 1][1]}`; }
   return d;
 }
 let gid = 0;
-// bars (optionally stacked) + optional line on top
+function grid(W, pl, pr, pt, ih, ticks, fmtTick) {
+  let s = '';
+  ticks.forEach(v => { const y = pt + ih - ih * (v - ticks[0]) / (ticks[ticks.length - 1] - ticks[0] || 1); s += `<line x1="${pl}" x2="${W - pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(243,241,234,${v === 0 ? .14 : .05})" ${v === 0 ? '' : 'stroke-dasharray="3 5"'}/><text x="${pl - 8}" y="${(y + 3.5).toFixed(1)}" text-anchor="end" font-size="10" fill="#5F6478">${fmtTick(v)}</text>`; });
+  return s;
+}
+const short = v => Math.abs(v) >= 1000 ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + 'k' : String(+v.toFixed(1));
+// bars (stacked or side by side) + optional line on top
 function barChart({ labels, bars, line, h = 220, fmt = nf, stacked = true }) {
-  const W = 800, H = h, pl = 34, pr = 10, pt = 14, pb = 26, iw = W - pl - pr, ih = H - pt - pb, n = labels.length || 1;
+  const W = 800, H = h, pl = 36, pr = 8, pt = 12, pb = 26, iw = W - pl - pr, ih = H - pt - pb, n = labels.length || 1;
   const tot = labels.map((_, i) => stacked ? sum(bars, b => b.values[i]) : Math.max(...bars.map(b => b.values[i] || 0)));
-  const max = Math.max(1, ...tot, ...(line ? line.values : [0])) * 1.12;
-  const bw = Math.max(3, iw / n * .62), id = 'g' + (++gid);
+  const { step, top } = nice(Math.max(1, ...tot, ...(line ? line.values : [0])));
+  const ticks = [0, step, step * 2, step * 3, top], Y = v => pt + ih - ih * v / top;
+  const bw = Math.max(3, iw / n * .6), id = 'g' + (++gid);
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${h}px"><defs>`;
-  bars.forEach((b, j) => s += `<linearGradient id="${id}b${j}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${b.color}"/><stop offset="1" stop-color="${b.color}" stop-opacity=".35"/></linearGradient>`);
-  s += `<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${line ? line.color : '#fff'}" stop-opacity=".28"/><stop offset="1" stop-color="${line ? line.color : '#fff'}" stop-opacity="0"/></linearGradient></defs>`;
-  for (let g = 0; g <= 4; g++) { const y = pt + ih * g / 4; s += `<line x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}" stroke="rgba(243,241,234,.06)"/><text x="${pl - 8}" y="${y + 4}" text-anchor="end" font-size="10" fill="#5F6478">${Math.round(max * (1 - g / 4))}</text>`; }
+  bars.forEach((b, j) => s += `<linearGradient id="${id}b${j}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${b.color}"/><stop offset="1" stop-color="${b.color}" stop-opacity=".25"/></linearGradient>`);
+  s += `<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${line ? line.color : '#fff'}" stop-opacity=".3"/><stop offset="1" stop-color="${line ? line.color : '#fff'}" stop-opacity="0"/></linearGradient></defs>`;
+  s += grid(W, pl, pr, pt, ih, ticks, short);
   labels.forEach((l, i) => {
-    const cx = pl + iw * (i + .5) / n; let y0 = pt + ih, tipTxt = `<b>${esc(l)}</b>`;
+    const cx = pl + iw * (i + .5) / n; let y0 = pt + ih, tipTxt = `<b>${esc(l)}</b>`, g = '';
     bars.forEach((b, j) => {
-      const v = b.values[i] || 0, bh = ih * v / max, x = stacked ? cx - bw / 2 : cx - bw / 2 + j * bw / bars.length, w = stacked ? bw : bw / bars.length;
+      const v = b.values[i] || 0, bh = ih * v / top, x = stacked ? cx - bw / 2 : cx - bw / 2 + j * bw / bars.length, w = stacked ? bw : bw / bars.length - 1;
       const y = stacked ? y0 - bh : pt + ih - bh;
-      if (v > 0) s += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(4, w / 2)}" fill="url(#${id}b${j})" style="transform-origin:${cx}px ${pt + ih}px;animation:grow .9s ${(.02 * i).toFixed(2)}s var(--ease) both"/>`;
+      if (v > 0) g += `<rect class="bar" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" rx="${Math.min(5, w / 2).toFixed(1)}" fill="url(#${id}b${j})" style="color:${b.color};transform-origin:${cx}px ${pt + ih}px;animation:grow .9s ${(.018 * i).toFixed(3)}s var(--spring) both"/>`;
       if (stacked) y0 -= bh;
       tipTxt += `<br><span>${esc(b.name)}:</span> ${fmt(v)}`;
     });
     if (line) tipTxt += `<br><span>${esc(line.name)}:</span> ${fmt(line.values[i] || 0)}`;
-    s += `<rect x="${pl + iw * i / n}" y="${pt}" width="${iw / n}" height="${ih}" fill="transparent" data-tip="${esc(tipTxt)}"/>`;
-    const every = Math.ceil(n / 12);
+    s += `<g class="colg"><rect class="hl" x="${(pl + iw * i / n).toFixed(1)}" y="${pt}" width="${(iw / n).toFixed(1)}" height="${ih}" fill="rgba(110,136,255,.07)" rx="6"/>${g}<rect x="${(pl + iw * i / n).toFixed(1)}" y="${pt}" width="${(iw / n).toFixed(1)}" height="${ih}" fill="transparent" data-tip="${esc(tipTxt)}"/></g>`;
+    const every = Math.ceil(n / 10);
     if (i % every === 0) s += `<text x="${cx}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#5F6478">${esc(l)}</text>`;
   });
   if (line) {
-    const pts = line.values.map((v, i) => [+(pl + iw * (i + .5) / n).toFixed(1), +(pt + ih - ih * (v || 0) / max).toFixed(1)]);
-    const d = smooth(pts);
-    s += `<path d="${d} L${pts[pts.length - 1][0]},${pt + ih} L${pts[0][0]},${pt + ih} Z" fill="url(#${id}l)" pointer-events="none"/>`;
-    s += `<path d="${d}" fill="none" stroke="${line.color}" stroke-width="2.5" pointer-events="none" style="filter:drop-shadow(0 0 6px ${line.color});stroke-dasharray:3000;stroke-dashoffset:3000;animation:draw 1.6s .3s var(--ease) forwards"/>`;
-    pts.forEach(p => s += `<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${line.color}" pointer-events="none"/>`);
+    const pts = line.values.map((v, i) => [+(pl + iw * (i + .5) / n).toFixed(1), +Y(v || 0).toFixed(1)]), d = curve(pts), last = pts[pts.length - 1];
+    s += `<path d="${d} L${last[0]},${pt + ih} L${pts[0][0]},${pt + ih} Z" fill="url(#${id}l)" pointer-events="none" style="animation:fade 1.2s .6s both"/>`;
+    s += `<path d="${d}" fill="none" stroke="${line.color}" stroke-width="2.4" stroke-linecap="round" pointer-events="none" style="filter:drop-shadow(0 0 6px ${line.color});stroke-dasharray:3000;stroke-dashoffset:3000;animation:draw 1.8s .35s var(--ease) forwards"/>`;
+    s += `<circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${line.color}" pointer-events="none" style="filter:drop-shadow(0 0 6px ${line.color})"/><circle cx="${last[0]}" cy="${last[1]}" r="4" fill="none" stroke="${line.color}" pointer-events="none"><animate attributeName="r" values="4;14" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.8s" repeatCount="indefinite"/></circle>`;
   }
   return s + '</svg>';
 }
 function areaChart({ labels, series, h = 200, fmt = eur }) {
-  const W = 800, H = h, pl = 40, pr = 10, pt = 14, pb = 26, iw = W - pl - pr, ih = H - pt - pb, n = Math.max(labels.length, 2);
-  const all = series.flatMap(s => s.values), max = Math.max(1, ...all) * 1.15, min = Math.min(0, ...all);
-  const Y = v => pt + ih - ih * (v - min) / (max - min), id = 'a' + (++gid);
+  const W = 800, H = h, pl = 40, pr = 12, pt = 12, pb = 26, iw = W - pl - pr, ih = H - pt - pb, n = Math.max(labels.length, 2);
+  const all = series.flatMap(s => s.values), hi = nice(Math.max(1, ...all)), loRaw = Math.min(0, ...all);
+  const lo = loRaw < 0 ? -nice(-loRaw).top : 0, top = hi.top;
+  const ticks = lo < 0 ? [lo, lo / 2, 0, top / 2, top] : [0, hi.step, hi.step * 2, hi.step * 3, top];
+  const Y = v => pt + ih - ih * (v - lo) / (top - lo), id = 'a' + (++gid);
   let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:${h}px"><defs>`;
-  series.forEach((se, j) => s += `<linearGradient id="${id}${j}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${se.color}" stop-opacity=".35"/><stop offset="1" stop-color="${se.color}" stop-opacity="0"/></linearGradient>`);
-  s += '</defs>';
-  for (let g = 0; g <= 4; g++) { const v = max - (max - min) * g / 4, y = Y(v); s += `<line x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}" stroke="rgba(243,241,234,.06)"/><text x="${pl - 8}" y="${y + 4}" text-anchor="end" font-size="10" fill="#5F6478">${Math.round(v)}</text>`; }
+  series.forEach((se, j) => s += `<linearGradient id="${id}${j}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${se.color}" stop-opacity=".38"/><stop offset="1" stop-color="${se.color}" stop-opacity="0"/></linearGradient>`);
+  s += '</defs>' + grid(W, pl, pr, pt, ih, ticks, short);
   series.forEach((se, j) => {
-    const pts = se.values.map((v, i) => [+(pl + iw * i / (n - 1)).toFixed(1), +Y(v).toFixed(1)]);
-    const d = smooth(pts);
-    s += `<path d="${d} L${pts[pts.length - 1][0]},${Y(0)} L${pts[0][0]},${Y(0)} Z" fill="url(#${id}${j})"/>`;
-    s += `<path d="${d}" fill="none" stroke="${se.color}" stroke-width="2.6" style="filter:drop-shadow(0 0 7px ${se.color});stroke-dasharray:3000;stroke-dashoffset:3000;animation:draw 1.8s ${.2 * j}s var(--ease) forwards"/>`;
+    const pts = se.values.map((v, i) => [+(pl + iw * i / (n - 1)).toFixed(1), +Y(v).toFixed(1)]), d = curve(pts), last = pts[pts.length - 1];
+    s += `<path d="${d} L${last[0]},${Y(0)} L${pts[0][0]},${Y(0)} Z" fill="url(#${id}${j})" style="animation:fade 1.2s ${.4 + .2 * j}s both"/>`;
+    s += `<path d="${d}" fill="none" stroke="${se.color}" stroke-width="2.6" stroke-linecap="round" style="filter:drop-shadow(0 0 7px ${se.color});stroke-dasharray:3000;stroke-dashoffset:3000;animation:draw 1.8s ${.2 * j}s var(--ease) forwards"/>`;
+    s += `<circle cx="${last[0]}" cy="${last[1]}" r="3.5" fill="${se.color}"><animate attributeName="r" values="3.5;5.5;3.5" dur="2s" repeatCount="indefinite"/></circle>`;
   });
   labels.forEach((l, i) => {
     const x = pl + iw * i / (n - 1);
-    s += `<rect x="${x - iw / n / 2}" y="${pt}" width="${iw / n}" height="${ih}" fill="transparent" data-tip="${esc(`<b>${esc(l)}</b>` + series.map(se => `<br><span>${esc(se.name)}:</span> ${fmt(se.values[i] || 0)}`).join(''))}"/>`;
+    s += `<g class="colg"><line class="hl" x1="${x}" x2="${x}" y1="${pt}" y2="${pt + ih}" stroke="rgba(169,184,255,.4)" stroke-dasharray="3 4"/><rect x="${(x - iw / n / 2).toFixed(1)}" y="${pt}" width="${(iw / n).toFixed(1)}" height="${ih}" fill="transparent" data-tip="${esc(`<b>${esc(l)}</b>` + series.map(se => `<br><span>${esc(se.name)}:</span> ${fmt(se.values[i] || 0)}`).join(''))}"/></g>`;
     s += `<text x="${x}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#5F6478">${esc(l)}</text>`;
   });
   return s + '</svg>';
 }
 function donut(items, { size = 180, center = '', sub = '' } = {}) {
-  const tot = sum(items, i => i.value) || 1, r = 70, c = 2 * Math.PI * r; let off = 0;
-  let s = `<svg viewBox="0 0 200 200" width="${size}" height="${size}" style="flex:none"><circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(243,241,234,.06)" stroke-width="22"/>`;
-  items.forEach((it, i) => {
+  const tot = sum(items, i => i.value) || 1, r = 70, c = 2 * Math.PI * r, id = 'm' + (++gid); let off = 0;
+  let s = `<svg viewBox="0 0 200 200" width="${size}" height="${size}" style="flex:none;overflow:visible;position:relative;z-index:1"><defs><mask id="${id}"><circle cx="100" cy="100" r="${r}" fill="none" stroke="#fff" stroke-width="26" stroke-dasharray="${c}" stroke-dashoffset="${c}" transform="rotate(-90 100 100)" style="animation:sweep 1.3s .1s var(--ease) forwards"/></mask></defs><circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(243,241,234,.06)" stroke-width="22"/><g mask="url(#${id})">`;
+  items.forEach(it => {
     const len = c * it.value / tot;
-    s += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="${it.color}" stroke-width="22" stroke-dasharray="${len} ${c - len}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)" style="filter:drop-shadow(0 0 6px ${it.color}88);animation:fade .8s ${.1 * i}s both" data-tip="${esc(`<b>${esc(it.label)}</b><br>${esc(it.fmt || nf(it.value))}`)}"/>`;
+    s += `<circle class="slice" cx="100" cy="100" r="${r}" fill="none" stroke="${it.color}" stroke-width="22" stroke-dasharray="${Math.max(0, len - 2)} ${c - len + 2}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)" style="filter:drop-shadow(0 0 8px ${it.color}99)" data-tip="${esc(`<b>${esc(it.label)}</b><br>${esc(it.fmt || nf(it.value))} · ${Math.round(100 * it.value / tot)}%`)}"/>`;
     off += len;
   });
-  return s + `<text x="100" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#F3F1EA">${esc(center)}</text><text x="100" y="120" text-anchor="middle" font-size="11" fill="#9BA0B4">${esc(sub)}</text></svg>`;
+  return s + `</g><text x="100" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#F3F1EA">${esc(center)}</text><text x="100" y="120" text-anchor="middle" font-size="11" fill="#9BA0B4">${esc(sub)}</text></svg>`;
 }
-function ring(p, { size = 120, color = '#6E88FF', label = '' } = {}) {
-  const r = 50, c = 2 * Math.PI * r, len = c * Math.max(0, Math.min(1, p));
-  return `<svg viewBox="0 0 120 120" width="${size}" height="${size}" style="flex:none"><circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(243,241,234,.07)" stroke-width="10"/><circle cx="60" cy="60" r="${r}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${len} ${c}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px ${color})"/><text x="60" y="66" text-anchor="middle" font-size="20" font-weight="700" fill="#F3F1EA">${esc(label)}</text></svg>`;
+function ring(p, { size = 124, color = '#6E88FF', label = '' } = {}) {
+  const r = 50, c = 2 * Math.PI * r, len = c * Math.max(0, Math.min(1, p)), id = 'r' + (++gid);
+  return `<svg viewBox="0 0 120 120" width="${size}" height="${size}" style="flex:none;overflow:visible"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A9B8FF"/><stop offset="1" stop-color="${color}"/></linearGradient></defs>
+  <circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(243,241,234,.07)" stroke-width="10"/>
+  <circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(110,136,255,.18)" stroke-width="1" stroke-dasharray="2 6"><animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="40s" repeatCount="indefinite"/></circle>
+  <circle cx="60" cy="60" r="${r}" fill="none" stroke="url(#${id})" stroke-width="10" stroke-linecap="round" stroke-dasharray="${len} ${c}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px ${color})"/>
+  <g><animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="8s" repeatCount="indefinite"/><circle cx="60" cy="10" r="3" fill="#A9B8FF" style="filter:drop-shadow(0 0 6px #A9B8FF)"/></g>
+  <text x="60" y="66" text-anchor="middle" font-size="20" font-weight="700" fill="#F3F1EA">${esc(label)}</text></svg>`;
 }
 function spark(vals, color = '#6E88FF') {
-  if (!vals.length) return '';
-  const max = Math.max(1, ...vals), pts = vals.map((v, i) => [+(i * 92 / Math.max(1, vals.length - 1)).toFixed(1), +(32 - 28 * v / max).toFixed(1)]);
-  return `<svg class="spark" viewBox="0 0 92 34"><path d="${smooth(pts)}" fill="none" stroke="${color}" stroke-width="2" style="filter:drop-shadow(0 0 4px ${color})"/></svg>`;
+  if (!vals.length || !vals.some(v => v)) return '';
+  const max = Math.max(1, ...vals), pts = vals.map((v, i) => [+(2 + i * 92 / Math.max(1, vals.length - 1)).toFixed(1), +(34 - 30 * v / max).toFixed(1)]), id = 's' + (++gid), d = curve(pts), last = pts[pts.length - 1];
+  return `<svg class="spark" viewBox="0 0 96 38"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".35"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs><path d="${d} L${last[0]},38 L${pts[0][0]},38 Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="1.8" style="filter:drop-shadow(0 0 4px ${color});stroke-dasharray:400;stroke-dashoffset:400;animation:draw 1.6s .4s var(--ease) forwards"/><circle cx="${last[0]}" cy="${last[1]}" r="2.4" fill="${color}"/></svg>`;
 }
 function funnel(steps) {
   const max = Math.max(1, ...steps.map(s => s.value));
-  return '<div class="list" style="gap:9px">' + steps.map((s, i) => {
-    const w = Math.max(2, 100 * s.value / max), prev = i ? steps[i - 1].value : 0, rate = i && prev ? Math.round(100 * s.value / prev) + '%' : '';
-    return `<div data-tip="${esc(`<b>${esc(s.label)}</b><br>${nf(s.value)}${rate ? ' · ' + rate + ' of previous' : ''}`)}"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span style="color:var(--dim)">${esc(s.label)}</span><span class="num"><b>${nf(s.value)}</b> <span style="color:var(--faint)">${rate}</span></span></div><div class="bar-in" style="height:10px"><i style="width:${w}%;background:linear-gradient(90deg,${s.color}88,${s.color});box-shadow:0 0 14px ${s.color}88"></i></div></div>`;
+  return '<div class="list" style="gap:10px">' + steps.map((s, i) => {
+    const w = Math.max(1.5, 100 * s.value / max), prev = i ? steps[i - 1].value : 0, rate = i && prev ? Math.round(100 * s.value / prev) + '%' : '';
+    return `<div data-tip="${esc(`<b>${esc(s.label)}</b><br>${nf(s.value)}${rate ? ' · ' + rate + ' of previous step' : ''}`)}"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span style="color:var(--dim)">${esc(s.label)}</span><span class="num"><b>${nf(s.value)}</b> <span style="color:var(--faint);margin-left:4px">${rate}</span></span></div><div class="bar-in" style="height:10px"><i style="width:${w}%;background:linear-gradient(90deg,${s.color}66,${s.color});box-shadow:0 0 14px ${s.color}88;animation-delay:${.1 * i}s"></i></div></div>`;
   }).join('') + '</div>';
 }
 const st = document.createElement('style');
-st.textContent = '@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes fade{from{opacity:0}to{opacity:1}}';
+st.textContent = '@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes fade{from{opacity:0}to{opacity:1}}@keyframes sweep{to{stroke-dashoffset:0}}';
 document.head.appendChild(st);
 function countUp(root) {
   root.querySelectorAll('[data-count]').forEach(el => {
-    const to = +el.dataset.count, pre = el.dataset.pre || '', dec = +(el.dataset.dec || 0), t0 = performance.now(), dur = 900;
-    const f = now => { const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = pre + (to * e).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); if (p < 1) requestAnimationFrame(f); };
+    const to = +el.dataset.count, pre = el.dataset.pre || '', dec = +(el.dataset.dec || 0), t0 = performance.now(), dur = REDUCE ? 1 : 1100;
+    const fin = () => pre + to.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    const f = now => { const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4); el.textContent = pre + (to * e).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); if (p < 1) requestAnimationFrame(f); };
     requestAnimationFrame(f);
+    setTimeout(() => { el.textContent = fin(); }, dur + 400);   // hidden tabs pause animation frames
   });
+}
+function spotlight(root) {
+  root.querySelectorAll('.card').forEach(c => c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
 }
 
 /* ═════════ derived numbers ═════════ */
@@ -423,6 +547,7 @@ function money() {
   const byMonth = (arr, mo) => sum(arr.filter(x => String(x.date || '').startsWith(mo)), x => x.amount);
   return { m, clients, active, mrr, month, incM: byMonth(inc, month), expM: byMonth(exp, month), incAll: sum(inc, x => x.amount), expAll: sum(exp, x => x.amount), months, incSeries: months.map(mo => byMonth(inc, mo)), expSeries: months.map(mo => byMonth(exp, mo)) };
 }
+const monLabel = (m, y) => new Date(m + '-15T12:00:00Z').toLocaleDateString('en-GB', y ? { month: 'short', year: '2-digit' } : { month: 'short' });
 function outreachDays(n = 30) {
   const o = Object.fromEntries(docs('outreach').map(d => [d.id, d])), days = [];
   for (let i = n - 1; i >= 0; i--) days.push(addDays(today(), -i));
@@ -437,37 +562,47 @@ const PAGES = [
   ['outreach', 'Outreach', 'outreach'], ['calls', 'Calls', 'calls'], ['clients', 'Clients', 'clients'], ['tasks', 'Tasks', 'tasks'],
 ];
 function renderNav() {
-  const openTasks = docs('tasks').filter(t => !t.done && t.due && t.due <= today()).length;
+  const dueTasks = docs('tasks').filter(t => !t.done && t.due && t.due <= today()).length;
   const warm = docs('deals').filter(d => ['warm', 'contacted', 'interested', 'trial'].includes(d.stage)).length;
-  const badge = { tasks: openTasks, pipeline: warm };
-  $('#nav').innerHTML = PAGES.map(([id, label, ic]) => `<a href="#${id}" data-p="${id}" class="${page === id ? 'on' : ''}">${ico(ic)}<span>${label}</span>${badge[id] ? `<span class="badge">${badge[id]}</span>` : ''}</a>`).join('');
+  const badge = { tasks: dueTasks, pipeline: warm };
+  const nav = $('#nav');
+  nav.innerHTML = '<div class="pill-bg" id="pillBg"></div>' + PAGES.map(([id, label, ic]) => `<a href="#${id}" data-p="${id}" class="${page === id ? 'on' : ''}">${ico(ic)}<span>${label}</span>${badge[id] ? `<span class="badge">${badge[id]}</span>` : ''}</a>`).join('');
+  const on = nav.querySelector('a.on'), pb = $('#pillBg');
+  if (on) { if (!renderNav.done) pb.style.transition = 'none'; pb.style.top = on.offsetTop + 'px'; pb.style.height = on.offsetHeight + 'px'; requestAnimationFrame(() => pb.style.transition = ''); renderNav.done = 1; }
 }
 function go(p) { if (!PAGES.some(x => x[0] === p)) p = 'overview'; page = p; ls.set('hq-page', p); if (location.hash !== '#' + p) history.replaceState(null, '', '#' + p); render(); scrollTo({ top: 0, behavior: 'smooth' }); }
 addEventListener('hashchange', () => go(location.hash.slice(1)));
 
-function render() {
+function render(soft) {
   renderNav();
   const meta = doc('meta', 'main') || {};
   const fn = VIEWS[page] || VIEWS.overview, title = PAGES.find(x => x[0] === page)[1];
   $('#pageTitle').textContent = title;
   $('#pageSub').textContent = new Date().toLocaleDateString('en-GB', { timeZone: 'Europe/Riga', weekday: 'long', day: 'numeric', month: 'long' }) + (meta.company ? ' · ' + meta.company : '');
-  const v = $('#view'); v.innerHTML = fn(meta); countUp(v); bindTips(v); (AFTER[page] || (() => {}))(v);
+  const v = $('#view'), y = scrollY;
+  v.innerHTML = fn(meta);
+  const newPage = page !== lastPage; lastPage = page;
+  if (newPage) { v.classList.add('swap'); void v.offsetWidth; v.classList.remove('swap'); }
+  else if (soft) { v.querySelectorAll('.card,.col').forEach(c => c.style.animation = 'none'); scrollTo(0, y); }
+  v.querySelectorAll('.card,.col').forEach((c, i) => c.style.setProperty('--i', i));
+  if (!soft || newPage) countUp(v); else v.querySelectorAll('[data-count]').forEach(el => el.textContent = (el.dataset.pre || '') + (+el.dataset.count).toLocaleString('en-US', { minimumFractionDigits: +(el.dataset.dec || 0), maximumFractionDigits: +(el.dataset.dec || 0) }));
+  bindTips(v); spotlight(v); (AFTER[page] || (() => {}))(v); tickClock();
 }
 const kpi = (label, val, { pre = '', suf = '', dec = 0, d = '', ic = 'spark', spk = null, color } = {}) => {
-  const neg = +val < 0, p = (neg ? '−' : '') + pre;
-  return `<div class="card kpi"><h3>${esc(label)}</h3><div class="ic" ${color ? `style="background:${color}22;color:${color}"` : ''}>${ico(ic)}</div><div class="v num"><span data-count="${Math.abs(+val || 0)}" data-pre="${p}" data-dec="${dec}">${p}0</span>${suf ? `<small>${suf}</small>` : ''}</div><div class="d">${d}</div>${spk ? spark(spk, color || '#6E88FF') : ''}</div>`;
+  const neg = +val < 0, p = (neg ? '−' : '') + pre, c = color || '#6E88FF';
+  return `<div class="card kpi"><h3 title="${esc(label)}">${esc(label)}</h3><div class="ic" style="background:${c}1f;color:${c};box-shadow:0 0 20px -6px ${c}88">${ico(ic)}</div><div class="v num"><span data-count="${Math.abs(+val || 0)}" data-pre="${p}" data-dec="${dec}">${p}0</span>${suf ? `<small>${suf}</small>` : ''}</div><div class="d">${d}</div>${spk ? spark(spk, c) : ''}</div>`;
 };
 
 function widgetsFor(where) {
   const ws = docs('widgets').filter(w => (w.page || 'overview') === where).sort((a, b) => (a.order || 0) - (b.order || 0));
   if (!ws.length) return '';
-  return `<div class="grid g3" style="margin-top:16px">` + ws.map(w => {
+  return `<div class="grid g3 mt">` + ws.map(w => {
     const span = w.wide ? 'span2' : '';
     if (w.type === 'kpi') return `<div class="card kpi ${span}"><h3>${esc(w.title)}</h3><div class="v num">${esc(w.value)}${w.suffix ? `<small>${esc(w.suffix)}</small>` : ''}</div><div class="d">${esc(w.sub || '')}</div></div>`;
     if (w.type === 'bar') return `<div class="card ${span}"><h3>${esc(w.title)}</h3>${barChart({ labels: (w.series || []).map(s => s.label), bars: [{ name: w.name || w.title, color: w.color || '#6E88FF', values: (w.series || []).map(s => +s.value || 0) }], h: 180 })}</div>`;
     if (w.type === 'donut') { const cols = ['#6E88FF', '#3DDC97', '#F5B544', '#FF6AD5', '#A78BFA', '#FF5A5F']; const items = (w.series || []).map((s, i) => ({ label: s.label, value: +s.value || 0, color: s.color || cols[i % 6] })); return `<div class="card ${span}"><h3>${esc(w.title)}</h3><div style="display:flex;align-items:center;gap:18px;margin-top:10px">${donut(items, { size: 150, center: w.center || '', sub: w.sub || '' })}<div class="legend" style="flex-direction:column">${items.map(i => `<span><i style="background:${i.color}"></i>${esc(i.label)} · ${nf(i.value)}</span>`).join('')}</div></div></div>`; }
     if (w.type === 'list') return `<div class="card ${span}"><h3>${esc(w.title)}</h3><div class="list">${(w.items || []).map(it => `<div class="li"><div class="t"><b>${esc(it.title || it)}</b>${it.sub ? `<small>${esc(it.sub)}</small>` : ''}</div>${it.pill ? `<span class="pill ${esc(it.color || 'blue')}">${esc(it.pill)}</span>` : ''}</div>`).join('')}</div></div>`;
-    return `<div class="card ${span}"><h3>${esc(w.title)}</h3><div style="margin-top:10px;color:var(--dim);font-size:14px;line-height:1.55;white-space:pre-wrap">${esc(w.text || '')}</div></div>`;
+    return `<div class="card ${span}"><h3>${esc(w.title)}</h3><div style="margin-top:10px;color:var(--dim);font-size:14px;line-height:1.55;white-space:pre-wrap;position:relative;z-index:1">${esc(w.text || '')}</div></div>`;
   }).join('') + '</div>';
 }
 
@@ -477,46 +612,50 @@ VIEWS.overview = meta => {
   const sentAll = sum(docs('outreach'), d => d.sent), week = sum(O.sent.slice(-7)), read = V.filter(p => p.engaged > 0).length;
   const deals = docs('deals'), warm = deals.filter(d => ['warm', 'contacted', 'interested', 'trial'].includes(d.stage));
   const goal = +meta.mrrGoal || 500, spots = +meta.foundingSpots || 5, taken = M.clients.filter(c => c.founding).length;
-  const until = meta.foundingUntil || '2027-02-28', daysLeft = Math.max(0, Math.ceil((new Date(until + 'T23:59:59+02:00') - Date.now()) / 864e5));
+  const until = meta.foundingUntil || '2027-02-28';
   const replies = sum(docs('outreach'), d => d.replies), clientDeals = deals.filter(d => d.kind !== 'partner');
   const warmClients = clientDeals.filter(d => d.stage !== 'lost').length, interested = clientDeals.filter(d => ['interested', 'trial', 'won'].includes(d.stage)).length, trials = clientDeals.filter(d => ['trial', 'won'].includes(d.stage)).length;
   const tasks = docs('tasks').filter(t => !t.done && (!t.due || t.due <= addDays(today(), 1))).sort((a, b) => String(a.due || '9').localeCompare(String(b.due || '9'))).slice(0, 6);
   const plan = doc('plan', today()) || {};
   const hour = +new Date().toLocaleString('en-GB', { timeZone: 'Europe/Riga', hour: '2-digit', hour12: false });
-  const hello = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  const hello = hour < 5 ? 'Still up' : hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  const nextCall = deals.filter(d => d.nextDate && d.stage !== 'lost').sort((a, b) => a.nextDate.localeCompare(b.nextDate))[0];
   return `
-  <div class="hero"><div><h1>${hello}, <em>${esc(meta.owner || 'boss')}</em>.</h1><p>${warm.length} warm deal${warm.length === 1 ? '' : 's'} in the pipeline · ${nf(week)} emails this week · ${read} people read their page</p></div></div>
+  <div class="hero"><div><h1>${hello}, <em>${esc(meta.owner || 'boss')}</em>.</h1><p>Here is where 2FOLD stands right now.</p>
+    <div class="ticker"><span class="pill amber">● ${warm.length} warm deals</span><span class="pill blue">${nf(week)} emails this week</span><span class="pill mint">${read} read their page</span>${nextCall ? `<span class="pill pink">next: ${esc(nextCall.name)} · ${esc(dayLabel(nextCall.nextDate))}</span>` : ''}</div></div></div>
   <div class="grid g6">
-    ${kpi('MRR', M.mrr, { pre: '€', d: `<span>goal ${eur(goal)}</span>`, ic: 'money', color: '#3DDC97', spk: M.incSeries })}
-    ${kpi('Clients', M.active.length, { suf: ` / ${spots} founding`, d: `${spots - taken} founding spots left`, ic: 'clients', color: '#A9B8FF' })}
-    ${kpi('Profit · this month', M.incM - M.expM, { pre: '€', d: `${eur(M.incM)} in · ${eur(M.expM)} out`, ic: 'money', color: M.incM - M.expM >= 0 ? '#3DDC97' : '#FF5A5F' })}
+    ${kpi('MRR', M.mrr, { pre: '€', d: `goal ${eur(goal)}`, ic: 'money', color: '#3DDC97', spk: M.incSeries })}
+    ${kpi('Clients', M.active.length, { suf: `/ ${spots}`, d: `${spots - taken} founding spots left`, ic: 'clients', color: '#A9B8FF' })}
+    ${kpi('Profit · month', M.incM - M.expM, { pre: '€', d: `${eur(M.incM)} in · ${eur(M.expM)} out`, ic: 'trend', color: M.incM - M.expM >= 0 ? '#3DDC97' : '#FF5A5F' })}
     ${kpi('Emails sent', sentAll, { d: `<span class="up">+${nf(week)}</span> this week`, ic: 'mail', spk: O.sent })}
-    ${kpi('Read their page', read, { d: `${V.length} opened in total`, ic: 'eye', color: '#F5B544', spk: O.read })}
+    ${kpi('Read their page', read, { d: `${V.length} opened`, ic: 'eye', color: '#F5B544', spk: O.read })}
     ${kpi('Warm deals', warm.length, { d: `${deals.filter(d => d.kind === 'partner' && d.stage !== 'lost').length} partners in talks`, ic: 'fire', color: '#FF6AD5' })}
   </div>
-  <div class="grid g3" style="margin-top:16px">
-    <div class="card span2"><h3>Outreach · last 30 days <span class="r">bars = emails · line = page reads</span></h3>${barChart({ labels: O.days.map(dayLabel), bars: [{ name: 'Emails sent', color: '#6E88FF', values: O.sent }], line: { name: 'Pages read', color: '#3DDC97', values: O.read }, h: 230 })}
+  <div class="grid g3 mt">
+    <div class="card span2"><h3>Outreach · last 30 days <span class="r">hover a day</span></h3>${barChart({ labels: O.days.map(dayLabel), bars: [{ name: 'Emails sent', color: '#6E88FF', values: O.sent }], line: { name: 'Pages read', color: '#3DDC97', values: O.read }, h: 236 })}
       <div class="legend"><span><i style="background:#6E88FF"></i>Emails sent</span><span><i style="background:#3DDC97"></i>Pages read</span></div></div>
     <div class="card"><h3>Founding offer</h3>
-      <div class="ring-wrap">${ring(taken / spots, { label: `${taken}/${spots}`, color: '#6E88FF' })}<div><div class="big num">${daysLeft}</div><div class="count-days">days left · until ${dayLabel(until)}</div><div class="count-days" style="margin-top:8px">99 € AI phone · 39 € text-back</div></div></div>
-      <h3 style="margin-top:20px">MRR goal</h3><div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px"><span>${eur(M.mrr)}</span><span style="color:var(--faint)">${eur(goal)}</span></div><div class="bar-in"><i style="width:${Math.min(100, 100 * M.mrr / goal)}%"></i></div>
+      <div class="ring-wrap">${ring(taken / spots, { label: `${taken}/${spots}`, color: '#6E88FF' })}<div><div style="font-size:12px;color:var(--dim)">spots taken</div><div style="font-size:13px;margin-top:6px">99 € AI phone<br>39 € text-back</div></div></div>
+      <div style="font-size:11px;letter-spacing:.14em;color:var(--faint);margin-top:16px;position:relative;z-index:1">OFFER ENDS ${esc(dayLabel(until).toUpperCase())}</div>
+      <div class="cd" id="cdLive" data-until="${esc(until)}" style="position:relative;z-index:1">${countdownHTML(until)}</div>
+      <h3 style="margin-top:18px">MRR goal</h3><div style="display:flex;justify-content:space-between;margin:10px 0 6px;font-size:13px;position:relative;z-index:1"><span>${eur(M.mrr)}</span><span style="color:var(--faint)">${eur(goal)}</span></div><div class="bar-in" style="z-index:1"><i style="width:${Math.max(1.5, Math.min(100, 100 * M.mrr / goal))}%"></i></div>
     </div>
   </div>
-  <div class="grid g3" style="margin-top:16px">
+  <div class="grid g3 mt">
     <div class="card"><h3>Funnel <span class="r">emails → clients</span></h3>${funnel([
       { label: 'Emails sent', value: sentAll, color: '#6E88FF' }, { label: 'Replied', value: replies, color: '#FF6AD5' },
       { label: 'Warm leads', value: warmClients, color: '#F5B544' }, { label: 'Interested', value: interested, color: '#A78BFA' },
       { label: 'Free week', value: trials, color: '#A9B8FF' }, { label: 'Clients', value: M.active.length, color: '#3DDC97' }])}
-      <div style="margin-top:14px;font-size:12px;color:var(--faint)">Personal pages (since 19 Nov): ${V.length} opened · ${read} read</div></div>
-    <div class="card"><h3>Money · 6 months</h3>${areaChart({ labels: M.months.map(m => new Date(m + '-15T12:00:00Z').toLocaleDateString('en-GB', { month: 'short' })), series: [{ name: 'Income', color: '#3DDC97', values: M.incSeries }, { name: 'Costs', color: '#FF6AD5', values: M.expSeries }], h: 190 })}
+      <div style="margin-top:14px;font-size:12px;color:var(--faint);position:relative;z-index:1">Personal pages (since 19 Nov): ${V.length} opened · ${read} read</div></div>
+    <div class="card"><h3>Money · 6 months</h3>${areaChart({ labels: M.months.map(m => monLabel(m)), series: [{ name: 'Income', color: '#3DDC97', values: M.incSeries }, { name: 'Costs', color: '#FF6AD5', values: M.expSeries }], h: 196 })}
       <div class="legend"><span><i style="background:#3DDC97"></i>Income</span><span><i style="background:#FF6AD5"></i>Costs</span></div></div>
-    <div class="card"><h3>Today <span class="r">${esc(wd(today()))}</span></h3>
-      ${(plan.rounds || []).length ? `<div class="list">${plan.rounds.map(r => `<div class="li"><span class="pill ${r.done ? 'mint' : 'blue'}">${r.done ? 'sent' : 'round'}</span><div class="t"><b>${esc(r.label)}</b>${r.note ? `<small>${esc(r.note)}</small>` : ''}</div></div>`).join('')}</div>` : ''}
-      <div class="list">${tasks.length ? tasks.map(t => `<div class="li"><button class="check" data-task="${t.id}"></button><div class="t"><b>${esc(t.title)}</b><small>${t.due ? (t.due < today() ? '<span style="color:var(--red)">overdue · </span>' : '') + esc(dayLabel(t.due)) : 'no date'}${t.area ? ' · ' + esc(t.area) : ''}</small></div></div>`).join('') : '<div class="empty">Nothing due. Nice.</div>'}</div></div>
+    <div class="card"><h3>Today <span class="r">${esc(wd(today()))} ${esc(dayLabel(today()))}</span></h3>
+      ${(plan.rounds || []).length ? `<div class="list">${plan.rounds.map(r => `<div class="li"><span class="pill ${r.done ? 'mint' : 'blue'}">${r.done ? 'done' : 'plan'}</span><div class="t"><b>${esc(r.label)}</b>${r.note ? `<small>${esc(r.note)}</small>` : ''}</div></div>`).join('')}</div>` : ''}
+      <div class="list">${tasks.length ? tasks.map(t => `<div class="li"><button class="check" data-task="${t.id}" aria-label="done"></button><div class="t"><b>${esc(t.title)}</b><small>${t.due ? (t.due < today() ? '<span style="color:var(--red)">overdue · </span>' : '') + esc(dayLabel(t.due)) : 'no date'}${t.time ? ' · ' + esc(t.time) : ''}${t.area ? ' · ' + esc(t.area) : ''}</small></div></div>`).join('') : '<div class="empty">Nothing due. Nice.</div>'}</div></div>
   </div>
-  <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3>Who read their page <span class="r">live from the server</span></h3><div class="list">${V.filter(p => p.engaged > 0).slice(0, 7).map(p => `<div class="li"><span class="dot" style="background:${p.yes ? '#3DDC97' : '#F5B544'};box-shadow:0 0 10px ${p.yes ? '#3DDC97' : '#F5B544'}"></span><div class="t"><b>${esc(p.name)}</b><small>${esc(p.trade)} · opened ${p.open}× · ${esc(ago(p.last))}</small></div>${p.yes ? '<span class="pill mint">said YES</span>' : p.calc ? '<span class="pill amber">used calculator</span>' : '<span class="pill blue">read</span>'}</div>`).join('') || '<div class="empty">No readers yet.</div>'}</div></div>
-    <div class="card"><h3>Hot deals</h3><div class="list">${warm.sort((a, b) => STAGES.findIndex(s => s[0] === b.stage) - STAGES.findIndex(s => s[0] === a.stage)).slice(0, 7).map(d => `<div class="li"><div class="t"><b>${esc(d.name)}</b><small>${esc(d.next || d.signal || d.trade || '')}${d.nextDate ? ' · ' + esc(dayLabel(d.nextDate)) : ''}</small></div><span class="pill ${stageColor(d.stage)}">${esc(stageName(d.stage))}</span></div>`).join('') || '<div class="empty">No warm deals.</div>'}</div></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>Who read their page <span class="r"><span class="dot live" style="display:inline-block;margin-right:6px;width:6px;height:6px"></span>live</span></h3><div class="list">${V.filter(p => p.engaged > 0).slice(0, 7).map(p => `<div class="li"><span class="dot live" style="background:${p.yes ? '#3DDC97' : '#F5B544'};box-shadow:0 0 10px ${p.yes ? '#3DDC97' : '#F5B544'};color:${p.yes ? '#3DDC97' : '#F5B544'}"></span><div class="t"><b>${esc(p.name)}</b><small>${esc(p.trade)} · opened ${p.open}× · ${esc(ago(p.last))}</small></div>${p.yes ? '<span class="pill mint">said YES</span>' : p.calc ? '<span class="pill amber">used calculator</span>' : '<span class="pill blue">read</span>'}</div>`).join('') || '<div class="empty">No readers yet.</div>'}</div></div>
+    <div class="card"><h3>Hot deals</h3><div class="list">${warm.sort((a, b) => STAGES.findIndex(s => s[0] === b.stage) - STAGES.findIndex(s => s[0] === a.stage)).slice(0, 7).map(d => `<div class="li"><span class="dot" style="background:${stageHex(d.stage)};box-shadow:0 0 10px ${stageHex(d.stage)}"></span><div class="t"><b>${esc(d.name)}</b><small>${esc(d.next || d.signal || d.trade || '')}${d.nextDate ? ' · ' + esc(dayLabel(d.nextDate)) : ''}</small></div><span class="pill ${stageColor(d.stage)}">${esc(stageName(d.stage))}</span></div>`).join('') || '<div class="empty">No warm deals.</div>'}</div></div>
   </div>
   ${widgetsFor('overview')}`;
 };
@@ -527,57 +666,63 @@ VIEWS.money = () => {
   M.m.filter(x => x.type === 'expense').forEach(x => cats[x.cat || 'other'] = (cats[x.cat || 'other'] || 0) + (+x.amount || 0));
   const items = Object.entries(cats).map(([k, v]) => ({ label: k, value: v, color: colors[k] || '#A78BFA', fmt: eur(v, 2) }));
   const rows = M.m.sort((a, b) => String(b.date).localeCompare(String(a.date)));
-  const profit = M.incAll - M.expAll, cum = []; let c = 0; M.months.forEach((mo, i) => { c += M.incSeries[i] - M.expSeries[i]; cum.push(c); });
+  const profit = M.incAll - M.expAll, cum = []; let c = 0; M.months.forEach((mo, i) => { c += M.incSeries[i] - M.expSeries[i]; cum.push(+c.toFixed(2)); });
   return `
   <div class="grid g4">
     ${kpi('MRR', M.mrr, { pre: '€', d: `ARR ${eur(M.mrr * 12)}`, ic: 'money', color: '#3DDC97' })}
-    ${kpi('Income · this month', M.incM, { pre: '€', dec: 2, d: `${eur(M.incAll, 2)} all time`, ic: 'money', color: '#3DDC97' })}
-    ${kpi('Costs · this month', M.expM, { pre: '€', dec: 2, d: `${eur(M.expAll, 2)} all time`, ic: 'money', color: '#FF6AD5' })}
+    ${kpi('Income · month', M.incM, { pre: '€', dec: 2, d: `${eur(M.incAll, 2)} all time`, ic: 'trend', color: '#3DDC97' })}
+    ${kpi('Costs · month', M.expM, { pre: '€', dec: 2, d: `${eur(M.expAll, 2)} all time`, ic: 'money', color: '#FF6AD5' })}
     ${kpi('Profit · all time', profit, { pre: '€', dec: 2, d: profit < 0 ? 'still investing' : 'in the green', ic: 'spark', color: profit < 0 ? '#FF5A5F' : '#3DDC97' })}
   </div>
-  <div class="grid g3" style="margin-top:16px">
-    <div class="card span2"><h3>Income vs costs · by month</h3>${barChart({ labels: M.months.map(m => new Date(m + '-15T12:00:00Z').toLocaleDateString('en-GB', { month: 'short', year: '2-digit' })), bars: [{ name: 'Income', color: '#3DDC97', values: M.incSeries }, { name: 'Costs', color: '#FF6AD5', values: M.expSeries }], line: { name: 'Running profit', color: '#6E88FF', values: cum.map(x => Math.max(0, x)) }, stacked: false, fmt: v => eur(v, 2), h: 240 })}
-      <div class="legend"><span><i style="background:#3DDC97"></i>Income</span><span><i style="background:#FF6AD5"></i>Costs</span><span><i style="background:#6E88FF"></i>Running profit</span></div></div>
-    <div class="card"><h3>Where money goes</h3>${items.length ? `<div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:10px">${donut(items, { center: eur(M.expAll), sub: 'total costs' })}<div class="legend" style="justify-content:center">${items.map(i => `<span><i style="background:${i.color}"></i>${esc(i.label)} ${eur(i.value, 2)}</span>`).join('')}</div></div>` : '<div class="empty">No costs yet.</div>'}</div>
+  <div class="grid g3 mt">
+    <div class="card span2"><h3>Income vs costs · by month</h3>${barChart({ labels: M.months.map(m => monLabel(m, 1)), bars: [{ name: 'Income', color: '#3DDC97', values: M.incSeries }, { name: 'Costs', color: '#FF6AD5', values: M.expSeries }], stacked: false, fmt: v => eur(v, 2), h: 236 })}
+      <div class="legend"><span><i style="background:#3DDC97"></i>Income</span><span><i style="background:#FF6AD5"></i>Costs</span></div></div>
+    <div class="card"><h3>Where money goes</h3>${items.length ? `<div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:12px">${donut(items, { center: eur(M.expAll), sub: 'total costs' })}<div class="legend" style="justify-content:center">${items.map(i => `<span><i style="background:${i.color}"></i>${esc(i.label)} ${eur(i.value, 2)}</span>`).join('')}</div></div>` : '<div class="empty">No costs yet.</div>'}</div>
   </div>
-  <div class="grid g3" style="margin-top:16px">
-    <div class="card span2"><h3>All entries <span class="r">${rows.length}</span></h3>
-      ${rows.length ? `<table><tr><th>Date</th><th>What</th><th>Type</th><th style="text-align:right">Amount</th><th></th></tr>${rows.map(r => `<tr><td class="num" style="color:var(--dim)">${esc(dayLabel(r.date))}</td><td><b>${esc(r.label)}</b>${r.client ? `<div style="font-size:12px;color:var(--faint)">${esc(r.client)}</div>` : ''}</td><td><span class="pill ${r.type === 'income' ? 'mint' : 'pink'}">${esc(r.cat || r.type)}</span></td><td class="amt num" style="color:${r.type === 'income' ? 'var(--mint)' : 'var(--paper)'}">${r.type === 'income' ? '+' : '−'}${eur(r.amount, 2).replace('−', '')}</td><td style="text-align:right"><button class="btn sm" data-del="${r.id}">✕</button></td></tr>`).join('')}</table>` : '<div class="empty">No entries yet.</div>'}</div>
+  <div class="grid g3 mt">
+    <div class="card span2"><h3>Running profit <span class="r">all money in − all money out</span></h3>${areaChart({ labels: M.months.map(m => monLabel(m, 1)), series: [{ name: 'Running profit', color: profit < 0 ? '#FF5A5F' : '#3DDC97', values: cum }], h: 170, fmt: v => eur(v, 2) })}</div>
     <div class="card"><h3>Add entry</h3>${moneyForm()}</div>
-  </div>${widgetsFor('money')}`;
+  </div>
+  <div class="grid g3 mt">
+    <div class="card span2"><h3>All entries <span class="r">${rows.length}</span></h3>
+      ${rows.length ? `<table><tr><th>Date</th><th>What</th><th>Type</th><th style="text-align:right">Amount</th><th></th></tr>${rows.map(r => `<tr><td class="num" style="color:var(--dim)">${esc(dayLabel(r.date))}</td><td><b>${esc(r.label)}</b>${r.client ? `<div style="font-size:12px;color:var(--faint)">${esc(r.client)}</div>` : ''}</td><td><span class="pill ${r.type === 'income' ? 'mint' : 'pink'}">${esc(r.cat || r.type)}</span></td><td class="amt num" style="color:${r.type === 'income' ? 'var(--mint)' : 'var(--paper)'}">${r.type === 'income' ? '+' : '−'}${eur(r.amount, 2).replace('−', '')}</td><td style="text-align:right"><button class="btn sm" data-del="${r.id}" aria-label="delete">✕</button></td></tr>`).join('')}</table>` : '<div class="empty">No entries yet.</div>'}</div>
+    ${widgetsFor('money').replace('<div class="grid g3 mt">', '<div style="display:contents">')}
+  </div>`;
 };
 function moneyForm() {
   return `<form class="form" id="moneyForm"><div class="seg" id="mType"><button type="button" class="on" data-v="expense">Cost</button><button type="button" data-v="income">Income</button></div>
-  <label>What<input name="label" required placeholder="e.g. Vonage top-up"></label>
+  <label>What<input name="label" required placeholder="e.g. Railway hosting"></label>
   <div class="row"><label>Amount €<input name="amount" type="number" step="0.01" min="0" required></label><label>Date<input name="date" type="date" value="${today()}"></label></div>
   <div class="row"><label>Category<select name="cat"><option>tools</option><option>ads</option><option>hardware</option><option>other</option><option>monthly</option><option>setup</option><option>partner</option></select></label><label>Client (optional)<input name="client"></label></div>
-  <button class="btn primary" type="submit">Save</button></form>`;
+  <button class="btn primary" type="submit" style="justify-content:center">Save</button></form>`;
 }
 AFTER.money = v => {
   let type = 'expense';
   v.querySelectorAll('#mType button').forEach(b => b.onclick = () => { type = b.dataset.v; v.querySelectorAll('#mType button').forEach(x => x.classList.toggle('on', x === b)); });
   const f = v.querySelector('#moneyForm');
-  f.onsubmit = async e => { e.preventDefault(); const d = Object.fromEntries(new FormData(f)); d.amount = +d.amount; d.type = type; await put('money', uid('m'), d); toast('Saved'); };
+  f.onsubmit = async e => { e.preventDefault(); const d = Object.fromEntries(new FormData(f)); d.amount = +d.amount; d.type = type; await put('money', uid('m'), d); toast('Saved ✓'); };
   v.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => { if (confirm('Delete this entry?')) { await del('money', b.dataset.del); toast('Deleted'); } });
 };
 
 const STAGES = [['warm', 'Warm', '#F5B544'], ['contacted', 'Contacted', '#A9B8FF'], ['interested', 'Interested', '#FF6AD5'], ['trial', 'Free week', '#A78BFA'], ['won', 'Client', '#3DDC97'], ['lost', 'Lost', '#5F6478']];
 const stageName = s => (STAGES.find(x => x[0] === s) || [, s])[1];
+const stageHex = s => (STAGES.find(x => x[0] === s) || [, , '#6E88FF'])[2];
 const stageColor = s => ({ warm: 'amber', contacted: 'blue', interested: 'pink', trial: 'blue', won: 'mint', lost: '' }[s] || '');
 VIEWS.pipeline = () => {
   const deals = docs('deals'), kind = ls.get('hq-kind') || 'all';
   const shown = deals.filter(d => kind === 'all' || (d.kind || 'client') === kind);
-  return `<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap"><div class="seg" id="kindSeg">${[['all', 'All'], ['client', 'Clients'], ['partner', 'Partners']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" data-k="${k}">${l}</button>`).join('')}</div><span style="color:var(--faint);font-size:12.5px">Drag cards between columns.</span></div>
-  <div class="kanban">${STAGES.map(([s, label, color]) => { const list = shown.filter(d => (d.stage || 'warm') === s); return `<div class="col" data-stage="${s}"><h4><i style="background:${color};box-shadow:0 0 10px ${color}"></i>${label}<span>${list.length}</span></h4>${list.map(d => `<div class="deal" draggable="true" data-id="${d.id}"><b>${esc(d.name)}</b><small>${esc(d.trade || '')}${d.kind === 'partner' ? ' · partner' : ''}</small>${d.signal ? `<div class="sig">● ${esc(d.signal)}</div>` : ''}<div class="meta">${d.value ? `<span class="pill mint">${eur(d.value)}/mo</span>` : ''}${d.next ? `<span class="pill">${esc(d.next)}${d.nextDate ? ' · ' + esc(dayLabel(d.nextDate)) : ''}</span>` : ''}${d.phone ? `<a class="pill blue" href="tel:${esc(d.phone)}" onclick="event.stopPropagation()">call</a>` : ''}</div></div>`).join('')}</div>`; }).join('')}</div>${widgetsFor('pipeline')}`;
+  const value = sum(shown.filter(d => ['warm', 'contacted', 'interested', 'trial'].includes(d.stage)), d => d.value);
+  return `<div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap"><div class="seg" id="kindSeg">${[['all', 'All'], ['client', 'Clients'], ['partner', 'Partners']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" data-k="${k}">${l}</button>`).join('')}</div><span class="pill mint">${eur(value)}/mo in play</span><span style="color:var(--faint);font-size:12.5px">Drag cards between columns · click to edit</span></div>
+  <div class="kanban">${STAGES.map(([s, label, color]) => { const list = shown.filter(d => (d.stage || 'warm') === s); return `<div class="col" data-stage="${s}"><h4><i style="background:${color};box-shadow:0 0 10px ${color}"></i>${label}<span>${list.length}</span></h4>${list.map(d => `<div class="deal" draggable="true" data-id="${d.id}" style="--sc:${color}"><b>${esc(d.name)}</b><small>${esc(d.trade || '')}${d.kind === 'partner' ? ' · partner' : ''}</small>${d.signal ? `<div class="sig">● ${esc(d.signal)}</div>` : ''}<div class="meta">${d.value ? `<span class="pill mint">${eur(d.value)}/mo</span>` : ''}${d.next ? `<span class="pill">${esc(d.next)}${d.nextDate ? ' · ' + esc(dayLabel(d.nextDate)) : ''}</span>` : ''}${d.phone ? `<a class="pill blue" href="tel:${esc(d.phone)}" onclick="event.stopPropagation()">call</a>` : ''}</div></div>`).join('')}</div>`; }).join('')}</div>${widgetsFor('pipeline')}`;
 };
 AFTER.pipeline = v => {
-  v.querySelectorAll('#kindSeg button').forEach(b => b.onclick = () => { ls.set('hq-kind', b.dataset.k); render(); });
+  v.querySelectorAll('#kindSeg button').forEach(b => b.onclick = () => { ls.set('hq-kind', b.dataset.k); render(true); });
   let dragId = null;
-  v.querySelectorAll('.deal').forEach(el => { el.ondragstart = e => { dragId = el.dataset.id; e.dataTransfer.effectAllowed = 'move'; }; el.onclick = () => dealModal(doc('deals', el.dataset.id)); });
+  v.querySelectorAll('.deal').forEach(el => { el.ondragstart = e => { dragId = el.dataset.id; el.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }; el.ondragend = () => el.classList.remove('dragging'); el.onclick = () => dealModal(doc('deals', el.dataset.id)); });
   v.querySelectorAll('.col').forEach(col => {
     col.ondragover = e => { e.preventDefault(); col.classList.add('over'); };
     col.ondragleave = () => col.classList.remove('over');
-    col.ondrop = async e => { e.preventDefault(); col.classList.remove('over'); if (dragId) { await patch('deals', dragId, { stage: col.dataset.stage, movedAt: today() }); toast('Moved to ' + stageName(col.dataset.stage)); } };
+    col.ondrop = async e => { e.preventDefault(); col.classList.remove('over'); if (dragId) { const s = col.dataset.stage; await patch('deals', dragId, { stage: s, movedAt: today() }); toast(s === 'won' ? '🎉 New client!' : 'Moved to ' + stageName(s)); } };
   });
 };
 function dealModal(d) {
@@ -590,7 +735,7 @@ function dealModal(d) {
     <label>Signal<input name="signal" value="${esc(d.signal || '')}"></label><label>Notes<textarea name="notes">${esc(d.notes || '')}</textarea></label>
     <div class="actions">${d.id ? '<button type="button" class="btn" id="dealDel">Delete</button>' : ''}<button type="button" class="btn" data-close>Cancel</button><button class="btn primary">Save</button></div></form>`);
   const f = $('#dealForm');
-  f.onsubmit = async e => { e.preventDefault(); const x = Object.fromEntries(new FormData(f)); x.value = +x.value || 0; await (d.id ? patch('deals', d.id, x) : put('deals', uid('d'), x)); closeModal(); toast('Saved'); };
+  f.onsubmit = async e => { e.preventDefault(); const x = Object.fromEntries(new FormData(f)); x.value = +x.value || 0; await (d.id ? patch('deals', d.id, x) : put('deals', uid('d'), x)); closeModal(); toast('Saved ✓'); };
   if (d.id) $('#dealDel').onclick = async () => { if (confirm('Delete this deal?')) { await del('deals', d.id); closeModal(); } };
 }
 
@@ -601,17 +746,18 @@ VIEWS.outreach = () => {
   return `
   <div class="grid g4">
     ${kpi('Emails sent · total', sum(docs('outreach'), d => d.sent), { ic: 'mail', spk: O.sent })}
-    ${kpi('This week', sum(O.sent.slice(-7)), { ic: 'mail' })}
+    ${kpi('This week', sum(O.sent.slice(-7)), { ic: 'trend' })}
     ${kpi('Pages opened', V.length, { ic: 'eye', color: '#F5B544', spk: O.opens })}
     ${kpi('Replies', sum(docs('outreach'), d => d.replies), { ic: 'spark', color: '#FF6AD5' })}
   </div>
-  <div class="grid g3" style="margin-top:16px">
-    <div class="card span2"><h3>Emails per day</h3>${barChart({ labels: O.days.map(dayLabel), bars: [{ name: 'Sent', color: '#6E88FF', values: O.sent }], line: { name: 'Pages opened', color: '#F5B544', values: O.opens }, h: 230 })}</div>
-    <div class="card"><h3>Week plan</h3><div class="list">${plans.length ? plans.map(p => `<div style="margin-bottom:8px"><div style="font-size:12px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin:6px 10px">${esc(wd(p.id))} · ${esc(dayLabel(p.id))}${p.id === today() ? ' · today' : ''}</div>${(p.rounds || []).map((r, i) => `<div class="li"><button class="check ${r.done ? 'on' : ''}" data-plan="${p.id}" data-i="${i}"></button><div class="t"><b>${esc(r.label)}</b>${r.note ? `<small>${esc(r.note)}</small>` : ''}</div></div>`).join('') || '<div class="empty" style="padding:8px">free day</div>'}</div>`).join('') : '<div class="empty">No plan yet.</div>'}</div></div>
+  <div class="grid g3 mt">
+    <div class="card span2"><h3>Emails per day <span class="r">last 30 days</span></h3>${barChart({ labels: O.days.map(dayLabel), bars: [{ name: 'Sent', color: '#6E88FF', values: O.sent }], line: { name: 'Pages opened', color: '#F5B544', values: O.opens }, h: 236 })}
+      <div class="legend"><span><i style="background:#6E88FF"></i>Emails sent</span><span><i style="background:#F5B544"></i>Pages opened</span></div></div>
+    <div class="card"><h3>Week plan</h3><div class="list">${plans.length ? plans.map(p => `<div style="margin-bottom:6px"><div style="font-size:11px;color:${p.id === today() ? 'var(--blue3)' : 'var(--faint)'};letter-spacing:.14em;text-transform:uppercase;margin:6px 10px">${esc(wd(p.id))} · ${esc(dayLabel(p.id))}${p.id === today() ? ' · today' : ''}</div>${(p.rounds || []).map((r, i) => `<div class="li ${r.done ? 'done' : ''}"><button class="check ${r.done ? 'on' : ''}" data-plan="${p.id}" data-i="${i}" aria-label="done"></button><div class="t"><b>${esc(r.label)}</b>${r.note ? `<small>${esc(r.note)}</small>` : ''}</div></div>`).join('') || '<div class="empty" style="padding:6px">free day</div>'}</div>`).join('') : '<div class="empty">No plan yet.</div>'}</div></div>
   </div>
-  <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3>By niche <span class="r">sent → read → replies</span></h3>${niches.length ? `<table><tr><th>Niche</th><th>Sent</th><th></th><th>Read</th><th>Replies</th><th>Season</th></tr>${niches.map(n => `<tr><td><b>${esc(n.name)}</b></td><td class="num">${nf(n.sent)}</td><td style="width:22%"><div class="bar-in"><i style="width:${100 * (n.sent || 0) / maxS}%"></i></div></td><td class="num">${n.read != null ? nf(n.read) : '–'}</td><td class="num">${nf(n.replies)}</td><td>${n.season ? `<span class="pill ${n.season === 'hot' ? 'pink' : n.season === 'warm' ? 'amber' : ''}">${esc(n.season)}</span>` : ''}</td></tr>`).join('')}</table>` : '<div class="empty">No niche data yet.</div>'}</div>
-    <div class="card"><h3>Page visits <span class="r">live · ${V.length}</span></h3><div class="list" style="max-height:420px;overflow:auto">${V.map(p => `<div class="li"><span class="dot" style="background:${p.engaged ? '#F5B544' : '#5F6478'};box-shadow:none"></span><div class="t"><b>${esc(p.name)}</b><small>${esc(p.trade)} · ${esc(rigaTime(p.last))}</small></div><span class="pill">${p.open}× open</span>${p.engaged ? '<span class="pill amber">read</span>' : ''}${p.calc ? '<span class="pill blue">calc</span>' : ''}${p.yes ? '<span class="pill mint">YES</span>' : ''}</div>`).join('') || '<div class="empty">No visits yet.</div>'}</div></div>
+  <div class="grid g2 mt">
+    <div class="card"><h3>By niche <span class="r">sent · read · replies</span></h3>${niches.length ? `<table><tr><th>Niche</th><th>Sent</th><th></th><th>Read</th><th>Replies</th><th>Season</th></tr>${niches.map(n => `<tr><td><b>${esc(n.name)}</b></td><td class="num">${nf(n.sent)}</td><td style="width:20%"><div class="bar-in"><i style="width:${100 * (n.sent || 0) / maxS}%"></i></div></td><td class="num">${n.read != null ? nf(n.read) : '–'}</td><td class="num">${nf(n.replies)}</td><td>${n.season ? `<span class="pill ${n.season === 'hot' ? 'pink' : n.season === 'warm' ? 'amber' : ''}">${n.season === 'hot' ? '🔥 ' : ''}${esc(n.season)}</span>` : ''}</td></tr>`).join('')}</table>` : '<div class="empty">No niche data yet.</div>'}</div>
+    <div class="card"><h3>Page visits <span class="r">live · ${V.length}</span></h3><div class="list" style="max-height:440px;overflow:auto">${V.map(p => `<div class="li"><span class="dot ${p.engaged ? 'live' : ''}" style="background:${p.engaged ? '#F5B544' : '#5F6478'};box-shadow:${p.engaged ? '0 0 10px #F5B544' : 'none'};color:#F5B544"></span><div class="t"><b>${esc(p.name)}</b><small>${esc(p.trade)} · ${esc(rigaTime(p.last))}</small></div><span class="pill">${p.open}× open</span>${p.engaged ? '<span class="pill amber">read</span>' : ''}${p.calc ? '<span class="pill blue">calc</span>' : ''}${p.yes ? '<span class="pill mint">YES</span>' : ''}</div>`).join('') || '<div class="empty">No visits yet.</div>'}</div></div>
   </div>${widgetsFor('outreach')}`;
 };
 AFTER.outreach = v => v.querySelectorAll('[data-plan]').forEach(b => b.onclick = async () => { const p = doc('plan', b.dataset.plan); const rounds = (p.rounds || []).map((r, i) => i === +b.dataset.i ? { ...r, done: !r.done } : r); await patch('plan', p.id, { rounds }); });
@@ -622,23 +768,25 @@ VIEWS.calls = () => {
   const first = ((doc('meta', 'main') || {}).callFirst || []).map(Number);
   let calls = docs('calls').map(c => ({ ...c, st: (c.status || '').toUpperCase() === 'NEW' ? '' : (c.status || '').toUpperCase() }));
   const counts = Object.fromEntries(CALL_ST.map(([k]) => [k, calls.filter(c => c.st === k).length]));
+  const doneN = calls.filter(c => c.st && c.st !== 'NEATBILD').length, total = calls.length;
   if (f === 'todo') calls = calls.filter(c => !c.st || c.st === 'NEATBILD' || c.st === 'ATZVANĪT'); else if (f !== 'all') calls = calls.filter(c => c.st === f);
   if (q) calls = calls.filter(c => (c.business + ' ' + c.trade + ' ' + c.phone).toLowerCase().includes(q));
   calls.sort((a, b) => { const fa = first.indexOf(+a.nr), fb = first.indexOf(+b.nr); return (fa < 0 ? 999 : fa) - (fb < 0 ? 999 : fb) || (+a.nr - +b.nr); });
-  return `<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px"><div class="seg" id="callSeg">${[['todo', 'To do'], ['all', 'All'], ...CALL_ST.slice(1).map(s => [s[0], s[1]])].map(([k, l]) => `<button class="${f === k ? 'on' : ''}" data-f="${esc(k)}">${l}${k !== 'todo' && k !== 'all' ? ` ${counts[k] || 0}` : ''}</button>`).join('')}</div><input id="callQ" placeholder="Search…" value="${esc(q)}" style="padding:9px 12px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.3);outline:none;min-width:200px"></div>
-  <div class="card"><h3>${calls.length} businesses <span class="r">★ = call first</span></h3><div class="list">${calls.slice(0, 150).map(c => `<div class="li" style="align-items:flex-start;flex-wrap:wrap"><div class="t" style="min-width:220px"><b>${first.includes(+c.nr) ? '<span style="color:var(--amber)">★ </span>' : ''}${esc(c.nr)}. ${esc(c.business)}</b><small>${esc(c.trade)} · <a href="tel:${esc(String(c.phone).replace(/\s/g, ''))}" style="color:var(--blue3)">${esc(c.phone)}</a>${c.calledOn ? ' · called ' + esc(c.calledOn) : ''}</small>${c.why ? `<small style="white-space:normal;color:var(--faint);margin-top:4px">${esc(c.why)}</small>` : ''}${c.note ? `<small style="white-space:normal;color:var(--amber);margin-top:4px">${esc(c.note)}</small>` : ''}</div><div style="display:flex;gap:5px;flex-wrap:wrap">${CALL_ST.slice(1).map(([k, l, col]) => `<button class="btn sm" style="${c.st === k ? `border-color:var(--${col || 'blue'});background:rgba(110,136,255,.12)` : ''}" data-call="${c.id}" data-st="${esc(k)}">${l}</button>`).join('')}<button class="btn sm" data-note="${c.id}">note</button></div></div>`).join('') || '<div class="empty">Nothing here.</div>'}</div></div>`;
+  return `<div class="grid g4">${kpi('Businesses', total, { ic: 'calls' })}${kpi('Reached', doneN, { d: `${total ? Math.round(100 * doneN / total) : 0}% of the list`, ic: 'trend', color: '#A9B8FF' })}${kpi('Said YES', counts['JĀ'] || 0, { ic: 'spark', color: '#3DDC97' })}${kpi('Call back', counts['ATZVANĪT'] || 0, { ic: 'calls', color: '#F5B544' })}</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0 14px"><div class="seg" id="callSeg">${[['todo', 'To do'], ['all', 'All'], ...CALL_ST.slice(1).map(s => [s[0], s[1]])].map(([k, l]) => `<button class="${f === k ? 'on' : ''}" data-f="${esc(k)}">${l}${k !== 'todo' && k !== 'all' ? ` ${counts[k] || 0}` : ''}</button>`).join('')}</div><input id="callQ" placeholder="Search…" value="${esc(q)}" style="padding:9px 12px;border-radius:11px;border:1px solid var(--line2);background:rgba(0,0,0,.3);outline:none;min-width:200px"></div>
+  <div class="card"><h3>${calls.length} businesses <span class="r">★ = call first</span></h3><div class="list">${calls.slice(0, 150).map(c => `<div class="li" style="align-items:flex-start;flex-wrap:wrap"><div class="t" style="min-width:220px"><b>${first.includes(+c.nr) ? '<span style="color:var(--amber)">★ </span>' : ''}${esc(c.nr)}. ${esc(c.business)}</b><small>${esc(c.trade)} · <a href="tel:${esc(String(c.phone).replace(/\s/g, ''))}" style="color:var(--blue3)">${esc(c.phone)}</a>${c.calledOn ? ' · called ' + esc(c.calledOn) : ''}</small>${c.why ? `<small style="white-space:normal;color:var(--faint);margin-top:4px">${esc(c.why)}</small>` : ''}${c.note ? `<small style="white-space:normal;color:var(--amber);margin-top:4px">${esc(c.note)}</small>` : ''}</div><div style="display:flex;gap:5px;flex-wrap:wrap">${CALL_ST.slice(1).map(([k, l, col]) => `<button class="btn sm" style="${c.st === k ? `border-color:var(--${col || 'blue'});background:rgba(110,136,255,.14);color:var(--paper)` : ''}" data-call="${c.id}" data-st="${esc(k)}">${l}</button>`).join('')}<button class="btn sm" data-note="${c.id}">note</button></div></div>`).join('') || '<div class="empty">Nothing here.</div>'}</div></div>`;
 };
 AFTER.calls = v => {
-  v.querySelectorAll('#callSeg button').forEach(b => b.onclick = () => { ls.set('hq-callf', b.dataset.f); render(); });
-  const q = v.querySelector('#callQ'); q.oninput = () => { ls.set('hq-callq', q.value); clearTimeout(q.t); q.t = setTimeout(() => { render(); const n = $('#callQ'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); }, 250); };
+  v.querySelectorAll('#callSeg button').forEach(b => b.onclick = () => { ls.set('hq-callf', b.dataset.f); render(true); });
+  const q = v.querySelector('#callQ'); q.oninput = () => { ls.set('hq-callq', q.value); clearTimeout(q.t); q.t = setTimeout(() => { render(true); const n = $('#callQ'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); }, 250); };
   v.querySelectorAll('[data-call]').forEach(b => b.onclick = async () => { await patch('calls', b.dataset.call, { status: b.dataset.st, calledOn: today(), updatedAt: new Date().toISOString(), by: 'HQ' }); toast('Saved: ' + b.textContent); });
   v.querySelectorAll('[data-note]').forEach(b => b.onclick = async () => { const c = doc('calls', b.dataset.note); const n = prompt('Note for ' + c.business, c.note || ''); if (n != null) await patch('calls', c.id, { note: n }); });
 };
 
 VIEWS.clients = () => {
-  const M = money();
-  return `<div class="grid g4">${kpi('Active clients', M.clients.filter(c => c.status === 'active').length, { ic: 'clients', color: '#3DDC97' })}${kpi('On free week', M.clients.filter(c => c.status === 'trial').length, { ic: 'spark' })}${kpi('MRR', M.mrr, { pre: '€', ic: 'money', color: '#3DDC97' })}${kpi('Avg / client', M.clients.filter(c => c.status === 'active').length ? M.mrr / M.clients.filter(c => c.status === 'active').length : 0, { pre: '€', ic: 'money' })}</div>
-  <div class="grid g3" style="margin-top:16px">${M.clients.map(c => `<div class="card"><h3>${esc(c.trade || 'client')} <span class="r"><span class="pill ${c.status === 'active' ? 'mint' : c.status === 'trial' ? 'blue' : 'red'}">${esc(c.status)}</span></span></h3><div style="font-size:22px;font-weight:700;margin-top:10px;letter-spacing:-.02em">${esc(c.name)}</div><div style="color:var(--dim);font-size:13px;margin-top:4px">since ${esc(c.since ? dayLabel(c.since) : '–')}${c.founding ? ' · founding client' : ''}</div><div class="kpi"><div class="v num" style="font-size:28px">${eur(c.monthly)}<small>/mo</small></div></div><div class="legend">${(c.tools || []).map(t => `<span class="pill blue">${esc(t)}</span>`).join('')}</div></div>`).join('') || `<div class="card span3"><div class="empty" style="padding:50px 10px"><div style="font-size:40px">🚀</div><div style="margin-top:10px;font-size:16px;color:var(--paper)">First client is coming.</div><div style="margin-top:6px">When someone signs, press <b>+ Add → Client</b>, or tell Claude.</div></div></div>`}</div>${widgetsFor('clients')}`;
+  const M = money(), act = M.clients.filter(c => c.status === 'active');
+  return `<div class="grid g4">${kpi('Active clients', act.length, { ic: 'clients', color: '#3DDC97' })}${kpi('On free week', M.clients.filter(c => c.status === 'trial').length, { ic: 'spark' })}${kpi('MRR', M.mrr, { pre: '€', ic: 'money', color: '#3DDC97' })}${kpi('Avg / client', act.length ? M.mrr / act.length : 0, { pre: '€', ic: 'trend' })}</div>
+  <div class="grid g3 mt">${M.clients.map(c => `<div class="card"><h3>${esc(c.trade || 'client')} <span class="r"><span class="pill ${c.status === 'active' ? 'mint' : c.status === 'trial' ? 'blue' : 'red'}">${esc(c.status)}</span></span></h3><div style="font-size:22px;font-weight:700;margin-top:10px;letter-spacing:-.02em;position:relative;z-index:1">${esc(c.name)}</div><div style="color:var(--dim);font-size:13px;margin-top:4px;position:relative;z-index:1">since ${esc(c.since ? dayLabel(c.since) : '–')}${c.founding ? ' · founding client' : ''}</div><div style="font-size:28px;font-weight:700;margin-top:12px;position:relative;z-index:1" class="num">${eur(c.monthly)}<small style="font-size:13px;color:var(--dim)">/mo</small></div><div class="legend">${(c.tools || []).map(t => `<span class="pill blue">${esc(t)}</span>`).join('')}</div></div>`).join('') || `<div class="card span3"><div class="empty" style="padding:56px 10px"><div style="font-size:44px;animation:float 3s ease-in-out infinite">🚀</div><div style="margin-top:12px;font-size:17px;color:var(--paper)">The first client is coming.</div><div style="margin-top:6px">When someone signs, press <b>+ Add → Client</b>, or tell Claude.</div></div></div>`}</div>${widgetsFor('clients')}`;
 };
 function clientModal() {
   openModal(`<h3>New client</h3><form class="form" id="clientForm"><div class="row"><label>Name<input name="name" required></label><label>Trade<input name="trade"></label></div>
@@ -653,13 +801,15 @@ function clientModal() {
 VIEWS.tasks = () => {
   const all = docs('tasks').sort((a, b) => String(a.due || '9').localeCompare(String(b.due || '9')));
   const t = today(), groups = [['Overdue', all.filter(x => !x.done && x.due && x.due < t)], ['Today', all.filter(x => !x.done && x.due === t)], ['Coming up', all.filter(x => !x.done && (!x.due || x.due > t))], ['Done', all.filter(x => x.done).slice(-15).reverse()]];
-  return `<div class="grid g3"><div class="span2">${groups.map(([g, list]) => list.length ? `<div class="card" style="margin-bottom:16px"><h3>${g} <span class="r">${list.length}</span></h3><div class="list">${list.map(x => `<div class="li ${x.done ? 'done' : ''}"><button class="check ${x.done ? 'on' : ''}" data-t="${x.id}"></button><div class="t"><b>${esc(x.title)}</b><small>${x.due ? esc(wd(x.due) + ' ' + dayLabel(x.due)) : 'no date'}${x.time ? ' · ' + esc(x.time) : ''}${x.area ? ' · ' + esc(x.area) : ''}</small></div><button class="btn sm" data-tdel="${x.id}">✕</button></div>`).join('')}</div></div>` : '').join('') || '<div class="card"><div class="empty">No tasks.</div></div>'}</div>
-  <div class="card" style="align-self:start"><h3>Add task</h3><form class="form" id="taskForm"><label>Task<input name="title" required></label><div class="row"><label>Date<input name="due" type="date" value="${t}"></label><label>Time<input name="time" placeholder="16:00"></label></div><label>Area<select name="area"><option>calls</option><option>email</option><option>content</option><option>partners</option><option>admin</option></select></label><button class="btn primary">Add</button></form></div></div>${widgetsFor('tasks')}`;
+  const doneN = all.filter(x => x.done).length;
+  return `<div class="grid g3"><div class="span2">${groups.map(([g, list]) => list.length ? `<div class="card" style="margin-bottom:16px"><h3>${g === 'Overdue' ? '<span style="color:var(--red)">●</span> ' : ''}${g} <span class="r">${list.length}</span></h3><div class="list">${list.map(x => `<div class="li ${x.done ? 'done' : ''}"><button class="check ${x.done ? 'on' : ''}" data-t="${x.id}" aria-label="done"></button><div class="t"><b>${esc(x.title)}</b><small>${x.due ? esc(wd(x.due) + ' ' + dayLabel(x.due)) : 'no date'}${x.time ? ' · ' + esc(x.time) : ''}${x.area ? ' · ' + esc(x.area) : ''}</small></div><button class="btn sm" data-tdel="${x.id}" aria-label="delete">✕</button></div>`).join('')}</div></div>` : '').join('') || '<div class="card"><div class="empty">No tasks.</div></div>'}</div>
+  <div style="display:flex;flex-direction:column;gap:16px;align-self:start"><div class="card"><h3>Progress</h3><div class="ring-wrap">${ring(all.length ? doneN / all.length : 0, { label: `${doneN}/${all.length}`, color: '#3DDC97' })}<div style="font-size:13px;color:var(--dim)">tasks done</div></div></div>
+  <div class="card"><h3>Add task</h3><form class="form" id="taskForm"><label>Task<input name="title" required></label><div class="row"><label>Date<input name="due" type="date" value="${t}"></label><label>Time<input name="time" placeholder="16:00"></label></div><label>Area<select name="area"><option>calls</option><option>email</option><option>content</option><option>partners</option><option>admin</option></select></label><button class="btn primary" style="justify-content:center">Add</button></form></div></div></div>${widgetsFor('tasks')}`;
 };
 AFTER.tasks = v => {
-  v.querySelectorAll('[data-t]').forEach(b => b.onclick = async () => { const x = doc('tasks', b.dataset.t); await patch('tasks', x.id, { done: !x.done, doneAt: x.done ? null : today() }); });
+  v.querySelectorAll('[data-t]').forEach(b => b.onclick = async () => { const x = doc('tasks', b.dataset.t); b.classList.toggle('on'); await patch('tasks', x.id, { done: !x.done, doneAt: x.done ? null : today() }); if (!x.done) toast('Done ✓'); });
   v.querySelectorAll('[data-tdel]').forEach(b => b.onclick = async () => { await del('tasks', b.dataset.tdel); toast('Deleted'); });
-  const f = v.querySelector('#taskForm'); f.onsubmit = async e => { e.preventDefault(); await put('tasks', uid('t'), { ...Object.fromEntries(new FormData(f)), done: false }); toast('Task added'); };
+  const f = v.querySelector('#taskForm'); f.onsubmit = async e => { e.preventDefault(); await put('tasks', uid('t'), { ...Object.fromEntries(new FormData(f)), done: false }); toast('Task added ✓'); };
 };
 
 /* ═════════ modal, add menu, palette ═════════ */
@@ -667,28 +817,38 @@ function openModal(html) { $('#modal').innerHTML = html; $('#modalVeil').classLi
 function closeModal() { $('#modalVeil').classList.remove('on'); }
 $('#modalVeil').onclick = e => { if (e.target.id === 'modalVeil') closeModal(); };
 function addMenu() {
-  openModal(`<h3>Add</h3><div class="list" style="margin-top:10px">${[['task', 'Task', 'tasks'], ['money', 'Money entry', 'money'], ['deal', 'Deal / lead', 'pipeline'], ['client', 'Client', 'clients']].map(([k, l, ic]) => `<div class="li" style="cursor:pointer" data-add="${k}">${ico(ic)}<div class="t"><b>${l}</b></div></div>`).join('')}</div>`);
+  openModal(`<h3>Add</h3><div class="list" style="margin-top:10px">${[['task', 'Task', 'tasks', 'something to do'], ['money', 'Money entry', 'money', 'a cost or income'], ['deal', 'Deal / lead', 'pipeline', 'someone interested'], ['client', 'Client', 'clients', 'someone who signed']].map(([k, l, ic, s]) => `<div class="li" style="cursor:pointer" data-add="${k}"><span class="pill blue" style="padding:8px">${ico(ic, 16)}</span><div class="t"><b>${l}</b><small>${s}</small></div></div>`).join('')}</div>`);
   $('#modal').querySelectorAll('[data-add]').forEach(el => el.onclick = () => doAdd(el.dataset.add));
 }
 function doAdd(k) {
   if (k === 'deal') return dealModal(null);
   if (k === 'client') return clientModal();
-  if (k === 'money') { closeModal(); go('money'); return setTimeout(() => $('#moneyForm input[name=label]').focus(), 100); }
-  closeModal(); go('tasks'); setTimeout(() => $('#taskForm input[name=title]').focus(), 100);
+  if (k === 'money') { closeModal(); go('money'); return setTimeout(() => { const i = $('#moneyForm input[name=label]'); i.scrollIntoView({ block: 'center', behavior: 'smooth' }); i.focus({ preventScroll: true }); }, 200); }
+  closeModal(); go('tasks'); setTimeout(() => $('#taskForm input[name=title]').focus(), 200);
 }
 $('#addBtn').onclick = addMenu;
 const PAL = () => [...PAGES.map(([id, l]) => ({ l: 'Go to ' + l, run: () => go(id) })), { l: 'Add task', run: () => doAdd('task') }, { l: 'Add money entry', run: () => doAdd('money') }, { l: 'Add deal', run: () => doAdd('deal') }, { l: 'Add client', run: () => doAdd('client') }, { l: 'Refresh data', run: () => load() },
   ...docs('deals').map(d => ({ l: 'Deal: ' + d.name, run: () => { go('pipeline'); dealModal(d); } })), ...docs('calls').map(c => ({ l: 'Call: ' + c.business, run: () => { ls.set('hq-callf', 'all'); ls.set('hq-callq', c.business); go('calls'); } }))];
 let palSel = 0, palList = [];
-function openPal() { $('#palVeil').classList.add('on'); const i = $('#palIn'); i.value = ''; drawPal(); setTimeout(() => i.focus(), 30); }
-function drawPal() { const q = $('#palIn').value.toLowerCase(); palList = PAL().filter(o => o.l.toLowerCase().includes(q)).slice(0, 12); palSel = Math.min(palSel, palList.length - 1); $('#palOpts').innerHTML = palList.map((o, i) => `<div class="opt ${i === palSel ? 'on' : ''}" data-i="${i}">${esc(o.l)}</div>`).join(''); $('#palOpts').querySelectorAll('.opt').forEach(el => el.onclick = () => { $('#palVeil').classList.remove('on'); palList[+el.dataset.i].run(); }); }
+function openPal() { $('#palVeil').classList.add('on'); const i = $('#palIn'); i.value = ''; palSel = 0; drawPal(); setTimeout(() => i.focus(), 30); }
+function drawPal() { const q = $('#palIn').value.toLowerCase(); palList = PAL().filter(o => o.l.toLowerCase().includes(q)).slice(0, 12); palSel = Math.max(0, Math.min(palSel, palList.length - 1)); $('#palOpts').innerHTML = palList.map((o, i) => `<div class="opt ${i === palSel ? 'on' : ''}" data-i="${i}">${esc(o.l)}</div>`).join(''); $('#palOpts').querySelectorAll('.opt').forEach(el => el.onclick = () => { $('#palVeil').classList.remove('on'); palList[+el.dataset.i].run(); }); }
 $('#palIn').oninput = () => { palSel = 0; drawPal(); };
 $('#palIn').onkeydown = e => { if (e.key === 'ArrowDown') { palSel = Math.min(palSel + 1, palList.length - 1); drawPal(); e.preventDefault(); } else if (e.key === 'ArrowUp') { palSel = Math.max(0, palSel - 1); drawPal(); e.preventDefault(); } else if (e.key === 'Enter' && palList[palSel]) { $('#palVeil').classList.remove('on'); palList[palSel].run(); } };
 $('#palVeil').onclick = e => { if (e.target.id === 'palVeil') $('#palVeil').classList.remove('on'); };
 $('#palBtn').onclick = openPal;
 addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPal(); } if (e.key === 'Escape') { closeModal(); $('#palVeil').classList.remove('on'); } });
 
-/* ═════════ login / start ═════════ */
+/* ═════════ intro / login / start ═════════ */
+function intro() {
+  if (REDUCE || ss.get('hq-intro')) return { done: () => {}, };
+  ss.set('hq-intro', '1');
+  const el = $('#intro'), bar = $('#introBar'), t0 = Date.now();
+  el.classList.add('on'); setTimeout(() => bar.style.width = '55%', 200);
+  let closed = false;
+  const close = () => { if (closed) return; closed = true; bar.style.width = '100%'; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.classList.remove('on', 'out'), 700); }, 250); };
+  el.onclick = close;
+  return { done: () => setTimeout(close, Math.max(0, 1500 - (Date.now() - t0))) };
+}
 function showLogin(err) { $('#app').classList.remove('on'); $('#login').style.display = 'grid'; $('#loginErr').textContent = err || ''; $('#apiIn').value = API; setTimeout(() => $('#keyIn').focus(), 50); }
 $('#loginForm').onsubmit = async e => {
   e.preventDefault(); KEY = $('#keyIn').value.trim(); API = ($('#apiIn').value.trim() || DEFAULT_API).replace(/\/$/, '');
@@ -697,10 +857,16 @@ $('#loginForm').onsubmit = async e => {
   catch (err) { $('#loginErr').textContent = err.status === 403 ? 'Wrong key.' : 'Server not reachable.'; }
 };
 $('#logoutBtn').onclick = () => { ls.set('hq-key', null); KEY = ''; showLogin(); };
-$('#refreshBtn').onclick = async () => { if (await load()) toast('Up to date'); };
-async function start() { $('#login').style.display = 'none'; $('#app').classList.add('on'); if (location.hash) page = location.hash.slice(1); await load(); }
-setInterval(() => { if (KEY && !document.hidden) load(true); }, 60000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden && KEY && Date.now() - lastSync > 20000) load(true); });
+$('#refreshBtn').onclick = async () => { if (await load('soft')) toast('Up to date ✓'); };
+async function start() {
+  const it = intro();
+  $('#login').style.display = 'none'; $('#app').classList.add('on');
+  if (location.hash) page = location.hash.slice(1);
+  await load(); it.done();
+}
+setInterval(() => { if (KEY && !document.hidden) load('soft'); }, 60000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && KEY && Date.now() - lastSync > 20000) load('soft'); });
+tickClock();
 if (KEY) start(); else showLogin();
 })();
 </script>
